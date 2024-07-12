@@ -25,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   File? _selectedFile;
   bool isSubmitBook = false;
   final List<Uint8List> _selectedImages = [];
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
 
   void _submit() async {
     try {
@@ -76,9 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
     isSubmitBook = true;
     setState(() {});
   }
-
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
 
   Future<Uint8List?> _renderPage(PdfImageRendererPdf pdf, int pageIndex) async {
     await pdf.openPage(pageIndex: pageIndex);

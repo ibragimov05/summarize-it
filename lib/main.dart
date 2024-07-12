@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:summarize_it/firebase_options.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_router.dart';
+import 'package:summarize_it/utils/app_text_styles.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,14 @@ class SummarizeIt extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
+          appBarTheme: AppBarTheme(
+            backgroundColor: AppColors.summarizeItWhite,
+            centerTitle: true,
+            titleTextStyle: AppTextStyles.workSansMain.copyWith(
+              fontSize: 20,
+              color: AppColors.greyscale900,
+            ),
+          ),
         ),
         darkTheme: dark,
         onGenerateRoute: AppRouter.generateRoute,

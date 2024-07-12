@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
 
 class CustomMainGreenButton extends StatelessWidget {
   final String buttonText;
+  final RoundedLoadingButtonController buttonController;
   final void Function() onTap;
 
+  // final RoundedLoadingButtonController _btnController =
+  //       RoundedLoadingButtonController();
   const CustomMainGreenButton({
     super.key,
+    required this.buttonController,
     required this.buttonText,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
+    return RoundedLoadingButton(
+      controller: buttonController,
+      onPressed: onTap,
+      width: MediaQuery.of(context).size.width,
+      color: AppColors.green900,
+      animateOnTap: true,
+      successColor: AppColors.green900,
       child: Container(
         height: 60,
         width: double.infinity,
