@@ -1,37 +1,82 @@
 import 'dart:convert';
-
+import 'package:firebase_auth/firebase_auth.dart' as f;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:summarize_it/data/models/user.dart';
 
 class UserHttpService {
-  Future<void> getUsers({required String email}) async {
-    final Uri url = Uri.parse(
-        'https://summarize-it-8ae05-default-rtdb.firebaseio.com/users/$email.json');
-    final response = await http.get(url);
+  final String _firebaseCustomKey = dotenv.get('FIREBASE_CUSTOM_KEY');
+  final String _baseUrl =
+      'https://summarize-it-8ae05-default-rtdb.firebaseio.com';
+
+  Future<User> getUser({
+    required String email,
+    required String uid,
+  }) async {
+    final String idToken = await _getIdToken() ?? '';
+
+    final Uri url =
+        Uri.parse('$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken');
+    final http.Response response = await http.get(url);
+
     if (response.statusCode == 200) {
-      print(response.body);
+      final Map<String, dynamic> usersMap = jsonDecode(response.body);
+
+      User? user;
+      usersMap.forEach((key, value) {
+        if (value['email'] == email && value['uid'] == uid) {
+          value['id'] = key;
+          user = User.fromJson(value);
+        }
+      });
+
+      if (user != null) {
+        return user!;
+      } else {
+        throw Exception('Could not find user: ${response.body}');
+      }
     } else {
-      print('error');
+      throw Exception('Failed to get users: ${response.body}');
     }
   }
 
-  Future<void> addUser() async {
-    final Uri url = Uri.parse(
-        'https://summarize-it-8ae05-default-rtdb.firebaseio.com/users/.json');
+  Future<User> addUser({
+    required String firstName,
+    required String lastName,
+    required String email,
+  }) async {
+    final String idToken = await _getIdToken() ?? '';
 
-    Map<String, dynamic> data = {};
-    data['test@gmail.com'] = {};
-    final response = await http.post(
-      url,
-      body: jsonEncode(data),
-    );
+    final Uri url =
+        Uri.parse('$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken');
+
+    Map<String, dynamic> userData = {
+      'uid': f.FirebaseAuth.instance.currentUser?.uid ?? '',
+      'first-name': firstName,
+      'last-name': lastName,
+      'email': email,
+      'favorite-books': ['fav-books'],
+      'history': ['history'],
+    };
+
+    final http.Response response =
+        await http.post(url, body: jsonEncode(userData));
+
     if (response.statusCode == 200) {
-      print(response.body);
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      userData['id'] = data['name'];
+      return User.fromJson(userData);
     } else {
-      print('error');
+      throw Exception(
+          'Error adding user: status code ${response.statusCode}, body: ${response.body}');
     }
   }
-}
 
-void main() async {
-  await UserHttpService().getUsers(email: 'test@gmail.com');
+  Future<String?> _getIdToken() async {
+    final f.User? user = f.FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return await user.getIdToken();
+    }
+    throw Exception('No authenticated user found.');
+  }
 }

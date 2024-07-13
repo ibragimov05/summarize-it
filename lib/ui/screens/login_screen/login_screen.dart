@@ -36,7 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
           password: _passwordTextController.text,
         );
       } on FirebaseAuthException catch (e) {
-        if (mounted) AppFunctions.showErrorSnackBar(context, 'firebase error: $e');
+        if (mounted) {
+          AppFunctions.showErrorSnackBar(context, 'firebase error: $e');
+        }
       } catch (e) {
         if (mounted) AppFunctions.showErrorSnackBar(context, 'error: $e');
       } finally {

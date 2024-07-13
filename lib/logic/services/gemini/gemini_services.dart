@@ -15,7 +15,7 @@ class GeminiService {
     for (Uint8List image in images) {
       dataParts.add(DataPart('image/jpeg', image));
     }
-    //
+    
     final List<Content> content = [
       Content.multi(
         [

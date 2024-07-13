@@ -10,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
       onTap: () async {
         await FirebaseAuthService.logoutUser();
       },
-      child: Center(
+      child: const Center(
         child: Text(
           'Profile screen',
           style: TextStyle(

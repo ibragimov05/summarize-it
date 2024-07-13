@@ -5,7 +5,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pdf_image_renderer/pdf_image_renderer.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/logic/services/gemini_services.dart';
+import 'package:summarize_it/logic/services/gemini/gemini_services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:summarize_it/utils/app_assets.dart';

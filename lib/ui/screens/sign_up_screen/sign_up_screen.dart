@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/logic/services/firebase/firebase_auth_service.dart';
+import 'package:summarize_it/logic/services/http/user_http_service.dart';
 import 'package:summarize_it/ui/screens/sign_up_screen/widgets/sign_up_text_style.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
@@ -24,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final RoundedLoadingButtonController _buttonController =
       RoundedLoadingButtonController();
+  final UserHttpService _userHttpService = UserHttpService();
   final Map<String, TextEditingController> _textControllers = {
     AppConstants.firstName: TextEditingController(),
     AppConstants.lastName: TextEditingController(),
@@ -52,12 +54,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
           email: _textControllers[AppConstants.email]!.text,
           password: _textControllers[AppConstants.password]!.text,
         );
+        await _userHttpService.addUser(
+          firstName: _textControllers[AppConstants.firstName]!.text,
+          lastName: _textControllers[AppConstants.lastName]!.text,
+          email: _textControllers[AppConstants.email]!.text,
+        );
         if (mounted) {
           AppFunctions.showSnackBar(context, AppConstants.successfullySignedUp);
           Navigator.of(context).pop();
         }
       } on FirebaseAuthException catch (e) {
-        if (mounted) AppFunctions.showErrorSnackBar(context, 'firebase error: $e');
+        if (mounted) {
+          AppFunctions.showErrorSnackBar(context, 'firebase error: $e');
+        }
       } catch (e) {
         if (mounted) AppFunctions.showErrorSnackBar(context, 'error: $e');
       } finally {
