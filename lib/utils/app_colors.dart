@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   static const Color summarizeItWhite = Colors.white;
   static const Color scaffoldBackgroundColor = Color(0xFFfefefe);
+  static const Color summarizeItTransparent = Colors.transparent;
 
   static const Color greyscale900 = Color(0xFF101426);
   static const Color greyscale800 = Color(0xFF151A30);

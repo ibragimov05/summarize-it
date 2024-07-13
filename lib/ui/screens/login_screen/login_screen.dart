@@ -165,10 +165,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
+                          const Row(
                             children: [
-                              const Icon(Icons.circle_outlined),
-                              const Gap(5),
+                              Icon(Icons.circle_outlined),
+                              Gap(5),
                               LoginScreenText(text: AppConstants.rememberMe),
                             ],
                           ),

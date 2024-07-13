@@ -8,4 +8,7 @@ class AppAssets {
   static const String icoSearchSel = 'assets/icons/tab_box/search-2.svg';
   static const String icoBookmarksSel = 'assets/icons/tab_box/bookmarks-2.svg';
   static const String icoProfileSel = 'assets/icons/tab_box/profile-2.svg';
+
+  static const String passwordEye = 'assets/icons/eye.svg';
+  static const String passwordEyeSlash = 'assets/icons/eye-slash.svg';
 }

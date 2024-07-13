@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:summarize_it/utils/app_assets.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatefulWidget {
   final String hintText;
   final bool isObscure;
   final bool isKeyboardDone;
@@ -21,12 +23,25 @@ class CustomTextFormField extends StatelessWidget {
   });
 
   @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  late bool _isObscure;
+
+  @override
+  void initState() {
+    super.initState();
+    _isObscure = widget.isObscure;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         FormField<String>(
-          validator: validator,
+          validator: widget.validator,
           builder: (FormFieldState<String> field) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,16 +52,17 @@ class CustomTextFormField extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: TextFormField(
-                    keyboardType: textInputType,
-                    textInputAction: isKeyboardDone
+                    keyboardType: widget.textInputType,
+                    textInputAction: widget.isKeyboardDone
                         ? TextInputAction.done
                         : TextInputAction.next,
-                    controller: textEditingController,
-                    obscureText: isObscure,
+                    controller: widget.textEditingController,
+                    obscureText: _isObscure,
                     decoration: InputDecoration(
+                      suffixIcon: _passwordToggleObscure(),
                       border:
                           const OutlineInputBorder(borderSide: BorderSide.none),
-                      hintText: hintText,
+                      hintText: widget.hintText,
                       hintStyle: AppTextStyles.workSansMain.copyWith(
                         color: AppColors.greyscale400,
                         fontWeight: FontWeight.w500,
@@ -88,4 +104,16 @@ class CustomTextFormField extends StatelessWidget {
       ],
     );
   }
+
+  Widget? _passwordToggleObscure() => widget.isObscure
+      ? GestureDetector(
+          onTap: () => setState(() => _isObscure = !_isObscure),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: SvgPicture.asset(
+              _isObscure ? AppAssets.passwordEyeSlash : AppAssets.passwordEye,
+            ),
+          ),
+        )
+      : null;
 }

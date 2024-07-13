@@ -23,6 +23,13 @@ class AppFunctions {
     }
   }
 
+  static String? textValidator(String? text, String fieldName) {
+    if (text == null || text.trim().isEmpty) {
+      return 'Please, enter your $fieldName';
+    }
+    return null;
+  }
+
   static String? emailValidator(String? email) {
     if (email == null || email.trim().isEmpty) {
       return 'Please, enter your email';

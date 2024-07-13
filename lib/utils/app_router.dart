@@ -19,8 +19,10 @@ class AppRouter {
         return _buildPageRoute(const MainScreen());
       case AppRouter.signUp:
         return _buildPageRoute(const SignUpScreen());
-      default:
+      case AppRouter.login:
         return _buildPageRoute(const LoginScreen());
+      default:
+        return _buildPageRoute(const SignUpScreen());
     }
   }
 }
