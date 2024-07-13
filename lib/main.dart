@@ -1,9 +1,11 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:summarize_it/firebase_options.dart';
-import 'package:summarize_it/logic/services/firebase/firebase_auth_service.dart';
+import 'package:summarize_it/ui/screens/login_screen/login_screen.dart';
+import 'package:summarize_it/ui/screens/main_screen/main_screen.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_router.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
@@ -12,14 +14,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await dotenv.load(fileName: '.env');
-  try {
-    await FirebaseAuthService.loginUser(
-      email: 'tester5@gmail.com',
-      password: 'yourpassword', // replace with the actual password
-    );
-  } catch (e) {
-    print(e); // Print the error to understand what exactly is going wrong
-  }
   runApp(const SummarizeIt());
 }
 
@@ -48,6 +42,20 @@ class SummarizeIt extends StatelessWidget {
         ),
         darkTheme: dark,
         onGenerateRoute: AppRouter.generateRoute,
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              if (snapshot.hasData) {
+                return const MainScreen();
+              } else {
+                return const LoginScreen();
+              }
+            }
+          },
+        ),
       ),
     );
   }

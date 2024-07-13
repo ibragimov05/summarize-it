@@ -31,22 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       _roundedLoadingButtonController.start();
       try {
-        await FirebaseAuthService.registerUser(
+        await FirebaseAuthService.loginUser(
           email: _emailTextController.text,
           password: _passwordTextController.text,
         );
       } on FirebaseAuthException catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('firebase error: $e')),
-          );
-        }
+        if (mounted) AppFunctions.showErrorSnackBar(context, 'firebase error: $e');
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('error: $e')),
-          );
-        }
+        if (mounted) AppFunctions.showErrorSnackBar(context, 'error: $e');
       } finally {
         _roundedLoadingButtonController.reset();
       }
@@ -173,6 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                                context, AppRouter.forgotPassword),
                             child: Text(
                               AppConstants.forgotPassword,
                               style: AppTextStyles.workSansMain.copyWith(

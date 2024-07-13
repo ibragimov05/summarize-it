@@ -32,4 +32,8 @@ class AppConstants {
 
   static const String alreadyHaveAnAccount = 'Already have an account?';
   static const String login = 'Login';
+  static const String recoverYourAccountPassword =
+      'Recover your account password';
+  static const String continueText = 'Continue';
+  static const String successfullySignedUp = 'You have successfully signed up!';
 }

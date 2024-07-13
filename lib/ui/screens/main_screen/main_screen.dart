@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:summarize_it/ui/screens/bookmarks_screen/bookmarks_screen.dart';
 import 'package:summarize_it/ui/screens/home_screen/home_screen.dart';
+import 'package:summarize_it/ui/screens/profile_screen/profile_screen.dart';
+import 'package:summarize_it/ui/screens/search_screen/search_screen.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_constants.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
@@ -15,9 +18,9 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = const [
     HomeScreen(),
-    Placeholder(),
-    Placeholder(),
-    Placeholder(),
+    SearchScreen(),
+    BookmarksScreen(),
+    ProfileScreen(),
   ];
 
   int _currentScreen = 0;

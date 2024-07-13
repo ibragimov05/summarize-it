@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:summarize_it/utils/app_assets.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_constants.dart';
+import 'package:summarize_it/utils/app_functions.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,10 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _response = await GeminiService.summarize(images: _selectedImages);
       _btnController.reset();
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('error: $e')));
-      }
+      if (mounted) AppFunctions.showErrorSnackBar(context, 'error: $e');
       _btnController.reset();
     } finally {
       isSubmitBook = false;

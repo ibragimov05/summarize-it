@@ -48,32 +48,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _canLogin = false;
       setState(() {});
       try {
-        print(_textControllers[AppConstants.email]!.text);
-        print(_textControllers[AppConstants.password]!.text);
-        await FirebaseAuthService.loginUser(
+        await FirebaseAuthService.registerUser(
           email: _textControllers[AppConstants.email]!.text,
           password: _textControllers[AppConstants.password]!.text,
         );
         if (mounted) {
+          AppFunctions.showSnackBar(context, AppConstants.successfullySignedUp);
           Navigator.of(context).pop();
         }
       } on FirebaseAuthException catch (e) {
-        _showSnackBar('firebase error: $e');
+        if (mounted) AppFunctions.showErrorSnackBar(context, 'firebase error: $e');
       } catch (e) {
-        _showSnackBar('error: $e');
+        if (mounted) AppFunctions.showErrorSnackBar(context, 'error: $e');
       } finally {
         _buttonController.reset();
       }
     } else {
       _buttonController.reset();
-    }
-  }
-
-  void _showSnackBar(String message) {
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
     }
   }
 
@@ -84,13 +75,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         surfaceTintColor: AppColors.summarizeItTransparent,
         leading: const ArrowBackButton(),
         title: const Text(AppConstants.signUp),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                await FirebaseAuthService.logoutUser();
-              },
-              icon: Icon(Icons.logout))
-        ],
       ),
       body: Form(
         key: _formKey,

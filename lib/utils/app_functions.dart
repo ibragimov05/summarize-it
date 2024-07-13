@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:summarize_it/utils/app_colors.dart';
+import 'package:summarize_it/utils/app_text_styles.dart';
 
 class AppFunctions {
   static bool isAndroid() {
@@ -44,9 +46,36 @@ class AppFunctions {
     if (password == null || password.trim().isEmpty) {
       return 'Please, enter your password';
     } else if (isSignUp &&
-        !RegExp(r'^(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$').hasMatch(password)) {
+        !RegExp(r'^(?=.*[a-zA-Z]).{8,}$').hasMatch(password)) {
       return 'Password should be strong';
     }
     return null;
+  }
+
+  static void showErrorSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: AppTextStyles.workSansMain.copyWith(
+            fontWeight: FontWeight.w500,
+            color: AppColors.error500,
+          ),
+        ),
+      ),
+    );
+  }
+
+  static void showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: Text(
+        message,
+        style: AppTextStyles.workSansMain.copyWith(
+          fontWeight: FontWeight.w500,
+          color: AppColors.greyscale100,
+        ),
+      )),
+    );
   }
 }
