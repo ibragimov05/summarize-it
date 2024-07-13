@@ -164,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
 
-            //! already have an account? login
+            //! already have an account? login 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
