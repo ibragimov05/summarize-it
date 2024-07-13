@@ -22,7 +22,7 @@ class AppRouter {
       case AppRouter.login:
         return _buildPageRoute(const LoginScreen());
       default:
-        return _buildPageRoute(const SignUpScreen());
+        return _buildPageRoute(const LoginScreen());
     }
   }
 }

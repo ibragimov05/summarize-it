@@ -48,31 +48,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _canLogin = false;
       setState(() {});
       try {
+        print(_textControllers[AppConstants.email]!.text);
+        print(_textControllers[AppConstants.password]!.text);
         await FirebaseAuthService.loginUser(
           email: _textControllers[AppConstants.email]!.text,
           password: _textControllers[AppConstants.password]!.text,
         );
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
       } on FirebaseAuthException catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('firebase error: $e'),
-            ),
-          );
-        }
+        _showSnackBar('firebase error: $e');
       } catch (e) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('error: $e'),
-            ),
-          );
-        }
+        _showSnackBar('error: $e');
       } finally {
         _buttonController.reset();
       }
     } else {
       _buttonController.reset();
+    }
+  }
+
+  void _showSnackBar(String message) {
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
     }
   }
 
@@ -83,6 +84,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         surfaceTintColor: AppColors.summarizeItTransparent,
         leading: const ArrowBackButton(),
         title: const Text(AppConstants.signUp),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseAuthService.logoutUser();
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -164,7 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
 
-            //! already have an account? login 
+            //! already have an account? login
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -193,5 +201,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _textControllers.forEach((key, controller) => controller.dispose);
+    super.dispose();
   }
 }
