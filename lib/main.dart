@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:summarize_it/firebase_options.dart';
+import 'package:summarize_it/logic/services/firebase/firebase_auth_service.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_router.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
@@ -11,6 +12,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await dotenv.load(fileName: '.env');
+  try {
+    await FirebaseAuthService.loginUser(
+      email: 'tester5@gmail.com',
+      password: 'yourpassword', // replace with the actual password
+    );
+  } catch (e) {
+    print(e); // Print the error to understand what exactly is going wrong
+  }
   runApp(const SummarizeIt());
 }
 
