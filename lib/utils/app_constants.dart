@@ -36,4 +36,7 @@ class AppConstants {
       'Recover your account password';
   static const String continueText = 'Continue';
   static const String successfullySignedUp = 'You have successfully signed up!';
+
+  static const String resetPasswordEmailSent =
+      'A link to reset your password has been sent to your email';
 }
