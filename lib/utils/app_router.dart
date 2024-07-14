@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:summarize_it/ui/screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:summarize_it/ui/screens/login_screen/login_screen.dart';
 import 'package:summarize_it/ui/screens/main_screen/main_screen.dart';
+import 'package:summarize_it/ui/screens/onboarding/onboarding_screen.dart';
 import 'package:summarize_it/ui/screens/sign_up_screen/sign_up_screen.dart';
 
 class AppRouter {
@@ -25,6 +26,8 @@ class AppRouter {
         return _buildPageRoute(const LoginScreen());
       case AppRouter.forgotPassword:
         return _buildPageRoute(const ForgotPasswordScreen());
+      case AppRouter.onboarding:
+        return _buildPageRoute(const OnboardingScreen());
       default:
         return _buildPageRoute(const LoginScreen());
     }

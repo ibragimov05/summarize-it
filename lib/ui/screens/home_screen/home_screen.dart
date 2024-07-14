@@ -8,11 +8,10 @@ import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/logic/services/gemini/gemini_services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:summarize_it/ui/screens/home_screen/widgets/greeting_message.dart';
 import 'package:summarize_it/utils/app_assets.dart';
 import 'package:summarize_it/utils/app_colors.dart';
-import 'package:summarize_it/utils/app_constants.dart';
 import 'package:summarize_it/utils/app_functions.dart';
-import 'package:summarize_it/utils/app_text_styles.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -109,19 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           Expanded(
             child: _response == null
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Center(
-                      child: Text(
-                        AppConstants.greetingMessage,
-                        textAlign: TextAlign.start,
-                        style: AppTextStyles.workSansMain.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  )
+                ? const GreetingMessage()
                 : Markdown(data: _response!),
           ),
           Container(
@@ -130,12 +117,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white,
                 spreadRadius: 1,
                 blurRadius: 25,
-                offset: Offset(0, -10), // Shadow position (x, y)
+                offset: Offset(0, -10),
               ),
             ]),
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 20.0, right: 20.0, bottom: 10, top: 5),
+                left: 20.0,
+                right: 20.0,
+                bottom: 10,
+                top: 5,
+              ),
               child: RoundedLoadingButton(
                 width: MediaQuery.of(context).size.width,
                 color: AppColors.green900,

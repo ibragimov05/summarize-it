@@ -159,13 +159,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Row(
-                            children: [
-                              Icon(Icons.circle_outlined),
-                              Gap(5),
-                              LoginScreenText(text: AppConstants.rememberMe),
-                            ],
-                          ),
+                          // const Row(
+                          //   children: [
+                          //     Icon(Icons.circle_outlined),
+                          //     Gap(5),
+                          //     LoginScreenText(text: AppConstants.rememberMe),
+                          //   ],
+                          // ),
+                          const SizedBox(),
                           GestureDetector(
                             onTap: () => Navigator.pushNamed(
                                 context, AppRouter.forgotPassword),
@@ -194,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        AppConstants.donNotHaveAnAccount,
+                        AppConstants.doNotHaveAnAccount,
                         style: AppTextStyles.workSansMain.copyWith(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

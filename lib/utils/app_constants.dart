@@ -1,4 +1,6 @@
 class AppConstants {
+  static const String summarizeIt = 'SummarizeIt';
+
   static const List<String> tabBox = [
     'Home',
     'Search',
@@ -14,7 +16,7 @@ class AppConstants {
   static const String rememberMe = 'Remember Me';
   static const String signIn = 'Sign In';
   static const String signUp = 'Sign Up';
-  static const String donNotHaveAnAccount = 'Don\'t have an account?';
+  static const String doNotHaveAnAccount = 'Don\'t have an account?';
   static const String completeYourAccount = 'Complete your account';
 
   //* hint texts
@@ -39,4 +41,18 @@ class AppConstants {
 
   static const String resetPasswordEmailSent =
       'A link to reset your password has been sent to your email';
+
+  //! onboaring
+  static List<String> onboardingTextTitles = [
+    'Now reading books will be easier.',
+    'Your reading companion powered by AI.',
+    'Experience books like never before.',
+  ];
+  static List<String> onboardingTexts = [
+    'Experience AI-powered summaries, making book reading faster and more efficient. Get the essence of any book in minutes.',
+    'BookSage\'s AI technology summarizes books, enhancing your reading experience. Join us and revolutionize your reading habits.',
+    'Save time with concise summaries. Focus on key ideas and enhance your knowledge efficiently.',
+  ];
+  static const String getStarted = 'Get Started';
+  static const String register = 'Register';
 }
