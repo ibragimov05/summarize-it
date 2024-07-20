@@ -12,7 +12,7 @@ class SummaryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: ArrowBackButton(),
+        leading: const ArrowBackButton(),
       ),
       body: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
         builder: (context, state) {

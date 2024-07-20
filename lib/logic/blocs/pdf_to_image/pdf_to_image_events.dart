@@ -7,3 +7,5 @@ final class ConvertPdfToImageEvent extends PdfToImageEvents {
   final RoundedLoadingButtonController buttonController;
   ConvertPdfToImageEvent({required this.file,required this.buttonController});
 }
+
+final class ClearBookPagesEvent extends PdfToImageEvents {}

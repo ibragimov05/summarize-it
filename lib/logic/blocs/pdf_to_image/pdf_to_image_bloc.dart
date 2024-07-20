@@ -12,6 +12,7 @@ part 'pdf_to_image_states.dart';
 class PdfToImageBloc extends Bloc<PdfToImageEvents, PdfToImageStates> {
   PdfToImageBloc() : super(InitialPdfToImageState()) {
     on<ConvertPdfToImageEvent>(_convert);
+    on<ClearBookPagesEvent>(_clearBookPages);
   }
 
   void _convert(ConvertPdfToImageEvent event, emit) async {
@@ -52,5 +53,12 @@ class PdfToImageBloc extends Bloc<PdfToImageEvents, PdfToImageStates> {
     } finally {
       event.buttonController.reset();
     }
+  }
+
+  void _clearBookPages(
+    ClearBookPagesEvent event,
+    Emitter<PdfToImageStates> emit,
+  ) {
+    emit(InitialPdfToImageState());
   }
 }
