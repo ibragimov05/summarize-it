@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          //! welcome and summarize screen
+          /// welcome and summarize screen
           BlocConsumer<GenerativeAiBloc, GenerativeAiStates>(
             listener: (context, state) {
               if (state is LoadedGenerativeAiState) {
@@ -47,7 +47,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, pdfState) {
                   if (pdfState is LoadingPdfToImageState ||
                       pdfState is LoadedPdfToImageState) {
-                    return const ClearBookPages();
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const ClearBookPages(),
+                        IconButton(
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            AppRouter.summaryScreen,
+                          ),
+                          icon: Icon(
+                            AppFunctions.isAndroid()
+                                ? Icons.arrow_forward_rounded
+                                : Icons.arrow_forward_ios_rounded,
+                          ),
+                        ),
+                      ],
+                    );
                   }
                   return const Expanded(child: GreetingMessage());
                 },
@@ -55,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
 
-          //! book images
+          /// book images
           BlocConsumer<FilePickerBloc, FilePickerStates>(
             listener: (context, state) {
               if (state is LoadedFilePickerState) {
@@ -99,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
 
-          //! open documents && submit book
+          /// open documents && submit book
           BlocBuilder<PdfToImageBloc, PdfToImageStates>(
             builder: (context, state) {
               return Container(

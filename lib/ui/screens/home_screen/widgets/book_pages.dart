@@ -1,7 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:summarize_it/utils/responsive.dart';
+
+import '../../../../utils/device_screen.dart';
 
 class BookPages extends StatelessWidget {
   final List<Uint8List> files;
@@ -12,7 +13,7 @@ class BookPages extends StatelessWidget {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisExtent: Responsive.screenW(context) / 2 - 10,
+        mainAxisExtent: DeviceScreen.w(context) / 2 - 10,
         mainAxisSpacing: 20,
         crossAxisSpacing: 20,
       ),

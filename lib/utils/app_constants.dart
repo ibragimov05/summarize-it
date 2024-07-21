@@ -42,7 +42,7 @@ class AppConstants {
   static const String resetPasswordEmailSent =
       'A link to reset your password has been sent to your email';
 
-  //! onboaring
+  //! onboarding
   static List<String> onboardingTextTitles = [
     'Now reading books will be easier.',
     'Your reading companion powered by AI.',
@@ -55,4 +55,12 @@ class AppConstants {
   ];
   static const String getStarted = 'Get Started';
   static const String register = 'Register';
+
+  static  bool themeValue = false;
+
+  /// summary screen
+  static const String noResultsFound = 'No results found! Sorry :(';
+  static const String audio = 'Audio';
+  static const String save =  'Save';
+  static const String summaryOfBook = 'Summary of book';
 }

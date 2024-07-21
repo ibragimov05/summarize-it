@@ -3,7 +3,8 @@ import 'package:summarize_it/ui/screens/onboarding/widgets/ellipse_widget.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_constants.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
-import 'package:summarize_it/utils/responsive.dart';
+
+import '../../../utils/device_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -39,7 +40,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
         width: double.infinity,
-        height: Responsive.screenH(context) / 2.3,
+        height: DeviceScreen.h(context) / 2.3,
         margin: const EdgeInsets.all(30),
         // padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(

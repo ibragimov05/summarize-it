@@ -11,7 +11,8 @@ import 'package:summarize_it/utils/app_constants.dart';
 import 'package:summarize_it/utils/app_functions.dart';
 import 'package:summarize_it/utils/app_router.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
-import 'package:summarize_it/utils/responsive.dart';
+
+import '../../../utils/device_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -63,8 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
           //! hi welcome back
           SizedBox(
-            width: Responsive.screenW(context),
-            height: Responsive.screenH(context) / 4,
+            width: DeviceScreen.w(context),
+            height: DeviceScreen.h(context) / 4,
             child: SafeArea(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
             alignment: Alignment.bottomCenter,
             child: Container(
               width: double.infinity,
-              height: Responsive.screenH(context) / 1.5,
+              height: DeviceScreen.h(context) / 1.5,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: const BoxDecoration(
                 color: AppColors.scaffoldBackgroundColor,
@@ -159,13 +160,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // const Row(
-                          //   children: [
-                          //     Icon(Icons.circle_outlined),
-                          //     Gap(5),
-                          //     LoginScreenText(text: AppConstants.rememberMe),
-                          //   ],
-                          // ),
                           const SizedBox(),
                           GestureDetector(
                             onTap: () => Navigator.pushNamed(
@@ -190,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const Gap(30),
 
-                  //! don't have an account? Sign up
+                  /// don't have an account? Sign up
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
