@@ -19,7 +19,6 @@ class AppConstants {
   static const String doNotHaveAnAccount = 'Don\'t have an account?';
   static const String completeYourAccount = 'Complete your account';
 
-  //* hint texts
   static const String hintTextFirstName = 'Enter your first name';
   static const String hintTextLastName = 'Enter your last name';
   static const String hintTextEmail = 'Enter your email address';
@@ -42,7 +41,6 @@ class AppConstants {
   static const String resetPasswordEmailSent =
       'A link to reset your password has been sent to your email';
 
-  //! onboarding
   static List<String> onboardingTextTitles = [
     'Now reading books will be easier.',
     'Your reading companion powered by AI.',
@@ -56,11 +54,16 @@ class AppConstants {
   static const String getStarted = 'Get Started';
   static const String register = 'Register';
 
-  static  bool themeValue = false;
+  static bool themeValue = false;
 
   /// summary screen
   static const String noResultsFound = 'No results found! Sorry :(';
   static const String audio = 'Audio';
-  static const String save =  'Save';
+  static const String save = 'Save';
   static const String summaryOfBook = 'Summary of book';
+
+  /// home screen
+  static const String chooseSummaryLength = 'Choose summary length';
+  static const String clearScreen = 'Clear screen from book pages';
+
 }

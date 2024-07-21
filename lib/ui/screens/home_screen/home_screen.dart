@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/book_pages.dart';
@@ -7,8 +8,11 @@ import 'package:summarize_it/ui/screens/home_screen/widgets/custom_slider.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/greeting_message.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/helper_buttons.dart';
 import 'package:summarize_it/utils/ai_constants.dart';
+import 'package:summarize_it/utils/app_colors.dart';
+import 'package:summarize_it/utils/app_constants.dart';
 import 'package:summarize_it/utils/app_functions.dart';
 import 'package:summarize_it/utils/app_router.dart';
+import 'package:summarize_it/utils/app_text_styles.dart';
 
 import 'widgets/clear_book_pages.dart';
 
@@ -29,9 +33,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+    return Scaffold(
+      appBar: AppBar(
+        surfaceTintColor: AppColors.summarizeItTransparent,
+        title: SizedBox(
+          child: Row(
+            children: [
+              const CircleAvatar(backgroundColor: AppColors.green900),
+              const Gap(10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Hi, Andy',
+                    style: AppTextStyles.workSansMain.copyWith(fontSize: 17),
+                  ),
+                  Text(
+                    'Good morning.',
+                    style: AppTextStyles.workSansMain.copyWith(
+                      fontSize: 13,
+                      color: AppColors.greyscale400,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: Column(
         children: [
           /// welcome and summarize screen
           BlocConsumer<GenerativeAiBloc, GenerativeAiStates>(
@@ -51,17 +82,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const ClearBookPages(),
-                        IconButton(
-                          onPressed: () => Navigator.pushNamed(
-                            context,
-                            AppRouter.summaryScreen,
+                        if (state is LoadedGenerativeAiState)
+                          IconButton(
+                            onPressed: () => Navigator.pushNamed(
+                              context,
+                              AppRouter.summaryScreen,
+                            ),
+                            icon: Icon(
+                              AppFunctions.isAndroid()
+                                  ? Icons.arrow_forward_rounded
+                                  : Icons.arrow_forward_ios_rounded,
+                            ),
                           ),
-                          icon: Icon(
-                            AppFunctions.isAndroid()
-                                ? Icons.arrow_forward_rounded
-                                : Icons.arrow_forward_ios_rounded,
-                          ),
-                        ),
                       ],
                     );
                   }
@@ -91,8 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: BlocBuilder<PdfToImageBloc, PdfToImageStates>(
                     builder: (context, state) {
                       if (state is ErrorPdfToImageState) {
-                        return const Center(
-                          child: Text("Fayl yuklanishda xatolik"),
+                        return Center(
+                          child: Text(state.error),
                         );
                       }
 
@@ -119,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocBuilder<PdfToImageBloc, PdfToImageStates>(
             builder: (context, state) {
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration:
                     const BoxDecoration(color: Colors.white, boxShadow: [
                   BoxShadow(
@@ -130,9 +162,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ]),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomSlider(
-                        onSliderValChanged: (p0) => _summaryLength = p0),
+                    if (state is LoadedPdfToImageState)
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              AppConstants.chooseSummaryLength,
+                              style: AppTextStyles.workSansMain.copyWith(),
+                            ),
+                          ),
+                          CustomSlider(
+                            onSliderValChanged: (p0) => _summaryLength = p0,
+                          ),
+                        ],
+                      ),
                     HelperButtons(
                       openDocButtonController: _openDocButtonController,
                       submitButtonController: _submitButtonController,

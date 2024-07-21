@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summarize_it/ui/screens/onboarding/widgets/ellipse_widget.dart';
 import 'package:summarize_it/utils/app_colors.dart';
 import 'package:summarize_it/utils/app_constants.dart';
+import 'package:summarize_it/utils/app_router.dart';
 import 'package:summarize_it/utils/app_text_styles.dart';
 
 import '../../../utils/device_screen.dart';
@@ -42,7 +44,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         width: double.infinity,
         height: DeviceScreen.h(context) / 2.3,
         margin: const EdgeInsets.all(30),
-        // padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: AppColors.summarizeItWhite,
           borderRadius: BorderRadius.circular(30),
@@ -96,16 +97,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onTap: () async {
                 if (_currentIndex != 2) {
                   _pageController.nextPage(
-                    duration: const Duration(milliseconds: 550),
+                    duration: const Duration(milliseconds: 400),
                     curve: Curves.linear,
                   );
                 } else if (_currentIndex == 2) {
-                  // SharedPreferences sharedPreferences =
-                  //     await SharedPreferences.getInstance();
-                  // sharedPreferences.setBool('saw-onboarding', true);
-                  // if (context.mounted) {
-                  //   Navigator.of(context).pop();
-                  // }
+                  SharedPreferences sharedPreferences =
+                      await SharedPreferences.getInstance();
+                  sharedPreferences.setBool('saw-onboarding', true);
+                  if (context.mounted) {
+                    Navigator.pushReplacementNamed(context, AppRouter.login);
+                  }
                 }
               },
               child: Column(

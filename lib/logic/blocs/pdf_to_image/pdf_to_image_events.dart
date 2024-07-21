@@ -8,4 +8,4 @@ final class ConvertPdfToImageEvent extends PdfToImageEvents {
   ConvertPdfToImageEvent({required this.file,required this.buttonController});
 }
 
-final class ClearBookPagesEvent extends PdfToImageEvents {}
+final class ToInitialStatePdfToImageEvent extends PdfToImageEvents {}

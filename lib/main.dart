@@ -10,6 +10,7 @@ import 'package:summarize_it/utils/app_constants.dart';
 
 import 'logic/blocs/all_blocs.dart';
 import 'logic/blocs/observer/all_observer.dart';
+import 'logic/cubits/tab_box_cubit/tab_box_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,10 +26,11 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => DarkThemeCubit()),
-        BlocProvider(create: (ctx) => FilePickerBloc()),
-        BlocProvider(create: (ctx) => PdfToImageBloc()),
-        BlocProvider(create: (ctx) => GenerativeAiBloc()),
+        BlocProvider(create: (BuildContext context) => DarkThemeCubit()),
+        BlocProvider(create: (BuildContext context) => TabBoxCubit()),
+        BlocProvider(create: (BuildContext ctx) => FilePickerBloc()),
+        BlocProvider(create: (BuildContext ctx) => PdfToImageBloc()),
+        BlocProvider(create: (BuildContext ctx) => GenerativeAiBloc()),
       ],
       child: const SummarizeIt(),
     ),

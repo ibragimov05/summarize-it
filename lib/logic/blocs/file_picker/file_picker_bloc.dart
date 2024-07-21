@@ -10,9 +10,13 @@ part 'file_picker_states.dart';
 class FilePickerBloc extends Bloc<FilePickerEvents, FilePickerStates> {
   FilePickerBloc() : super(InitialFilePickerState()) {
     on<SelectFileEvent>(_selectFile);
+    on<ToInitialStateFilePickerEvent>(_toInitialStateFilePicker);
   }
 
-  void _selectFile(SelectFileEvent event, emit) async {
+  void _selectFile(
+    SelectFileEvent event,
+    Emitter<FilePickerStates> emit,
+  ) async {
     try {
       emit(LoadingFilePickerState());
 
@@ -29,4 +33,10 @@ class FilePickerBloc extends Bloc<FilePickerEvents, FilePickerStates> {
       emit(ErrorFilePickerState(error: e.toString()));
     }
   }
+
+  void _toInitialStateFilePicker(
+    ToInitialStateFilePickerEvent event,
+    Emitter<FilePickerStates> emit,
+  ) =>
+      emit(InitialFilePickerState());
 }

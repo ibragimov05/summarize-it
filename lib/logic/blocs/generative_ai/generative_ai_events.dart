@@ -7,5 +7,11 @@ final class SummarizeAiEvent extends GenerativeAiEvents {
   final SummaryLength summaryLength;
   final RoundedLoadingButtonController buttonController;
 
-  SummarizeAiEvent({required this.files, required this.summaryLength,required this.buttonController});
+  SummarizeAiEvent({
+    required this.files,
+    required this.summaryLength,
+    required this.buttonController,
+  });
 }
+
+final class ToInitialGenerativeAiEvent extends GenerativeAiEvents {}

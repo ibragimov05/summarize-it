@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
@@ -13,20 +14,21 @@ part 'generative_ai_states.dart';
 class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
   GenerativeAiBloc() : super(InitialGenerativeAiState()) {
     on<SummarizeAiEvent>(_summarize);
+    on<ToInitialGenerativeAiEvent>(_toInitialEvent);
   }
 
   void _summarize(SummarizeAiEvent event, emit) async {
     emit(LoadingGenerativeAiState());
     event.buttonController.start();
     try {
-      final model = GenerativeModel(
+      final GenerativeModel model = GenerativeModel(
         model: 'gemini-1.5-flash-latest',
         apiKey: dotenv.get("GEMINI_API_KEY"),
       );
 
       List<DataPart> dataParts = [];
 
-      for (var image in event.files) {
+      for (Uint8List image in event.files) {
         dataParts.add(DataPart('image/jpeg', image));
       }
 
@@ -36,7 +38,8 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
           ...dataParts,
         ]),
       ];
-      final response = await model.generateContent(content);
+      final GenerateContentResponse response =
+          await model.generateContent(content);
 
       emit(LoadedGenerativeAiState(
         result: response.text ?? "Could not fund anything",
@@ -47,4 +50,10 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
       event.buttonController.reset();
     }
   }
+
+  void _toInitialEvent(
+    ToInitialGenerativeAiEvent event,
+    Emitter<GenerativeAiStates> emit,
+  ) =>
+      emit(InitialGenerativeAiState());
 }
