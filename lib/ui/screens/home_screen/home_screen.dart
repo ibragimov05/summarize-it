@@ -7,12 +7,12 @@ import 'package:summarize_it/ui/screens/home_screen/widgets/book_pages.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/custom_slider.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/greeting_message.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/helper_buttons.dart';
-import 'package:summarize_it/utils/ai_constants.dart';
-import 'package:summarize_it/utils/app_colors.dart';
-import 'package:summarize_it/utils/app_constants.dart';
-import 'package:summarize_it/utils/app_functions.dart';
-import 'package:summarize_it/utils/app_router.dart';
-import 'package:summarize_it/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/ai_constants.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_constants.dart';
+import 'package:summarize_it/core/utils/app_functions.dart';
+import 'package:summarize_it/core/utils/app_router.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 
 import 'widgets/clear_book_pages.dart';
 
@@ -166,6 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     if (state is LoadedPdfToImageState)
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),

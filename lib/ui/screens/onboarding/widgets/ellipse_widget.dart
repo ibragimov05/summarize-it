@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
 
 class EllipseWidget extends StatelessWidget {
   final int indexPage;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/utils/ai_constants.dart';
-import 'package:summarize_it/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/ai_constants.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
 
 class CustomSlider extends StatefulWidget {
   final Function(int) onSliderValChanged;

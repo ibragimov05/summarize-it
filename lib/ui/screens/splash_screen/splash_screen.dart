@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:summarize_it/utils/app_colors.dart';
-import 'package:summarize_it/utils/app_constants.dart';
-import 'package:summarize_it/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_constants.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

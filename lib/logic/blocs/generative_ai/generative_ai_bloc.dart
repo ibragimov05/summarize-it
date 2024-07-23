@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 
-import '../../../utils/ai_constants.dart';
+import '../../../core/utils/ai_constants.dart';
 
 part 'generative_ai_events.dart';
 

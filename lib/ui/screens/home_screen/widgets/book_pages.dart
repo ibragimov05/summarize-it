@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import '../../../../utils/device_screen.dart';
+import '../../../../core/utils/device_screen.dart';
 
 class BookPages extends StatelessWidget {
   final List<Uint8List> files;

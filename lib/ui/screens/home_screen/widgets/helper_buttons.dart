@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 
-import '../../../../utils/app_colors.dart';
+import '../../../../core/utils/app_colors.dart';
 
 class HelperButtons extends StatelessWidget {
   final RoundedLoadingButtonController openDocButtonController;

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:summarize_it/ui/screens/summary_screen/widgets/summary_text_field.dart';
 import 'package:summarize_it/ui/widgets/regular_button.dart';
-import 'package:summarize_it/utils/app_functions.dart';
-import 'package:summarize_it/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-import '../../../../utils/device_screen.dart';
+import '../../../../core/utils/device_screen.dart';
 
 class SummaryModalBottomSheet extends StatefulWidget {
   const SummaryModalBottomSheet({super.key});
@@ -24,7 +23,7 @@ class _SummaryModalBottomSheetState extends State<SummaryModalBottomSheet> {
     return Container(
       width: double.infinity,
       height: DeviceScreen.h(context) / 2.8,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

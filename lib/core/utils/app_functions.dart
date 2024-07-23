@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:summarize_it/utils/app_colors.dart';
-import 'package:summarize_it/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 
 class AppFunctions {
   static bool isAndroid() {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summarize_it/ui/screens/onboarding/widgets/ellipse_widget.dart';
-import 'package:summarize_it/utils/app_colors.dart';
-import 'package:summarize_it/utils/app_constants.dart';
-import 'package:summarize_it/utils/app_router.dart';
-import 'package:summarize_it/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_constants.dart';
+import 'package:summarize_it/core/utils/app_router.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-import '../../../utils/device_screen.dart';
+import '../../../core/utils/device_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

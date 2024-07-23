@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:summarize_it/utils/app_constants.dart';
+import 'package:summarize_it/core/utils/app_constants.dart';
 
 class DarkThemeCubit extends Cubit<bool> {
   DarkThemeCubit() : super(AppConstants.themeValue);

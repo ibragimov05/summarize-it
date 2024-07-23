@@ -4,9 +4,9 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:summarize_it/ui/screens/summary_screen/widgets/summary_modal_bottom_sheet.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/regular_button.dart';
-import 'package:summarize_it/utils/app_colors.dart';
-import 'package:summarize_it/utils/app_constants.dart';
-import 'package:summarize_it/utils/device_screen.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_constants.dart';
+import 'package:summarize_it/core/utils/device_screen.dart';
 
 import '../../../logic/blocs/generative_ai/generative_ai_bloc.dart';
 

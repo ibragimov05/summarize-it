@@ -5,9 +5,9 @@ import 'package:summarize_it/logic/cubits/tab_box_cubit/tab_box_cubit.dart';
 import 'package:summarize_it/ui/screens/bookmarks_screen/bookmarks_screen.dart';
 import 'package:summarize_it/ui/screens/home_screen/home_screen.dart';
 import 'package:summarize_it/ui/screens/search_screen/search_screen.dart';
-import 'package:summarize_it/utils/app_colors.dart';
-import 'package:summarize_it/utils/app_constants.dart';
-import 'package:summarize_it/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_constants.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/ui/screens/profile_screen/profile_screen.dart';
 
 class MainScreen extends StatelessWidget {

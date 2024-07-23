@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:summarize_it/utils/app_assets.dart';
-import 'package:summarize_it/utils/app_colors.dart';
-import 'package:summarize_it/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/app_assets.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final String hintText;
@@ -15,11 +15,11 @@ class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
     super.key,
     required this.hintText,
-    required this.isObscure,
     required this.validator,
-    required this.isKeyboardDone,
-    required this.textInputType,
     required this.textEditingController,
+    this.isObscure = false,
+    this.isKeyboardDone = true,
+    this.textInputType = TextInputType.text,
   });
 
   @override
