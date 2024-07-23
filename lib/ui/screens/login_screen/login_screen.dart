@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/ui/screens/login_screen/widgets/login_screen_text.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
 import 'package:summarize_it/ui/widgets/custom_text_field.dart';
@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     buttonController: _roundedLoadingButtonController,
                     onTap: _onSignInButtonTapped,
                   ),
-                  const Gap(30),
+                  5.h(),
 
                   /// don't have an account? Sign up
                   Row(
@@ -196,7 +196,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: AppColors.greyscale400,
                         ),
                       ),
-                      const Gap(5),
+                      5.w(),
                       GestureDetector(
                         onTap: () =>
                             Navigator.pushNamed(context, AppRouter.signUp),

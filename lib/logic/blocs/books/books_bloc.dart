@@ -17,12 +17,12 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     on<AddBookEvent>(_addBook);
   }
 
-  void _getBooks(GetBookEvent event, Emitter<BooksState> emit) {
+  void _getBooks(GetBookEvent event, Emitter<BooksState> emit) async {
     emit(LoadingBookState());
     try {
-      emit.forEach(
+      await emit.forEach(
         _bookRepository.getBooks(),
-        onData: (books) => LoadedBookState(books: books),
+        onData: (List<Book> books) => LoadedBookState(books: books),
       );
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));
@@ -33,7 +33,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     emit(LoadingBookState());
     try {
       _bookRepository.addBook(event.book);
-      emit(InitialBookState());
+      emit(AddBookSuccessState());
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));
     }

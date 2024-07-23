@@ -65,5 +65,11 @@ class AppConstants {
   /// home screen
   static const String chooseSummaryLength = 'Choose summary length';
   static const String clearScreen = 'Clear screen from book pages';
+  static const String infoAboutBook = 'Info about book';
 
+  static const String bookFacts = 'Facts about book:';
+  static const String awesome = 'Awesome!';
+
+  static const String noSavedBooks = 'There is no saved books';
+  static const String bookmarks = 'Bookmarks';
 }

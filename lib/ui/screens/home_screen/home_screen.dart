@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/book_pages.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/custom_slider.dart';
@@ -40,7 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             children: [
               const CircleAvatar(backgroundColor: AppColors.green900),
-              const Gap(10),
+              5.w(),
+
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

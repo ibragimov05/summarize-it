@@ -7,9 +7,9 @@ final class InitialGenerativeAiState extends GenerativeAiStates {}
 final class LoadingGenerativeAiState extends GenerativeAiStates {}
 
 final class LoadedGenerativeAiState extends GenerativeAiStates {
-  final String result;
+  final Book book;
 
-  LoadedGenerativeAiState({required this.result});
+  LoadedGenerativeAiState({required this.book});
 }
 
 final class ErrorGenerativeAiState extends GenerativeAiStates {

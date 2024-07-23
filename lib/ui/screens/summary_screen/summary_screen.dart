@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:summarize_it/ui/screens/summary_screen/widgets/summary_modal_bottom_sheet.dart';
+import 'package:summarize_it/core/utils/app_functions.dart';
+import 'package:summarize_it/core/utils/extensions.dart';
+import 'package:summarize_it/logic/blocs/all_blocs.dart';
+import 'package:summarize_it/ui/screens/summary_screen/widgets/book_info_dialog.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/regular_button.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/device_screen.dart';
-
-import '../../../logic/blocs/generative_ai/generative_ai_bloc.dart';
 
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});
@@ -27,48 +28,50 @@ class _SummaryScreenState extends State<SummaryScreen> {
         leading: const ArrowBackButton(),
         title: const Text(AppConstants.summaryOfBook),
         actions: [
-          IconButton(
-            onPressed: () => showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) => Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
-                child: const SummaryModalBottomSheet(),
-              ),
-            ),
-            icon: const Icon(Icons.info_outline),
+          BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
+            builder: (context, state) {
+              if (state is LoadedGenerativeAiState) {
+                return IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => BookInfoDialog(book: state.book),
+                    );
+                  },
+                  tooltip: AppConstants.infoAboutBook,
+                  icon: const Icon(Icons.info_outline),
+                );
+              }
+              return const SizedBox.shrink();
+            },
           )
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
-              builder: (context, state) {
-                if (state is LoadedGenerativeAiState) {
-                  return Markdown(data: state.result);
-                }
-                return const Center(
-                  child: Text(AppConstants.noResultsFound),
-                );
-              },
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.white,
-                  spreadRadius: 1,
-                  blurRadius: 25,
-                  offset: Offset(0, -10),
+      body: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
+        builder: (context, state) {
+          if (state is LoadedGenerativeAiState) {
+            return Expanded(
+              child: Markdown(
+                data: state.book.summary,
+                padding: const EdgeInsets.only(
+                  bottom: kToolbarHeight + 15,
+                  left: 16,
+                  right: 16,
+                  top: 16,
                 ),
-              ],
-            ),
-            child: Row(
+              ),
+            );
+          }
+          return const Center(
+            child: Text(AppConstants.noResultsFound),
+          );
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
+        builder: (context, state) {
+          if (state is LoadedGenerativeAiState) {
+            return Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 RegularButton(
@@ -76,15 +79,35 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   buttonLabel: AppConstants.audio,
                   onTap: () {},
                 ),
-                RegularButton(
-                  w: DeviceScreen.w(context) / 2 - 50,
-                  buttonLabel: AppConstants.save,
-                  onTap: () {},
+                BlocConsumer<BooksBloc, BooksState>(
+                  listener: (context, bookState) {
+                    if (bookState is AddBookSuccessState) {
+                      AppFunctions.showSnackBar(
+                        context,
+                        'New summary has been saved successfully!',
+                      );
+                    }
+                  },
+                  builder: (context, bookState) {
+                    if (bookState is LoadingBookState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return RegularButton(
+                      w: DeviceScreen.w(context) / 2 - 50,
+                      buttonLabel: AppConstants.save,
+                      onTap: () => context
+                          .read<BooksBloc>()
+                          .add(AddBookEvent(book: state.book)),
+                    );
+                  },
                 ),
               ],
-            ),
-          ),
-        ],
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }

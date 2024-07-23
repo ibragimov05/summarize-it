@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/ui/screens/sign_up_screen/widgets/sign_up_text_style.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
@@ -178,7 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     color: AppColors.greyscale500,
                   ),
                 ),
-                const Gap(5),
+                5.w(),
                 GestureDetector(
                   onTap: _canLogin ? () => Navigator.of(context).pop() : null,
                   child: Text(

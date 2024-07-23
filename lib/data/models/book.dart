@@ -6,7 +6,8 @@ class Book {
   final String summary;
   final String author;
   final double rate;
-  final Timestamp publishedDate;
+  final Timestamp bookPublishedDate;
+  final Timestamp summaryAddedDate;
   final List<String> facts;
 
   const Book({
@@ -15,7 +16,8 @@ class Book {
     required this.summary,
     required this.author,
     required this.rate,
-    required this.publishedDate,
+    required this.bookPublishedDate,
+    required this.summaryAddedDate,
     required this.facts,
   });
 
@@ -26,8 +28,9 @@ class Book {
       summary: map['summary'] ?? 'null',
       author: map['author'] ?? 'null',
       rate: map['rate'] ?? 0.0,
-      publishedDate: Timestamp.fromDate(DateTime.parse(map['published-date'])),
-      facts: List<String>.from(map['facts']),
+      bookPublishedDate: map['published-date'] ?? Timestamp.now(),
+      summaryAddedDate: map['summary-added-date'] ?? Timestamp.now(),
+      facts: List<String>.from(map['facts'] ?? []),
     );
   }
 
@@ -37,7 +40,8 @@ class Book {
       'summary': summary,
       'author': author,
       'rate': rate,
-      'published-date': publishedDate,
+      'published-date': bookPublishedDate,
+      'summary-added-date': Timestamp.now(),
       'facts': facts,
     };
   }

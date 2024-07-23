@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/extensions.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -23,7 +23,7 @@ class SplashScreen extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            const Gap(30),
+            5.h(),
             const CircularProgressIndicator(
               backgroundColor: AppColors.green900,
               color: AppColors.summarizeItWhite,

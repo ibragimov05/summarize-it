@@ -6,7 +6,10 @@ class FirebaseBookService {
       FirebaseFirestore.instance.collection('books');
 
   Stream<List<Book>> getBooks() {
-    return _bookCollection.snapshots().map(
+    return _bookCollection
+        .orderBy('published-date', descending: false)
+        .snapshots()
+        .map(
           (QuerySnapshot<Map<String, dynamic>> querySnapshot) => querySnapshot
               .docs
               .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
