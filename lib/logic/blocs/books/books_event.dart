@@ -10,3 +10,9 @@ final class AddBookEvent extends BooksEvent {
 
   AddBookEvent({required this.book});
 }
+
+final class DeleteBookEvent extends BooksEvent {
+  final String id;
+
+  DeleteBookEvent({required this.id});
+}

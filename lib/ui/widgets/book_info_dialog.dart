@@ -14,6 +14,7 @@ class BookInfoDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+
       title: Text(
         book.title,
         style: AppTextStyles.workSansMain.copyWith(

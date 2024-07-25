@@ -44,7 +44,11 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                   return state.books.isEmpty
                       ? _noSavedBooks()
                       : ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                            right: 16,
+                            top: 10,
+                          ),
                           itemCount: state.books.length,
                           itemBuilder: (context, index) =>
                               ShowSummaryWidget(book: state.books[index]),

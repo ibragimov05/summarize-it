@@ -15,6 +15,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
         super(InitialBookState()) {
     on<GetBookEvent>(_getBooks);
     on<AddBookEvent>(_addBook);
+    on<DeleteBookEvent>(_deleteBook);
   }
 
   void _getBooks(GetBookEvent event, Emitter<BooksState> emit) async {
@@ -34,6 +35,14 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     try {
       _bookRepository.addBook(event.book);
       emit(AddBookSuccessState());
+    } catch (e) {
+      emit(ErrorBookState(message: e.toString()));
+    }
+  }
+
+  void _deleteBook(DeleteBookEvent event, Emitter<BooksState> emit) {
+    try {
+      _bookRepository.deleteBook(event.id);
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));
     }

@@ -72,4 +72,11 @@ class AppConstants {
 
   static const String noSavedBooks = 'There is no saved books';
   static const String bookmarks = 'Bookmarks';
+
+  /// profile screen
+  static const String profileInfo = 'Profile info';
+  static const String security = 'Security';
+  static const String general = 'General';
+  static const String about = 'About';
+  static const String helpAndSupport = 'Help and support';
 }

@@ -12,15 +12,25 @@ class FirebaseBookService {
         .map(
           (QuerySnapshot<Map<String, dynamic>> querySnapshot) => querySnapshot
               .docs
-              .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
-                  Book.fromMap(doc.data()))
-              .toList(),
+              .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+            Map<String, dynamic> data = doc.data();
+            data['id'] = doc.id;
+            return Book.fromMap(data);
+          }).toList(),
         );
   }
 
   void addBok(Book book) {
     try {
       _bookCollection.add(book.toMap());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  void deleteBook(String id) {
+    try {
+      _bookCollection.doc(id).delete();
     } catch (e) {
       rethrow;
     }

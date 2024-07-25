@@ -50,7 +50,6 @@ class AiConstants {
       author name in string format,
       category of book in string format,
       rate of the book in number format,
-      also find exact image of the book! and make sure image is that book's image you must find image,
       exact published date with year and month and day in the following format (YYYY-MM-DD),
       and three interesting facts about this book in List<String> format.
       
@@ -63,5 +62,7 @@ class AiConstants {
         "rate-of-the-book": ...,
         "published-date": "...",
         "facts": ["...", "...", "..."],
-      }''';
+      } 
+      PLEASE DO NOT MAKE ANY MISTAKE AND GIVE ME RESPONSE AS I SAID!
+      ''';
 }
