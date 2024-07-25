@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/summary_screen/widgets/book_info_dialog.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
@@ -50,15 +49,13 @@ class _SummaryScreenState extends State<SummaryScreen> {
       body: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
         builder: (context, state) {
           if (state is LoadedGenerativeAiState) {
-            return Expanded(
-              child: Markdown(
-                data: state.book.summary,
-                padding: const EdgeInsets.only(
-                  bottom: kToolbarHeight + 15,
-                  left: 16,
-                  right: 16,
-                  top: 16,
-                ),
+            return Markdown(
+              data: state.book.summary,
+              padding: const EdgeInsets.only(
+                bottom: kToolbarHeight + 15,
+                left: 16,
+                right: 16,
+                top: 16,
               ),
             );
           }

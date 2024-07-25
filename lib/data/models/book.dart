@@ -5,7 +5,9 @@ class Book {
   final String title;
   final String summary;
   final String author;
-  final double rate;
+  final num rate;
+  final num rateOfTheBook;
+  final String categoryOfBook;
   final Timestamp bookPublishedDate;
   final Timestamp summaryAddedDate;
   final List<String> facts;
@@ -16,6 +18,8 @@ class Book {
     required this.summary,
     required this.author,
     required this.rate,
+    required this.rateOfTheBook,
+    required this.categoryOfBook,
     required this.bookPublishedDate,
     required this.summaryAddedDate,
     required this.facts,
@@ -28,6 +32,8 @@ class Book {
       summary: map['summary'] ?? 'null',
       author: map['author'] ?? 'null',
       rate: map['rate'] ?? 0.0,
+      rateOfTheBook: map['rate-of-the-book'] ?? 0.0,
+      categoryOfBook: map['category-of-book'] ?? 'null',
       bookPublishedDate: map['published-date'] ?? Timestamp.now(),
       summaryAddedDate: map['summary-added-date'] ?? Timestamp.now(),
       facts: List<String>.from(map['facts'] ?? []),
@@ -40,6 +46,8 @@ class Book {
       'summary': summary,
       'author': author,
       'rate': rate,
+      'rate-of-the-book': rateOfTheBook,
+      'category-of-book': categoryOfBook,
       'published-date': bookPublishedDate,
       'summary-added-date': Timestamp.now(),
       'facts': facts,

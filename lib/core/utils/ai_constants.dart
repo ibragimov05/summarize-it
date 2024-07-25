@@ -46,16 +46,21 @@ class AiConstants {
 
   static const String responseType = '''
       Please also add search key information such as:
-      book title,
-      author name,
+      book title in string format,
+      author name in string format,
+      category of book in string format,
+      rate of the book in number format,
+      also find exact image of the book! and make sure image is that book's image you must find image,
       exact published date with year and month and day in the following format (YYYY-MM-DD),
-      and three interesting facts about this book.
+      and three interesting facts about this book in List<String> format.
       
       Please, make sure that you give me the response in the following format:
       {
         "title": "...",
         "summary": "...",
         "author": "...",
+        "category-of-book": "...",
+        "rate-of-the-book": ...,
         "published-date": "...",
         "facts": ["...", "...", "..."],
       }''';
