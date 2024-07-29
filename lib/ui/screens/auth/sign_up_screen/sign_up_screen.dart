@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
-import 'package:summarize_it/ui/screens/sign_up_screen/widgets/sign_up_text_style.dart';
+import 'package:summarize_it/ui/screens/auth/sign_up_screen/widgets/sign_up_text_style.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
 import 'package:summarize_it/ui/widgets/custom_text_field.dart';
@@ -11,8 +11,7 @@ import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-import '../../../data/services/firebase/firebase_auth_service.dart';
-import '../../../data/services/http/user_http_service.dart';
+import '../../../../data/services/http/user_http_service.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -51,10 +50,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _canLogin = false;
       setState(() {});
       try {
-        await FirebaseAuthService.registerUser(
-          email: _textControllers[AppConstants.email]!.text,
-          password: _textControllers[AppConstants.password]!.text,
-        );
+        // await FirebaseAuthService.registerUser(
+        //   email: _textControllers[AppConstants.email]!.text,
+        //   password: _textControllers[AppConstants.password]!.text,
+        // );
         await _userHttpService.addUser(
           firstName: _textControllers[AppConstants.firstName]!.text,
           lastName: _textControllers[AppConstants.lastName]!.text,

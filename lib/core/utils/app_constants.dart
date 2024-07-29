@@ -79,4 +79,8 @@ class AppConstants {
   static const String general = 'General';
   static const String about = 'About';
   static const String helpAndSupport = 'Help and support';
+  static const String profile = 'Profile';
+  static const String changePassword = 'Change password';
+  static const String language = 'Language';
+  static const String darkMode = 'Dark mode';
 }

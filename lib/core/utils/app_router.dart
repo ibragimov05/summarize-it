@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:summarize_it/data/models/book.dart';
 import 'package:summarize_it/ui/screens/bookmarked_summary_screen/bookmarked_summary_screen.dart';
-import 'package:summarize_it/ui/screens/forgot_password_screen/forgot_password_screen.dart';
-import 'package:summarize_it/ui/screens/login_screen/login_screen.dart';
+import 'package:summarize_it/ui/screens/edit_profile_screen/edit_profile_screen.dart';
+import 'package:summarize_it/ui/screens/auth/forgot_password_screen/forgot_password_screen.dart';
+import 'package:summarize_it/ui/screens/auth/login_screen/login_screen.dart';
 import 'package:summarize_it/ui/screens/main_screen/main_screen.dart';
 import 'package:summarize_it/ui/screens/onboarding/onboarding_screen.dart';
-import 'package:summarize_it/ui/screens/sign_up_screen/sign_up_screen.dart';
+import 'package:summarize_it/ui/screens/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:summarize_it/ui/screens/summary_screen/summary_screen.dart';
 
 class AppRouter {
@@ -16,6 +17,7 @@ class AppRouter {
   static const String forgotPassword = '/forgotPassword';
   static const String summaryScreen = '/summaryScreen';
   static const String bookmarkedSummaryScreen = '/bookmarkedSummaryScreen';
+  static const String editProfileScreen = '/editProfileScreen';
 
   static PageRoute _buildPageRoute(Widget widget) {
     return CupertinoPageRoute(builder: (BuildContext context) => widget);
@@ -38,6 +40,8 @@ class AppRouter {
       case AppRouter.bookmarkedSummaryScreen:
         final book = settings.arguments as Book;
         return _buildPageRoute(BookmarkedSummaryScreen(book: book));
+      case AppRouter.editProfileScreen:
+        return _buildPageRoute(const EditProfileScreen());
       default:
         return _buildPageRoute(const LoginScreen());
     }

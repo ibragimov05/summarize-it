@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/core/utils/app_assets.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
+import 'package:summarize_it/core/utils/app_router.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/cubits/dark_theme/dark_theme_cubit.dart';
@@ -23,12 +25,23 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CircleAvatar(backgroundColor: AppColors.green900),
-                5.w(),
-                Text(
-                  'Andy Lexsian',
-                  style: AppTextStyles.workSansMain.copyWith(fontSize: 18),
+                Row(
+                  children: [
+                    const CircleAvatar(backgroundColor: AppColors.green900),
+                    5.w(),
+                    Text(
+                      'Andy Lexsian',
+                      style: AppTextStyles.workSansMain.copyWith(fontSize: 18),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  icon: const Icon(Icons.logout),
                 ),
               ],
             ),
@@ -38,24 +51,26 @@ class ProfileScreen extends StatelessWidget {
                   const TitleText(text: AppConstants.profileInfo),
                   CustomListTile(
                     icoPath: AppAssets.icoUser,
-                    text: 'Profile',
-                    onTap: () {},
+                    text: AppConstants.profile,
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRouter.editProfileScreen);
+                    },
                   ),
                   const TitleText(text: AppConstants.security),
                   CustomListTile(
-                    icoPath: AppAssets.icoUnlock,
-                    text: 'Change password',
+                    icoPath: AppAssets.icoKey,
+                    text: AppConstants.changePassword,
                     onTap: () {},
                   ),
                   CustomListTile(
                     icoPath: AppAssets.icoLock,
-                    text: 'Forgot password',
+                    text: AppConstants.forgotPassword,
                     onTap: () {},
                   ),
                   const TitleText(text: AppConstants.general),
                   CustomListTile(
                     icoPath: AppAssets.icoLanguageCircle,
-                    text: 'Language',
+                    text: AppConstants.language,
                     onTap: () {},
                   ),
                   GestureDetector(
@@ -70,7 +85,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             10.w(),
                             Text(
-                              'Dark mode',
+                              AppConstants.darkMode,
                               style: AppTextStyles.workSansMain.copyWith(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,

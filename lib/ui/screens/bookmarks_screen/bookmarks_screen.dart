@@ -4,6 +4,7 @@ import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
+import 'package:summarize_it/ui/screens/bookmarks_screen/widget/search_books_text_field.dart';
 import 'package:summarize_it/ui/screens/bookmarks_screen/widget/show_summary_widget.dart';
 import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
 
@@ -41,9 +42,11 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                   );
                 }
                 if (state is LoadedBookState) {
-                  return state.books.isEmpty
-                      ? _noSavedBooks()
-                      : ListView.builder(
+                  return Column(
+                    children: [
+                      SearchBooksTextField(books: state.books),
+                      Expanded(
+                        child: ListView.builder(
                           padding: const EdgeInsets.only(
                             left: 16,
                             right: 16,
@@ -52,7 +55,10 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                           itemCount: state.books.length,
                           itemBuilder: (context, index) =>
                               ShowSummaryWidget(book: state.books[index]),
-                        );
+                        ),
+                      ),
+                    ],
+                  );
                 }
                 return _noSavedBooks();
               },

@@ -9,8 +9,6 @@ import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-import '../../../data/services/firebase/firebase_auth_service.dart';
-
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -27,8 +25,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   void _onContinueTap() async {
     if (_formKey.currentState!.validate()) {
       try {
-        await FirebaseAuthService.resetPassword(
-            email: _emailTextController.text);
+        // await FirebaseAuthService.resetPassword(
+        //     email: _emailTextController.text);
         if (mounted) {
           AppFunctions.showSnackBar(
               context, AppConstants.resetPasswordEmailSent);

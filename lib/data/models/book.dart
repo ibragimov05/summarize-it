@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Book {
   final String id;
+  final String userId;
   final String title;
   final String summary;
   final String author;
@@ -14,6 +15,7 @@ class Book {
 
   const Book({
     required this.id,
+    required this.userId,
     required this.title,
     required this.summary,
     required this.author,
@@ -28,6 +30,7 @@ class Book {
   factory Book.fromMap(Map<String, dynamic> map) {
     return Book(
       id: map['id'] ?? DateTime.now().microsecondsSinceEpoch.toString(),
+      userId: map['user-id'],
       title: map['title'] ?? 'null',
       summary: map['summary'] ?? 'null',
       author: map['author'] ?? 'null',
@@ -42,6 +45,7 @@ class Book {
 
   Map<String, dynamic> toMap() {
     return {
+      'user-id': userId,
       'title': title,
       'summary': summary,
       'author': author,

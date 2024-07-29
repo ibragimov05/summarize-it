@@ -9,7 +9,7 @@ class UserHttpService {
   final String _baseUrl =
       'https://summarize-it-8ae05-default-rtdb.firebaseio.com';
 
-  Future<User> getUser({
+  Future<UserModel> getUser({
     required String email,
     required String uid,
   }) async {
@@ -22,11 +22,11 @@ class UserHttpService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> usersMap = jsonDecode(response.body);
 
-      User? user;
+      UserModel? user;
       usersMap.forEach((key, value) {
         if (value['email'] == email && value['uid'] == uid) {
           value['id'] = key;
-          user = User.fromJson(value);
+          user = UserModel.fromJson(value);
         }
       });
 
@@ -40,7 +40,7 @@ class UserHttpService {
     }
   }
 
-  Future<User> addUser({
+  Future<UserModel> addUser({
     required String firstName,
     required String lastName,
     required String email,
@@ -65,7 +65,7 @@ class UserHttpService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
       userData['id'] = data['name'];
-      return User.fromJson(userData);
+      return UserModel.fromJson(userData);
     } else {
       throw Exception(
           'Error adding user: status code ${response.statusCode}, body: ${response.body}');
