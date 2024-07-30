@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
-import 'package:summarize_it/data/services/all_services.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/book_pages.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/custom_slider.dart';

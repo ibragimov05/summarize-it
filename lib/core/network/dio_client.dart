@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DioClient {
   final _dio = Dio();
-  // final String _firebaseCustomKey = dotenv.get('FIREBASE_CUSTOM_KEY');
 
   DioClient._private() {
     _dio.options
