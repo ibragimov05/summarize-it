@@ -46,6 +46,7 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
       if (response.text == null) {
         throw 'Could not find summary';
       } else {
+        print(response.text!);
         final data = jsonDecode(response.text!.clearJson);
         data['summary-added-date'] = Timestamp.now();
         data['published-date'] =

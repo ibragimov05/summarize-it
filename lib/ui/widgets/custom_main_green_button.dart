@@ -4,17 +4,17 @@ import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 
 class CustomMainGreenButton extends StatelessWidget {
+  final double? w;
   final String buttonText;
   final RoundedLoadingButtonController buttonController;
   final void Function() onTap;
 
-  // final RoundedLoadingButtonController _btnController =
-  //       RoundedLoadingButtonController();
   const CustomMainGreenButton({
     super.key,
     required this.buttonController,
     required this.buttonText,
     required this.onTap,
+    this.w
   });
 
   @override
@@ -22,7 +22,7 @@ class CustomMainGreenButton extends StatelessWidget {
     return RoundedLoadingButton(
       controller: buttonController,
       onPressed: onTap,
-      width: MediaQuery.of(context).size.width,
+      width: w == null ? MediaQuery.of(context).size.width : w!,
       color: AppColors.green900,
       animateOnTap: true,
       successColor: AppColors.green900,

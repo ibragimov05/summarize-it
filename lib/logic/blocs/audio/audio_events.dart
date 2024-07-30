@@ -4,13 +4,27 @@ part of 'audio_bloc.dart';
 sealed class AudioEvents {}
 
 final class GetAudioDownloadUrlEvent extends AudioEvents {
-  final String text;
+  final String bookTitle;
+  final String summary;
 
-  GetAudioDownloadUrlEvent({required this.text});
+  GetAudioDownloadUrlEvent({required this.bookTitle, required this.summary});
 }
 
-final class DownloadAudioUrlEvent extends AudioEvents {
-  final String text;
+final class DownloadAudioEvent extends AudioEvents {
+  final String fileName;
+  final String downloadUrl;
 
-  DownloadAudioUrlEvent({required this.text});
+  DownloadAudioEvent({required this.fileName, required this.downloadUrl});
 }
+
+final class PlayAudioEvent extends AudioEvents {
+  final String filePath;
+
+  PlayAudioEvent({required this.filePath});
+}
+
+final class PauseAudioEvent extends AudioEvents {}
+
+final class SkipForwardAudioEvent extends AudioEvents {}
+
+final class SkipBackwardAudioEvent extends AudioEvents {}

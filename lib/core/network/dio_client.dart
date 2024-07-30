@@ -14,9 +14,8 @@ class DioClient {
   static final _singletonConstructor = DioClient._private();
 
   factory DioClient() => _singletonConstructor;
-
   Future<Response> getAudioDownloadUrl(String text) async {
-    final response = await _dio.get(
+    final response = await _dio.post(
       'https://api.v7.unrealspeech.com/speech',
       data: {
         'Text': text,

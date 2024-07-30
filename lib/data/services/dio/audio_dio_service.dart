@@ -13,16 +13,14 @@ class AudioDioService {
 
       if (response.statusCode == 200) {
         dioResponse.isSuccess = true;
-        dioResponse.data = response.data;
+        dioResponse.data = response.data['OutputUri'];
       } else {
         dioResponse.isSuccess = false;
         dioResponse.errorMessage = response.statusMessage ?? 'null';
         dioResponse.statusCode = response.statusCode;
       }
-      print(dioResponse.errorMessage);
       return dioResponse;
     } catch (e) {
-      print('$e');
       rethrow;
     }
   }
@@ -40,7 +38,7 @@ class AudioDioService {
 
       if (response.statusCode == 200) {
         dioResponse.isSuccess = true;
-        dioResponse.data = response.data;
+        dioResponse.data = filePath;
       } else {
         dioResponse.errorMessage = response.statusMessage ?? 'null';
         dioResponse.statusCode = response.statusCode;

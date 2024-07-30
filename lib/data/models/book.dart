@@ -9,6 +9,7 @@ class Book {
   final num rate;
   final num rateOfTheBook;
   final String categoryOfBook;
+  final String audioUrl;
   final Timestamp bookPublishedDate;
   final Timestamp summaryAddedDate;
   final List<String> facts;
@@ -22,6 +23,7 @@ class Book {
     required this.rate,
     required this.rateOfTheBook,
     required this.categoryOfBook,
+    required this.audioUrl,
     required this.bookPublishedDate,
     required this.summaryAddedDate,
     required this.facts,
@@ -37,6 +39,7 @@ class Book {
       rate: map['rate'] ?? 0.0,
       rateOfTheBook: map['rate-of-the-book'] ?? 0.0,
       categoryOfBook: map['category-of-book'] ?? 'null',
+      audioUrl: map['audio-url'] ?? 'null',
       bookPublishedDate: map['published-date'] ?? Timestamp.now(),
       summaryAddedDate: map['summary-added-date'] ?? Timestamp.now(),
       facts: List<String>.from(map['facts'] ?? []),
@@ -55,6 +58,7 @@ class Book {
       'published-date': bookPublishedDate,
       'summary-added-date': Timestamp.now(),
       'facts': facts,
+      'audio-url': 'null',
     };
   }
 }

@@ -6,54 +6,55 @@ enum SummaryLength {
 
 class AiConstants {
   static String summarizePrompt(SummaryLength summaryLength) {
-    if (summaryLength == SummaryLength.short) {
-      return shortSummary;
-    } else if (summaryLength == SummaryLength.medium) {
-      return mediumSummary;
-    } else {
-      return longSummary;
+    switch (summaryLength) {
+      case SummaryLength.short:
+        return shortSummary;
+      case SummaryLength.medium:
+        return mediumSummary;
+      case SummaryLength.long:
+        return longSummary;
+      default:
+        return '';
     }
   }
 
   static const String shortSummary = '''
-      I have a book that I need summarized. 
-      Please read the entire book and provide a brief summary 
-      that highlights the main points and key themes. 
-      Keep the summary concise, around 3-5 sentences, 
-      and ensure that it captures the essence of the book's message. 
-      $responseType
+      Please read the entire book and provide a brief summary. 
+      Focus on the main points and key themes, and keep the summary 
+      concise—around 3-5 sentences. Ensure the summary captures 
+      the essence of the book's message. $responseType
       Here is the text of the book: ''';
 
   static const String mediumSummary = '''
-      I have a book that I need summarized. 
-      Please read the entire book and provide a comprehensive summary 
-      that covers the main points, key themes, and important details. 
-      Break down the summary by major sections or chapters, if possible, 
-      and ensure that it captures the essence of the book's message and content. 
-      Aim for a summary length of 1-2 paragraphs. 
-      $responseType
+      Please read the entire book and provide a comprehensive summary. 
+      Cover the main points, key themes, and important details. 
+      If possible, break down the summary by major sections or chapters. 
+      Aim for a length of 1-2 paragraphs, and ensure the summary 
+      accurately reflects the book's message and content. $responseType
       Here is the text of the book: ''';
 
   static const String longSummary = '''
-      I have a book that I need summarized. Please read the entire book 
-      and provide a comprehensive summary that covers the main points, 
-      key themes, and important details. Break down the summary by 
-      chapters or sections if possible, and ensure that the summary captures 
-      the essence of the book's message and content. Additionally, highlight 
-      any significant quotes or passages that stand out. 
+      Please read the entire book and provide an in-depth summary. 
+      Include the main points, key themes, and important details. 
+      Break down the summary by chapters or sections if applicable, 
+      and ensure it captures the essence of the book's message and content. 
+      Additionally, highlight any significant quotes or passages.
+      Aim for 1000 words if you can, focusing on delivering a
+      balanced overview that reflects the book's depth and richness.
       $responseType
       Here is the text of the book: ''';
 
   static const String responseType = '''
-      Please also add search key information such as:
-      book title in string format,
-      author name in string format,
-      category of book in string format,
-      rate of the book in number format,
-      exact published date with year and month and day in the following format (YYYY-MM-DD),
-      and three interesting facts about this book in List<String> format.
+      Along with the summary, please include the following details:
+      - "title": The book's title as a string.
+      - "summary": The book's summary as generated.
+      - "author": The author's name as a string.
+      - "category-of-book": The book's category or genre as a string.
+      - "rate-of-the-book": A numerical rating for the book (e.g., 4.5).
+      - "published-date": The exact publication date in the format (YYYY-MM-DD).
+      - "facts": A list of three interesting facts about the book in List<String> format.
       
-      Please, make sure that you give me the response in the following format:
+      Please ensure the response is formatted as follows:
       {
         "title": "...",
         "summary": "...",
@@ -62,8 +63,8 @@ class AiConstants {
         "rate-of-the-book": ...,
         "published-date": "...",
         "facts": ["...", "...", "..."],
-      } 
-      PLEASE DO NOT MAKE ANY MISTAKE AND GIVE ME RESPONSE AS I SAID! 
-      and do not add any text outside of the curly brackets!
+      }
+      
+      It is crucial to follow this structure precisely. Do not include any additional text outside of the curly brackets!
       ''';
 }

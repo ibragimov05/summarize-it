@@ -51,14 +51,28 @@ class _SummaryScreenState extends State<SummaryScreen> {
       body: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
         builder: (context, state) {
           if (state is LoadedGenerativeAiState) {
-            return Markdown(
-              data: state.book.summary,
-              padding: const EdgeInsets.only(
-                bottom: kToolbarHeight + 15,
-                left: 16,
-                right: 16,
-                top: 16,
-              ),
+            return Column(
+              children: [
+                Expanded(
+                  child: Markdown(
+                    data: state.book.summary,
+                    padding: const EdgeInsets.only(
+                      bottom: kToolbarHeight + 15,
+                      left: 16,
+                      right: 16,
+                      top: 16,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.play_arrow),
+                    ),
+                  ],
+                )
+              ],
             );
           }
           return const Center(
@@ -66,53 +80,57 @@ class _SummaryScreenState extends State<SummaryScreen> {
           );
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
-        builder: (context, state) {
-          if (state is LoadedGenerativeAiState) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                RegularButton(
-                  w: DeviceScreen.w(context) / 2 - 50,
-                  buttonLabel: AppConstants.audio,
-                  onTap: () {
-                    context.read<AudioBloc>().add(
-                          GetAudioDownloadUrlEvent(text: state.book.summary),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 1.0),
+        child: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
+          builder: (context, state) {
+            if (state is LoadedGenerativeAiState) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  RegularButton(
+                    w: DeviceScreen.w(context) / 2 - 50,
+                    buttonLabel: AppConstants.audio,
+                    onTap: () {
+                      context.read<AudioBloc>().add(
+                            GetAudioDownloadUrlEvent(
+                              bookTitle: state.book.title,
+                              summary: state.book.summary,
+                            ),
+                          );
+                    },
+                  ),
+                  BlocConsumer<BooksBloc, BooksState>(
+                    listener: (context, bookState) {
+                      if (bookState is AddBookSuccessState) {
+                        AppFunctions.showSnackBar(
+                          context,
+                          'New summary has been saved successfully!',
                         );
-                  },
-                ),
-                BlocConsumer<BooksBloc, BooksState>(
-                  listener: (context, bookState) {
-                    if (bookState is AddBookSuccessState) {
-                      AppFunctions.showSnackBar(
-                        context,
-                        'New summary has been saved successfully!',
-                      );
-                    }
-                  },
-                  builder: (context, bookState) {
-                    if (bookState is LoadingBookState) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return RegularButton(
-                      w: DeviceScreen.w(context) / 2 - 50,
-                      buttonLabel: AppConstants.save,
-                      onTap: () {
-                        context.read<BooksBloc>().add(AddBookEvent(
+                      }
+                    },
+                    builder: (context, bookState) {
+                      if (bookState is LoadingBookState) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return RegularButton(
+                        w: DeviceScreen.w(context) / 2 - 50,
+                        buttonLabel: AppConstants.save,
+                        onTap: () => context.read<BooksBloc>().add(AddBookEvent(
                             book: state.book,
-                            userID: FirebaseAuth.instance.currentUser!.uid));
-                      },
-                    );
-                  },
-                ),
-              ],
-            );
-          }
-          return const SizedBox.shrink();
-        },
+                            userID: FirebaseAuth.instance.currentUser!.uid)),
+                      );
+                    },
+                  ),
+                ],
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }
