@@ -6,8 +6,11 @@ extension SizedBoxExtension on int {
   Widget w() => SizedBox(width: toDouble());
 }
 
-extension StringExtension on String {
+extension StringExtensions on String {
   String get clearJson {
-    return replaceAll(RegExp(r'^```json|```$'), '').trim();
+    if (startsWith("```")) {
+      return split("```")[1].substring(4);
+    }
+    return this;
   }
 }

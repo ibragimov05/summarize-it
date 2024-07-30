@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DioClient {
   final _dio = Dio();
@@ -13,6 +14,28 @@ class DioClient {
   static final _singletonConstructor = DioClient._private();
 
   factory DioClient() => _singletonConstructor;
+
+  Future<Response> getAudioDownloadUrl(String text) async {
+    final response = await _dio.get(
+      'https://api.v7.unrealspeech.com/speech',
+      data: {
+        'Text': text,
+        'VoiceId': 'Dan',
+        'Bitrate': '192k',
+        'Speed': '0',
+        'Pitch': '1',
+        'TimestampType': 'sentence',
+      },
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer ${dotenv.get('UNREAL_SPEECH_KEY')}',
+          'x-rapid-api-host': 'open-ai-text-to-speech1.p.rapidapi.com',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+    return response;
+  }
 
   Future<Response> get({
     required String url,
@@ -39,5 +62,17 @@ class DioClient {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<Response> download({
+    required String url,
+    required String saveDirectory,
+  }) async {
+    final response = await _dio.download(
+      url,
+      saveDirectory,
+    );
+
+    return response;
   }
 }

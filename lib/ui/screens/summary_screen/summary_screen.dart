@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
+import 'package:summarize_it/logic/blocs/audio/audio_bloc.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/regular_button.dart';
@@ -74,7 +76,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
                 RegularButton(
                   w: DeviceScreen.w(context) / 2 - 50,
                   buttonLabel: AppConstants.audio,
-                  onTap: () {},
+                  onTap: () {
+                    context.read<AudioBloc>().add(
+                          GetAudioDownloadUrlEvent(text: state.book.summary),
+                        );
+                  },
                 ),
                 BlocConsumer<BooksBloc, BooksState>(
                   listener: (context, bookState) {
@@ -94,9 +100,11 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     return RegularButton(
                       w: DeviceScreen.w(context) / 2 - 50,
                       buttonLabel: AppConstants.save,
-                      onTap: () => context
-                          .read<BooksBloc>()
-                          .add(AddBookEvent(book: state.book)),
+                      onTap: () {
+                        context.read<BooksBloc>().add(AddBookEvent(
+                            book: state.book,
+                            userID: FirebaseAuth.instance.currentUser!.uid));
+                      },
                     );
                   },
                 ),

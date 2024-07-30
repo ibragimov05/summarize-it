@@ -42,6 +42,7 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
       ];
       final GenerateContentResponse response =
           await model.generateContent(content);
+
       if (response.text == null) {
         throw 'Could not find summary';
       } else {
@@ -55,7 +56,6 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
         );
       }
     } catch (e) {
-      debugPrint('generative ai error => $e');
       emit(ErrorGenerativeAiState(message: e.toString()));
     } finally {
       event.buttonController.reset();

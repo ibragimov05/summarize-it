@@ -63,6 +63,7 @@ class AiConstants {
         "published-date": "...",
         "facts": ["...", "...", "..."],
       } 
-      PLEASE DO NOT MAKE ANY MISTAKE AND GIVE ME RESPONSE AS I SAID!
+      PLEASE DO NOT MAKE ANY MISTAKE AND GIVE ME RESPONSE AS I SAID! 
+      and do not add any text outside of the curly brackets!
       ''';
 }

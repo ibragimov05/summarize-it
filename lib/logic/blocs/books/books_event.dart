@@ -3,12 +3,18 @@ part of 'books_bloc.dart';
 @immutable
 sealed class BooksEvent {}
 
-final class GetBookEvent extends BooksEvent {}
+final class GetBookEvent extends BooksEvent {
+  final String uid;
+
+  GetBookEvent({required this.uid});
+
+}
 
 final class AddBookEvent extends BooksEvent {
+  final String userID;
   final Book book;
 
-  AddBookEvent({required this.book});
+  AddBookEvent({required this.book,required this.userID});
 }
 
 final class DeleteBookEvent extends BooksEvent {

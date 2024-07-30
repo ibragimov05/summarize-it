@@ -23,7 +23,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     emit(LoadingBookState());
     try {
       await emit.forEach(
-        _bookRepository.getBooks(),
+        _bookRepository.getBooks(uid: event.uid),
         onData: (List<Book> books) => LoadedBookState(books: books),
       );
     } catch (e) {
@@ -34,6 +34,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   void _addBook(AddBookEvent event, Emitter<BooksState> emit) {
     emit(LoadingBookState());
     try {
+      event.book.userId = event.userID;
       _bookRepository.addBook(event.book);
       emit(AddBookSuccessState());
     } catch (e) {

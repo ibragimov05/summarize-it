@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          /// welcome and summarize screen
+          //! welcome and summarize screen
           BlocConsumer<GenerativeAiBloc, GenerativeAiStates>(
             listener: (context, state) {
               if (state is LoadedGenerativeAiState) {
@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
 
-          /// book images
+          //! book images
           BlocConsumer<FilePickerBloc, FilePickerStates>(
             listener: (context, state) {
               if (state is LoadedFilePickerState) {
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
 
-          /// open documents && submit book
+          //! open documents && submit book
           BlocBuilder<PdfToImageBloc, PdfToImageStates>(
             builder: (context, state) {
               return Container(
@@ -177,9 +177,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
                             builder: (context, state) {
-                              
                               return CustomSlider(
-                                onSliderValChanged:state is LoadingGenerativeAiState ? null: (p0) => _summaryLength = p0,
+                                onSliderValChanged:
+                                    state is LoadingGenerativeAiState
+                                        ? null
+                                        : (p0) => _summaryLength = p0,
                               );
                             },
                           ),
