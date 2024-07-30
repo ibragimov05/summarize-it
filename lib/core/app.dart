@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
@@ -32,11 +31,12 @@ class SummarizeIt extends StatelessWidget {
           darkTheme: ThemeData.dark(),
           themeMode: state ? ThemeMode.dark : ThemeMode.light,
           onGenerateRoute: AppRouter.generateRoute,
-          home: BlocSelector<AuthBloc, AuthState, User?>(
+          home: BlocBuilder<AuthBloc, AuthState>(
             bloc: context.read<AuthBloc>()..add(WatchAuthEvent()),
-            selector: (state) => state.user,
-            builder: (context, user) {
-              return user == null ? const LoginScreen() : const MainScreen();
+            builder: (context, state) {
+              return state is AuthenticatedState
+                  ? const MainScreen()
+                  : const LoginScreen();
             },
           ),
         );

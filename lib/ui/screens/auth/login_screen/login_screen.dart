@@ -24,6 +24,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final RoundedLoadingButtonController _roundedLoadingButtonController =
       RoundedLoadingButtonController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -92,52 +95,43 @@ class _LoginScreenState extends State<LoginScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BlocBuilder<AuthBloc, AuthState>(
-                        builder: (context, state) {
-                          return Form(
-                            key: state.formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                /// email address
-                                const LoginScreenText(text: 'Email Address'),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 30),
-                                  child: CustomTextFormField(
-                                    textEditingController:
-                                        state.emailController!,
-                                    hintText: 'Enter your email address',
-                                    isObscure: false,
-                                    isKeyboardDone: false,
-                                    textInputType: TextInputType.emailAddress,
-                                    validator: AppFunctions.emailValidator,
-                                  ),
-                                ),
-
-                                /// password
-                                const LoginScreenText(text: 'Password'),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 30),
-                                  child: CustomTextFormField(
-                                    textEditingController:
-                                        state.passwordController!,
-                                    hintText: 'Enter your password',
-                                    isObscure: true,
-                                    isKeyboardDone: true,
-                                    textInputType: TextInputType.text,
-                                    validator: (String? p0) =>
-                                        AppFunctions.passwordValidator(
-                                            p0, false),
-                                  ),
-                                ),
-                              ],
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            /// email address
+                            const LoginScreenText(text: 'Email Address'),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 30),
+                              child: CustomTextFormField(
+                                textEditingController: _emailController,
+                                hintText: 'Enter your email address',
+                                isObscure: false,
+                                isKeyboardDone: false,
+                                textInputType: TextInputType.emailAddress,
+                                validator: AppFunctions.emailValidator,
+                              ),
                             ),
-                            // );
-                            // },
-                          );
-                        },
+
+                            /// password
+                            const LoginScreenText(text: 'Password'),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 30),
+                              child: CustomTextFormField(
+                                textEditingController: _passwordController,
+                                hintText: 'Enter your password',
+                                isObscure: true,
+                                isKeyboardDone: true,
+                                textInputType: TextInputType.text,
+                                validator: (String? p0) =>
+                                    AppFunctions.passwordValidator(p0, false),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
 
                       /// remember me? forgot password
@@ -165,7 +159,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     buttonText: AppConstants.signIn,
                     buttonController: _roundedLoadingButtonController,
                     onTap: () {
-                      context.read<AuthBloc>().add(LoginUserEvent());
+                      if (_formKey.currentState!.validate()) {
+                        context.read<AuthBloc>().add(
+                              LoginUserEvent(
+                                  email: _emailController.text,
+                                  password: _passwordController.text),
+                            );
+                      }
                       _roundedLoadingButtonController.reset();
                     },
                   ),

@@ -12,8 +12,8 @@ class FirebaseAuthService {
         email: email,
         password: password,
       );
-    } on FirebaseAuthException {
-      rethrow;
+    } on FirebaseAuthException catch(e) {
+      throw(e.message.toString());
     } catch (e) {
       rethrow;
     }
@@ -29,8 +29,8 @@ class FirebaseAuthService {
         password: password,
       );
       return response.user!;
-    } on FirebaseAuthException {
-      rethrow;
+    } on FirebaseAuthException catch(e){
+      throw(e.message.toString());
     } catch (e) {
       rethrow;
     }
@@ -39,9 +39,9 @@ class FirebaseAuthService {
   Future<void> logoutUser() async {
     try {
       await _firebaseAuth.signOut();
-    } on FirebaseAuthException {
-      rethrow;
-    } catch (e) {
+    } on FirebaseAuthException catch(e){
+      throw(e.message.toString());
+    }  catch (e) {
       rethrow;
     }
   }
@@ -49,9 +49,9 @@ class FirebaseAuthService {
   Future<void> resetPassword({required String email}) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException {
-      rethrow;
-    } catch (e) {
+    } on FirebaseAuthException catch(e){
+      throw(e.message.toString());
+    }  catch (e) {
       rethrow;
     }
   }

@@ -15,16 +15,16 @@ import 'logic/cubits/all_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: '.env');
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   AppConstants.themeValue = prefs.getBool('is-dark') ?? false;
 
   Bloc.observer = AppBlocObserver();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await dotenv.load(fileName: '.env');
-
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
-  final UserHttpService userHttpService = UserHttpService();
+  final UserDioService userHttpService = UserDioService();
   final FirebaseBookService firebaseBookService = FirebaseBookService();
 
   runApp(
@@ -49,11 +49,10 @@ void main() async {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (BuildContext context) => AuthBloc(
-              authRepository: context.read<AuthRepository>(),
-              userRepository: context.read<UserRepository>(),
-            )..add(InitialAuthEvent()),
-          ),
+              create: (BuildContext context) => AuthBloc(
+                    authRepository: context.read<AuthRepository>(),
+                    userRepository: context.read<UserRepository>(),
+                  )),
           BlocProvider(create: (BuildContext context) => DarkThemeCubit()),
           BlocProvider(create: (BuildContext context) => TabBoxCubit()),
           BlocProvider(create: (BuildContext context) => FilePickerBloc()),

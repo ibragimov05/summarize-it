@@ -3,7 +3,7 @@ import 'package:summarize_it/core/utils/ai_constants.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 
 class CustomSlider extends StatefulWidget {
-  final Function(int) onSliderValChanged;
+  final Function(int)? onSliderValChanged;
   const CustomSlider({super.key, required this.onSliderValChanged});
 
   @override
@@ -23,12 +23,14 @@ class _CustomSliderState extends State<CustomSlider> {
       thumbColor: AppColors.green900,
       activeColor: AppColors.green900,
       label: SummaryLength.values[_summaryLength.toInt() - 1].name,
-      onChanged: (value) {
-        widget.onSliderValChanged(value.toInt());
-        setState(() {
-          _summaryLength = value;
-        });
-      },
+      onChanged: widget.onSliderValChanged == null
+          ? null
+          : (value) {
+              widget.onSliderValChanged!(value.toInt());
+              setState(() {
+                _summaryLength = value;
+              });
+            },
     );
   }
 }

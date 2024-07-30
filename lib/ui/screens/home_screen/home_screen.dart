@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
+import 'package:summarize_it/data/services/all_services.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/book_pages.dart';
 import 'package:summarize_it/ui/screens/home_screen/widgets/custom_slider.dart';
@@ -41,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const CircleAvatar(backgroundColor: AppColors.green900),
               5.w(),
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -176,8 +176,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: AppTextStyles.workSansMain.copyWith(),
                             ),
                           ),
-                          CustomSlider(
-                            onSliderValChanged: (p0) => _summaryLength = p0,
+                          BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
+                            builder: (context, state) {
+                              
+                              return CustomSlider(
+                                onSliderValChanged:state is LoadingGenerativeAiState ? null: (p0) => _summaryLength = p0,
+                              );
+                            },
                           ),
                         ],
                       ),
