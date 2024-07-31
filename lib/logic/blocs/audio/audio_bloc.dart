@@ -72,20 +72,47 @@ class AudioBloc extends Bloc<AudioEvents, AudioStates> {
   void _playAudio(
     PlayAudioEvent event,
     Emitter<AudioStates> emit,
-  ) async {}
+  ) async {
+    try {
+      await _audioPlayer.setFilePath(event.filePath);
+      _audioPlayer.play();
+      emit(AudioPlayingState());
+    } catch (e) {}
+  }
 
   void _pauseAudio(
     PauseAudioEvent event,
     Emitter<AudioStates> emit,
-  ) async {}
+  ) async {
+    _audioPlayer.pause();
+    emit(AudioPausedState());
+  }
 
   void _skipForwardAudio(
     SkipForwardAudioEvent event,
     Emitter<AudioStates> emit,
-  ) async {}
+  ) async {
+    try {
+      final currentPosition = _audioPlayer.position;
+      final newPosition = currentPosition + const Duration(seconds: 5);
+      _audioPlayer.seek(newPosition);
+      emit(AudioPlayingState());
+    } catch (e) {
+      emit(ErrorAudioState(errorMessage: e.toString()));
+    }
+  }
 
   void _skipBackwardAudio(
     SkipBackwardAudioEvent event,
     Emitter<AudioStates> emit,
-  ) async {}
+  ) async {
+    try {
+      final currentPosition = _audioPlayer.position;
+      final newPosition = currentPosition - const Duration(seconds: 5);
+      _audioPlayer.seek(newPosition);
+      emit(AudioPlayingState());
+    } catch (e) {
+      emit(ErrorAudioState(errorMessage: e.toString()));
+    }
+  }
 }

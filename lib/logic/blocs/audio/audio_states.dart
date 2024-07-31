@@ -20,4 +20,6 @@ final class AudioDownloadedState extends AudioStates {
 
 final class AudioPlayingState extends AudioStates {}
 
-final class AudioPausedState extends AudioStates {}
+final class AudioPausedState extends AudioStates {
+  
+}

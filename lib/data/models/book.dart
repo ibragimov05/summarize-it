@@ -9,7 +9,7 @@ class Book {
   final num rate;
   final num rateOfTheBook;
   final String categoryOfBook;
-  final String audioUrl;
+  String audioUrl;
   final Timestamp bookPublishedDate;
   final Timestamp summaryAddedDate;
   final List<String> facts;
@@ -58,7 +58,7 @@ class Book {
       'published-date': bookPublishedDate,
       'summary-added-date': Timestamp.now(),
       'facts': facts,
-      'audio-url': 'null',
+      'audio-url': audioUrl,
     };
   }
 }

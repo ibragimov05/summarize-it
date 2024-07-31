@@ -12,6 +12,8 @@ import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/device_screen.dart';
 
+import 'widgets/audio_play_pause_widget.dart';
+
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});
 
@@ -20,6 +22,7 @@ class SummaryScreen extends StatefulWidget {
 }
 
 class _SummaryScreenState extends State<SummaryScreen> {
+  bool isPlaying = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,14 +67,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.play_arrow),
-                    ),
-                  ],
-                )
+                AudioPlayPauseWidget(),
               ],
             );
           }
