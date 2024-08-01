@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summarize_it/core/app.dart';
 import 'package:summarize_it/data/repositories/audio_repository.dart';
@@ -24,6 +25,8 @@ void main() async {
   AppConstants.themeValue = prefs.getBool('is-dark') ?? false;
 
   Bloc.observer = AppBlocObserver();
+  
+  await Hive.initFlutter();
 
   final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
   final UserDioService userHttpService = UserDioService();

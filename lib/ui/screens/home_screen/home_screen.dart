@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
@@ -31,6 +32,22 @@ class _HomeScreenState extends State<HomeScreen> {
   final RoundedLoadingButtonController _openDocButtonController =
       RoundedLoadingButtonController();
 
+  String username = '';
+
+  Future<void> getUserData() async {
+    var hive = await Hive.openBox('user-info');
+    // hive.put('');
+    print(hive.get('user-info'));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData().then(
+      (value) => setState(() {}),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hi, Andy',
+                    username,
                     style: AppTextStyles.workSansMain.copyWith(fontSize: 17),
                   ),
                   Text(
@@ -70,7 +87,12 @@ class _HomeScreenState extends State<HomeScreen> {
               if (state is LoadedGenerativeAiState) {
                 Navigator.pushNamed(context, AppRouter.summaryScreen);
               } else if (state is ErrorGenerativeAiState) {
-                AppFunctions.showErrorSnackBar(context, state.message);
+                debugPrint(
+                    '<-----> error GenerativeAiBloc: ${state.message} <----->');
+                AppFunctions.showErrorSnackBar(
+                  context,
+                  'Something went wrong. Please, try again!',
+                );
               }
             },
             builder: (context, state) {
