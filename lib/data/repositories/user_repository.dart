@@ -1,4 +1,4 @@
-import '../models/user.dart';
+import '../models/user_model.dart';
 import '../services/dio/user_dio_service.dart';
 
 class UserRepository {

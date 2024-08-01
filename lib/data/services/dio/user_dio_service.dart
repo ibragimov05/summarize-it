@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart' as f;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
 import 'package:summarize_it/core/network/dio_client.dart';
-import 'package:summarize_it/data/models/user.dart';
+import 'package:summarize_it/data/models/user_model.dart';
 
 class UserDioService {
   final String _firebaseCustomKey = dotenv.get('FIREBASE_CUSTOM_KEY');
@@ -15,30 +15,35 @@ class UserDioService {
     required String email,
     required String uid,
   }) async {
-    final String idToken = await _getIdToken() ?? '';
+    try {
+      final String idToken = await _getIdToken() ?? '';
 
-    final String url = '$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken';
+      final String url =
+          '$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken';
 
-    final Response response = await _dio.get(url: url);
+      final Response response = await _dio.get(url: url);
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> usersMap = response.data;
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> usersMap = response.data;
 
-      UserModel? user;
-      usersMap.forEach((key, value) {
-        if (value['email'] == email && value['uid'] == uid) {
-          value['id'] = key;
-          user = UserModel.fromJson(value);
+        UserModel? user;
+        usersMap.forEach((key, value) {
+          if (value['email'] == email && value['uid'] == uid) {
+            value['id'] = key;
+            user = UserModel.fromJson(value);
+          }
+        });
+
+        if (user != null) {
+          return user!;
+        } else {
+          throw Exception('Could not find user: ${response.data}');
         }
-      });
-
-      if (user != null) {
-        return user!;
       } else {
-        throw Exception('Could not find user: ${response.data}');
+        throw Exception('Failed to get users: ${response.data}');
       }
-    } else {
-      throw Exception('Failed to get users: ${response.data}');
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -48,29 +53,34 @@ class UserDioService {
     required String email,
     required String uid,
   }) async {
-    final String idToken = await _getIdToken() ?? '';
+    try {
+      final String idToken = await _getIdToken() ?? '';
 
-    final String url = '$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken';
+      final String url =
+          '$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken';
 
-    Map<String, dynamic> userData = {
-      'uid': uid,
-      'first-name': firstName,
-      'last-name': lastName,
-      'email': email,
-    };
+      Map<String, dynamic> userData = {
+        'uid': uid,
+        'first-name': firstName,
+        'last-name': lastName,
+        'email': email,
+      };
 
-    final Response response = await _dio.post(
-      url: url,
-      data: userData,
-    );
+      final Response response = await _dio.post(
+        url: url,
+        data: userData,
+      );
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = response.data;
-      userData['id'] = data['name'];
-      return UserModel.fromJson(userData);
-    } else {
-      throw Exception(
-          'Error adding user: status code ${response.statusCode}, body: ${response.data}');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = response.data;
+        userData['id'] = data['name'];
+        return UserModel.fromJson(userData);
+      } else {
+        throw Exception(
+            'Error adding user: status code ${response.statusCode}, body: ${response.data}');
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 

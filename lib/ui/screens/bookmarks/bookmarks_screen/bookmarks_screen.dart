@@ -5,8 +5,8 @@ import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
-import 'package:summarize_it/ui/screens/bookmarks_screen/widget/search_books_text_field.dart';
-import 'package:summarize_it/ui/screens/bookmarks_screen/widget/show_summary_widget.dart';
+import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/search_books_text_field.dart';
+import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/show_summary_widget.dart';
 import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
 
 class BookmarksScreen extends StatefulWidget {
@@ -46,23 +46,25 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                   );
                 }
                 if (state is LoadedBookState) {
-                  return Column(
-                    children: [
-                      SearchBooksTextField(books: state.books),
-                      Expanded(
-                        child: ListView.builder(
-                          padding: const EdgeInsets.only(
-                            left: 16,
-                            right: 16,
-                            top: 10,
-                          ),
-                          itemCount: state.books.length,
-                          itemBuilder: (context, index) =>
-                              ShowSummaryWidget(book: state.books[index]),
-                        ),
-                      ),
-                    ],
-                  );
+                  return state.books.isNotEmpty
+                      ? Column(
+                          children: [
+                            SearchBooksTextField(books: state.books),
+                            Expanded(
+                              child: ListView.builder(
+                                padding: const EdgeInsets.only(
+                                  left: 16,
+                                  right: 16,
+                                  top: 10,
+                                ),
+                                itemCount: state.books.length,
+                                itemBuilder: (context, index) =>
+                                    ShowSummaryWidget(book: state.books[index]),
+                              ),
+                            )
+                          ],
+                        )
+                      : _noSavedBooks();
                 }
                 return _noSavedBooks();
               },
@@ -73,7 +75,10 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
     );
   }
 
-  Widget _noSavedBooks() => const Center(
-        child: Text(AppConstants.noSavedBooks),
+  Widget _noSavedBooks() => Center(
+        child: Text(
+          AppConstants.noSavedBooks,
+          style: AppTextStyles.workSansW500.copyWith(fontSize: 16),
+        ),
       );
 }

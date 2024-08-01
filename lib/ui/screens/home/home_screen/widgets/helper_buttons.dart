@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 
-import '../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/app_colors.dart';
 
 class HelperButtons extends StatelessWidget {
   final RoundedLoadingButtonController openDocButtonController;

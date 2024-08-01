@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summarize_it/core/utils/hive_box_constants.dart';
 import 'package:summarize_it/data/repositories/all_repositories.dart';
 
 part 'auth_event.dart';
@@ -54,6 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onLogoutUser(LogoutEvent event, Emitter<AuthState> emit) async {
     emit(LoadingAuthState());
     try {
+      HiveConstants.box.delete(HiveConstants.userInfo);
       await _authRepository.logout();
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));

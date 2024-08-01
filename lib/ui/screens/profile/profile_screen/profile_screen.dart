@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/core/utils/app_assets.dart';
@@ -6,11 +5,13 @@ import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_router.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
+import 'package:summarize_it/logic/blocs/auth/auth_bloc.dart';
 import 'package:summarize_it/logic/cubits/dark_theme/dark_theme_cubit.dart';
-import 'package:summarize_it/ui/screens/profile_screen/widgets/custom_list_tile.dart';
-import 'package:summarize_it/ui/screens/profile_screen/widgets/title_text.dart';
+import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/custom_list_tile.dart';
+import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/title_text.dart';
 
-import '../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../logic/blocs/user_info/user_info_bloc.dart';
 import 'widgets/icon_with_bloc_builder.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -27,19 +28,26 @@ class ProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    const CircleAvatar(backgroundColor: AppColors.green900),
-                    5.w(),
-                    Text(
-                      'Andy Lexsian',
-                      style: AppTextStyles.workSansMain.copyWith(fontSize: 18),
-                    ),
-                  ],
+                Expanded(
+                  child: Row(
+                    children: [
+                      const CircleAvatar(backgroundColor: AppColors.green900),
+                      5.w(),
+                      BlocBuilder<UserInfoBloc, UserInfoState>(
+                        builder: (context, state) {
+                          return Text(
+                            "${state.firstName}",
+                            style: AppTextStyles.workSansMain
+                                .copyWith(fontSize: 18),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 IconButton(
                   onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                    context.read<AuthBloc>().add(LogoutEvent());
                   },
                   icon: const Icon(Icons.logout),
                 ),

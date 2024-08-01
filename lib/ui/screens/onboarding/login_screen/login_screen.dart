@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
-import 'package:summarize_it/ui/screens/auth/login_screen/widgets/login_screen_text.dart';
+import 'package:summarize_it/logic/blocs/user_info/user_info_bloc.dart';
+import 'package:summarize_it/ui/screens/onboarding/login_screen/widgets/login_screen_text.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
 import 'package:summarize_it/ui/widgets/custom_text_field.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
@@ -11,6 +13,7 @@ import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/core/utils/app_router.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../../core/utils/device_screen.dart';
 
@@ -155,18 +158,49 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  CustomMainGreenButton(
-                    buttonText: AppConstants.signIn,
-                    buttonController: _roundedLoadingButtonController,
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
-                              LoginUserEvent(
-                                  email: _emailController.text,
-                                  password: _passwordController.text),
+
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthenticatedState) {
+                        context.read<UserInfoBloc>().add(
+                              AddUserInfoEvent(
+                                email: _emailController.text,
+                                uid: FirebaseAuth.instance.currentUser?.uid ??
+                                    'null',
+                              ),
                             );
+                      } else if (state is ErrorAuthState) {
+                        _roundedLoadingButtonController.error();
+                        Future.delayed(
+                          const Duration(seconds: 3),
+                          () => _roundedLoadingButtonController.reset(),
+                        );
+                        toastification.show(
+                          context: context,
+                          type: ToastificationType.error,
+                          autoCloseDuration: const Duration(seconds: 5),
+                          description: Text(state.errorMessage,
+                              style: AppTextStyles.workSansW400),
+                          icon: const Icon(Icons.error),
+                          closeButtonShowType: CloseButtonShowType.onHover,
+                        );
                       }
-                      _roundedLoadingButtonController.reset();
+                    },
+                    builder: (context, state) {
+                      return CustomMainGreenButton(
+                        buttonText: AppConstants.signIn,
+                        buttonController: _roundedLoadingButtonController,
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(LoginUserEvent(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                ));
+                          } else {
+                            _roundedLoadingButtonController.reset();
+                          }
+                        },
+                      );
                     },
                   ),
                   5.h(),

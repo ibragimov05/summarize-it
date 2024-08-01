@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:summarize_it/ui/screens/onboarding/widgets/ellipse_widget.dart';
+import 'package:summarize_it/ui/screens/auth/onboarding_screen/widgets/ellipse_widget.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/app_router.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-import '../../../core/utils/device_screen.dart';
+import '../../../../core/utils/device_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -101,12 +99,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     curve: Curves.linear,
                   );
                 } else if (_currentIndex == 2) {
-                  SharedPreferences sharedPreferences =
-                      await SharedPreferences.getInstance();
-                  sharedPreferences.setBool('saw-onboarding', true);
-                  if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, AppRouter.login);
-                  }
+                  // SharedPreferences sharedPreferences =
+                  //     await SharedPreferences.getInstance();
+                  // sharedPreferences.setBool('saw-onboarding', true);
+                  // if (context.mounted) {
+                  //   Navigator.pushReplacementNamed(context, AppRouter.login);
+                  // }
                 }
               },
               child: Column(

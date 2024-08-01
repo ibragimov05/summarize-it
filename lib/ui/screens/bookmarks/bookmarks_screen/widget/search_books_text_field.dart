@@ -6,7 +6,7 @@ import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 
-import '../../../../data/models/book.dart';
+import '../../../../../data/models/book.dart';
 
 class SearchBooksTextField extends StatefulWidget {
   final List<Book> books;

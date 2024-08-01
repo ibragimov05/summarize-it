@@ -11,7 +11,7 @@ import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/device_screen.dart';
 
-import '../../widgets/audio_play_pause_widget.dart';
+import '../../../../widgets/audio_play_pause_widget.dart';
 
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});

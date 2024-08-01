@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
-import 'package:summarize_it/ui/screens/home_screen/widgets/book_pages.dart';
-import 'package:summarize_it/ui/screens/home_screen/widgets/custom_slider.dart';
-import 'package:summarize_it/ui/screens/home_screen/widgets/greeting_message.dart';
-import 'package:summarize_it/ui/screens/home_screen/widgets/helper_buttons.dart';
+import 'package:summarize_it/ui/screens/home/home_screen/widgets/book_pages.dart';
+import 'package:summarize_it/ui/screens/home/home_screen/widgets/custom_slider.dart';
+import 'package:summarize_it/ui/screens/home/home_screen/widgets/greeting_message.dart';
+import 'package:summarize_it/ui/screens/home/home_screen/widgets/helper_buttons.dart';
 import 'package:summarize_it/core/utils/ai_constants.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/core/utils/app_router.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/ui/screens/home/home_screen/widgets/loading_shimmer_widget.dart';
 
+import '../../../../logic/blocs/user_info/user_info_bloc.dart';
 import 'widgets/clear_book_pages.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,49 +35,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String username = '';
 
-  Future<void> getUserData() async {
-    var hive = await Hive.openBox('user-info');
-    // hive.put('');
-    print(hive.get('user-info'));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getUserData().then(
-      (value) => setState(() {}),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: AppColors.summarizeItTransparent,
-        title: SizedBox(
-          child: Row(
-            children: [
-              const CircleAvatar(backgroundColor: AppColors.green900),
-              5.w(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        title: BlocBuilder<UserInfoBloc, UserInfoState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const LoadingShimmerWidget();
+            }
+            return SizedBox(
+              child: Row(
                 children: [
-                  Text(
-                    username,
-                    style: AppTextStyles.workSansMain.copyWith(fontSize: 17),
-                  ),
-                  Text(
-                    'Good morning.',
-                    style: AppTextStyles.workSansMain.copyWith(
-                      fontSize: 13,
-                      color: AppColors.greyscale400,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  const CircleAvatar(backgroundColor: AppColors.green900),
+                  5.w(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hi, ${state.firstName ?? 'unnamed'}",
+                        style:
+                            AppTextStyles.workSansMain.copyWith(fontSize: 17),
+                      ),
+                      Text(
+                        'Good morning.',
+                        style: AppTextStyles.workSansMain.copyWith(
+                          fontSize: 13,
+                          color: AppColors.greyscale400,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
       body: Column(

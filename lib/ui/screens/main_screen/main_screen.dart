@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:summarize_it/logic/blocs/user_info/user_info_bloc.dart';
 import 'package:summarize_it/logic/cubits/tab_box_cubit/tab_box_cubit.dart';
-import 'package:summarize_it/ui/screens/bookmarks_screen/bookmarks_screen.dart';
-import 'package:summarize_it/ui/screens/home_screen/home_screen.dart';
-import 'package:summarize_it/ui/screens/search_screen/search_screen.dart';
+import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/bookmarks_screen.dart';
+import 'package:summarize_it/ui/screens/home/home_screen/home_screen.dart';
+import 'package:summarize_it/ui/screens/search/search_screen/search_screen.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/ui/screens/profile_screen/profile_screen.dart';
+import 'package:summarize_it/ui/screens/profile/profile_screen/profile_screen.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = const [
     HomeScreen(),
     SearchScreen(),
     BookmarksScreen(),
     ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserInfoBloc>().add(GetUserInfoEvent());
+  }
 
   @override
   Widget build(BuildContext context) {

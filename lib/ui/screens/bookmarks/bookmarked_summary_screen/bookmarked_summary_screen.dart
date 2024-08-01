@@ -5,7 +5,7 @@ import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/audio_play_pause_widget.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
 
-import '../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_colors.dart';
 
 class BookmarkedSummaryScreen extends StatelessWidget {
   final Book book;
