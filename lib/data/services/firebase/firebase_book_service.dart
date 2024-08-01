@@ -6,18 +6,15 @@ class FirebaseBookService {
       FirebaseFirestore.instance.collection('books');
 
   Stream<List<Book>> getBooks(String uid) {
-    return _bookCollection
-        .where('user-uid', isEqualTo: uid)
-        // .orderBy('published-date', descending: false)
-        .snapshots()
-        .map(
-          (QuerySnapshot<Map<String, dynamic>> querySnapshot) => querySnapshot
-              .docs
-              .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
-            Map<String, dynamic> data = doc.data();
-            data['id'] = doc.id;
-            return Book.fromMap(data);
-          }).toList(),
+    return _bookCollection.where('user-uid', isEqualTo: uid).snapshots().map(
+          (QuerySnapshot<Map<String, dynamic>> querySnapshot) =>
+              querySnapshot.docs.map(
+            (QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+              Map<String, dynamic> data = doc.data();
+              data['id'] = doc.id;
+              return Book.fromMap(data);
+            },
+          ).toList(),
         );
   }
 
