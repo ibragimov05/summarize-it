@@ -43,6 +43,8 @@ class _SummarizeItState extends State<SummarizeIt> {
             onGenerateRoute: AppRouter.generateRoute,
             home: BlocBuilder<UserInfoBloc, UserInfoState>(
               builder: (context, state) {
+                debugPrint(
+                    'UserInfoBloc error in app.dart ${state.errorMessage}');
                 if (state.isLoading) {
                   return const SplashScreen();
                 } else {

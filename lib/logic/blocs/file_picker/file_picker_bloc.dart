@@ -28,7 +28,10 @@ class FilePickerBloc extends Bloc<FilePickerEvents, FilePickerStates> {
       final selectedFile =
           result != null ? File(result.files.single.path!) : null;
 
-      emit(LoadedFilePickerState(file: selectedFile));
+      emit(LoadedFilePickerState(
+        file: selectedFile,
+        filePath: result?.paths.first,
+      ));
     } catch (e) {
       emit(ErrorFilePickerState(error: e.toString()));
     }

@@ -69,4 +69,17 @@ class AppFunctions {
       )),
     );
   }
+
+  static String getGreetinsText() {
+    final int now = DateTime.now().hour;
+    if (now >= 5 && now < 12) {
+      return 'Good morning.';
+    } else if (now >= 12 && now <= 18) {
+      return 'Good afternoon.';
+    } else if (now > 18 || now < 4) {
+      return 'Good evening.';
+    } else {
+      return 'Greetings!';
+    }
+  }
 }

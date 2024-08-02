@@ -5,7 +5,6 @@ import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/book_pages.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/custom_slider.dart';
-import 'package:summarize_it/ui/screens/home/home_screen/widgets/greeting_message.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/helper_buttons.dart';
 import 'package:summarize_it/core/utils/ai_constants.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
@@ -17,6 +16,7 @@ import 'package:summarize_it/ui/screens/home/home_screen/widgets/loading_shimmer
 
 import '../../../../logic/blocs/user_info/user_info_bloc.dart';
 import 'widgets/clear_book_pages.dart';
+import 'widgets/greeting_message.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,13 +33,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final RoundedLoadingButtonController _openDocButtonController =
       RoundedLoadingButtonController();
 
-  String username = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: AppColors.summarizeItTransparent,
+        shadowColor: AppColors.summarizeItWhite,
         title: BlocBuilder<UserInfoBloc, UserInfoState>(
           builder: (context, state) {
             if (state.isLoading) {
@@ -59,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             AppTextStyles.workSansMain.copyWith(fontSize: 17),
                       ),
                       Text(
-                        'Good morning.',
+                        AppFunctions.getGreetinsText(),
                         style: AppTextStyles.workSansMain.copyWith(
                           fontSize: 13,
                           color: AppColors.greyscale400,
@@ -74,8 +73,56 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
+          Column(
+            children: [
+              //! book images
+              BlocConsumer<FilePickerBloc, FilePickerStates>(
+                listener: (context, state) {
+                  if (state is LoadedFilePickerState) {
+                    if (state.file != null) {
+                      context.read<PdfToImageBloc>().add(
+                            ConvertPdfToImageEvent(
+                              file: state.file!,
+                              buttonController:
+                                  RoundedLoadingButtonController(),
+                            ),
+                          );
+                    }
+                  }
+                },
+                builder: (context, state) {
+                  if (state is LoadedFilePickerState) {
+                    return Expanded(
+                      child: BlocBuilder<PdfToImageBloc, PdfToImageStates>(
+                        builder: (context, state) {
+                          if (state is ErrorPdfToImageState) {
+                            return Center(
+                              child: Text(state.error),
+                            );
+                          }
+
+                          if (state is LoadingPdfToImageState ||
+                              state is LoadedPdfToImageState) {
+                            final files = state is LoadedPdfToImageState
+                                ? state.files
+                                : (state as LoadingPdfToImageState).files;
+
+                            return BookPages(files: files);
+                          }
+
+                          return const SizedBox();
+                        },
+                      ),
+                    );
+                  }
+
+                  return const SizedBox();
+                },
+              ),
+            ],
+          ),
           //! welcome and summarize screen
           BlocConsumer<GenerativeAiBloc, GenerativeAiStates>(
             listener: (context, state) {
@@ -102,9 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (state is LoadedGenerativeAiState)
                           IconButton(
                             onPressed: () => Navigator.pushNamed(
-                              context,
-                              AppRouter.summaryScreen,
-                            ),
+                                context, AppRouter.summaryScreen),
                             icon: Icon(
                               AppFunctions.isAndroid()
                                   ? Icons.arrow_forward_rounded
@@ -114,121 +159,65 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     );
                   }
-                  return const Expanded(child: GreetingMessage());
+                  return const GreetingMessage();
                 },
               );
             },
           ),
-
-          //! book images
-          BlocConsumer<FilePickerBloc, FilePickerStates>(
-            listener: (context, state) {
-              if (state is LoadedFilePickerState) {
-                if (state.file != null) {
-                  context.read<PdfToImageBloc>().add(
-                        ConvertPdfToImageEvent(
-                          file: state.file!,
-                          buttonController: RoundedLoadingButtonController(),
-                        ),
-                      );
-                }
-              }
-            },
-            builder: (context, state) {
-              if (state is LoadedFilePickerState) {
-                return Expanded(
-                  child: BlocBuilder<PdfToImageBloc, PdfToImageStates>(
-                    builder: (context, state) {
-                      if (state is ErrorPdfToImageState) {
-                        return Center(
-                          child: Text(state.error),
-                        );
-                      }
-
-                      if (state is LoadingPdfToImageState ||
-                          state is LoadedPdfToImageState) {
-                        final files = state is LoadedPdfToImageState
-                            ? state.files
-                            : (state as LoadingPdfToImageState).files;
-
-                        return BookPages(files: files);
-                      }
-
-                      return const SizedBox();
-                    },
-                  ),
-                );
-              }
-
-              return const SizedBox();
-            },
-          ),
-
-          //! open documents && submit book
-          BlocBuilder<PdfToImageBloc, PdfToImageStates>(
-            builder: (context, state) {
-              return Container(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration:
-                    const BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: Colors.white,
-                    spreadRadius: 1,
-                    blurRadius: 25,
-                    offset: Offset(0, -10),
-                  ),
-                ]),
-                child: Column(
+        ],
+      ),
+      //! open documents && submit book
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: BlocBuilder<PdfToImageBloc, PdfToImageStates>(
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (state is LoadedPdfToImageState)
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (state is LoadedPdfToImageState)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              AppConstants.chooseSummaryLength,
-                              style: AppTextStyles.workSansMain.copyWith(),
-                            ),
-                          ),
-                          BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
-                            builder: (context, state) {
-                              return CustomSlider(
-                                onSliderValChanged:
-                                    state is LoadingGenerativeAiState
-                                        ? null
-                                        : (p0) => _summaryLength = p0,
-                              );
-                            },
-                          ),
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        AppConstants.chooseSummaryLength,
+                        style: AppTextStyles.workSansMain.copyWith(),
                       ),
-                    HelperButtons(
-                      openDocButtonController: _openDocButtonController,
-                      submitButtonController: _submitButtonController,
-                      onOpenDocTap: () {
-                        context.read<FilePickerBloc>().add(SelectFileEvent());
+                    ),
+                    BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
+                      builder: (context, state) {
+                        return CustomSlider(
+                          onSliderValChanged: state is LoadingGenerativeAiState
+                              ? null
+                              : (p0) => _summaryLength = p0,
+                        );
                       },
-                      onSubmitTap: state is LoadedPdfToImageState
-                          ? () {
-                              context.read<GenerativeAiBloc>().add(
-                                    SummarizeAiEvent(
-                                      files: state.files,
-                                      summaryLength: SummaryLength
-                                          .values[_summaryLength - 1],
-                                      buttonController: _submitButtonController,
-                                    ),
-                                  );
-                            }
-                          : null,
                     ),
                   ],
                 ),
-              );
-            },
-          ),
-        ],
+              HelperButtons(
+                openDocButtonController: _openDocButtonController,
+                submitButtonController: _submitButtonController,
+                onOpenDocTap: () {
+                  context.read<FilePickerBloc>().add(SelectFileEvent());
+                },
+                onSubmitTap: state is LoadedPdfToImageState
+                    ? () {
+                        context.read<GenerativeAiBloc>().add(
+                              SummarizeAiEvent(
+                                files: state.files,
+                                summaryLength:
+                                    SummaryLength.values[_summaryLength - 1],
+                                buttonController: _submitButtonController,
+                              ),
+                            );
+                      }
+                    : null,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
