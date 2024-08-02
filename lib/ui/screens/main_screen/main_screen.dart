@@ -27,12 +27,6 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    context.read<UserInfoBloc>().add(GetUserInfoEvent());
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<TabBoxCubit, int>(
       builder: (BuildContext context, int state) {

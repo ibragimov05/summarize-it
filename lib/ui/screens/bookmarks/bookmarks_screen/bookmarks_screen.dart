@@ -45,9 +45,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                 if (state is LoadingBookState) {
                   return const CustomCircularProgressIndicator();
                 } else if (state is ErrorBookState) {
-                  return Center(
-                    child: Text(state.message),
-                  );
+                  return Center(child: Text(state.message));
                 }
                 if (state is LoadedBookState) {
                   return state.books.isNotEmpty

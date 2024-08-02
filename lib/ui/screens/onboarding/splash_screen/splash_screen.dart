@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
+import 'package:summarize_it/core/utils/device_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,20 +21,18 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Lottie.asset(
+              'assets/lottie/loading_duck.json',
+              height: DeviceScreen.w(context) / 3,
+              width: DeviceScreen.w(context) / 3,
+            ),
             Text(
               AppConstants.summarizeIt,
               style: AppTextStyles.workSansMain.copyWith(
                 fontSize: 40,
                 color: AppColors.summarizeItWhite,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
               ),
-            ),
-            5.h(),
-            const CircularProgressIndicator(
-              backgroundColor: AppColors.green900,
-              color: AppColors.summarizeItWhite,
-              strokeAlign: 2,
-              strokeWidth: 5,
             ),
           ],
         ),

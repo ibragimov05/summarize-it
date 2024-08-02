@@ -9,21 +9,22 @@ class LoadingShimmerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
-        child: Row(
-          children: [
-            const CircleAvatar(backgroundColor: Colors.white),
-            5.w(),
-            Column(
-              children: [
-                _shimmerContainer(context),
-                5.h(),
-                _shimmerContainer(context),
-              ],
-            ),
-          ],
-        ));
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Row(
+        children: [
+          const CircleAvatar(backgroundColor: Colors.white),
+          5.w(),
+          Column(
+            children: [
+              _shimmerContainer(context),
+              5.h(),
+              _shimmerContainer(context),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _shimmerContainer(BuildContext context) => Container(

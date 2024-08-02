@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summarize_it/logic/blocs/user_info/user_info_bloc.dart';
+import 'package:summarize_it/ui/screens/onboarding/splash_screen/splash_screen.dart';
 import 'package:toastification/toastification.dart';
 
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
@@ -10,9 +12,14 @@ import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_router.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-class SummarizeIt extends StatelessWidget {
+class SummarizeIt extends StatefulWidget {
   const SummarizeIt({super.key});
 
+  @override
+  State<SummarizeIt> createState() => _SummarizeItState();
+}
+
+class _SummarizeItState extends State<SummarizeIt> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DarkThemeCubit, bool>(
@@ -34,12 +41,20 @@ class SummarizeIt extends StatelessWidget {
             darkTheme: ThemeData.dark(),
             themeMode: state ? ThemeMode.dark : ThemeMode.light,
             onGenerateRoute: AppRouter.generateRoute,
-            home: BlocBuilder<AuthBloc, AuthState>(
-              bloc: context.read<AuthBloc>()..add(WatchAuthEvent()),
+            home: BlocBuilder<UserInfoBloc, UserInfoState>(
               builder: (context, state) {
-                return state is AuthenticatedState
-                    ? const MainScreen()
-                    : const LoginScreen();
+                if (state.isLoading) {
+                  return const SplashScreen();
+                } else {
+                  return BlocBuilder<AuthBloc, AuthState>(
+                    bloc: context.read<AuthBloc>()..add(WatchAuthEvent()),
+                    builder: (context, state) {
+                      return state is AuthenticatedState
+                          ? const MainScreen()
+                          : const LoginScreen();
+                    },
+                  );
+                }
               },
             ),
           ),

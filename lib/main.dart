@@ -36,7 +36,6 @@ void main() async {
             firebaseBookService: firebaseBookService,
           ),
         ),
-        
       ],
       child: MultiBlocProvider(
         providers: [
@@ -47,7 +46,10 @@ void main() async {
                   )),
           BlocProvider(
             create: (BuildContext context) =>
-                UserInfoBloc(userRepository: context.read<UserRepository>()),
+                UserInfoBloc(userRepository: context.read<UserRepository>())
+                  ..add(
+                    GetUserInfoEvent(),
+                  ),
           ),
           BlocProvider(create: (BuildContext context) => DarkThemeCubit()),
           BlocProvider(create: (BuildContext context) => TabBoxCubit()),
