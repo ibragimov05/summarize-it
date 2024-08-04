@@ -12,9 +12,8 @@ import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/core/utils/app_router.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/ui/screens/home/home_screen/widgets/loading_shimmer_widget.dart';
+import 'package:summarize_it/ui/widgets/loading_shimmer_widget.dart';
 
-import '../../../../logic/blocs/user_info/user_info_bloc.dart';
 import 'widgets/clear_book_pages.dart';
 import 'widgets/greeting_message.dart';
 
@@ -42,20 +41,21 @@ class _HomeScreenState extends State<HomeScreen> {
         title: BlocBuilder<UserInfoBloc, UserInfoState>(
           builder: (context, state) {
             if (state.isLoading) {
-              return const LoadingShimmerWidget();
+              return const LoadingShimmerWidget(isProfileScreen: false);
             }
-            return SizedBox(
-              child: Row(
-                children: [
-                  const CircleAvatar(backgroundColor: AppColors.green900),
-                  5.w(),
-                  Column(
+            return Row(
+              children: [
+                const CircleAvatar(backgroundColor: AppColors.green900),
+                5.w(),
+                Flexible(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Hi, ${state.firstName ?? 'unnamed'}",
                         style:
                             AppTextStyles.workSansMain.copyWith(fontSize: 17),
+                        overflow: TextOverflow.ellipsis, // Prevents overflow
                       ),
                       Text(
                         AppFunctions.getGreetinsText(),
@@ -64,11 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: AppColors.greyscale400,
                           fontWeight: FontWeight.w400,
                         ),
+                        overflow: TextOverflow.ellipsis, // Prevents overflow
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           },
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:summarize_it/logic/blocs/user_info/user_info_bloc.dart';
 import 'package:summarize_it/logic/cubits/tab_box_cubit/tab_box_cubit.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/bookmarks_screen.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/home_screen.dart';
@@ -24,6 +25,12 @@ class _MainScreenState extends State<MainScreen> {
     BookmarksScreen(),
     ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserInfoBloc>().add(GetUserInfoEvent());
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -13,8 +13,6 @@ import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-import '../../../../logic/blocs/user_info/user_info_bloc.dart';
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -155,16 +153,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
                         _buttonController.start();
-                        context.read<AuthBloc>().add(RegisterUserEvent(
-                              firstName:
-                                  _textControllers[AppConstants.firstName]!
-                                      .text,
-                              secondName:
-                                  _textControllers[AppConstants.lastName]!.text,
-                              email: _textControllers[AppConstants.email]!.text,
-                              password:
-                                  _textControllers[AppConstants.password]!.text,
-                            ));
+                        context.read<AuthBloc>().add(
+                              RegisterUserEvent(
+                                firstName:
+                                    _textControllers[AppConstants.firstName]!
+                                        .text,
+                                secondName:
+                                    _textControllers[AppConstants.lastName]!
+                                        .text,
+                                email:
+                                    _textControllers[AppConstants.email]!.text,
+                                password:
+                                    _textControllers[AppConstants.password]!
+                                        .text,
+                              ),
+                            );
                       }
                     },
                   ),

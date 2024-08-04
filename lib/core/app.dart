@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/logic/blocs/user_info/user_info_bloc.dart';
-import 'package:summarize_it/ui/screens/onboarding/splash_screen/splash_screen.dart';
 import 'package:toastification/toastification.dart';
 
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
@@ -41,22 +39,12 @@ class _SummarizeItState extends State<SummarizeIt> {
             darkTheme: ThemeData.dark(),
             themeMode: state ? ThemeMode.dark : ThemeMode.light,
             onGenerateRoute: AppRouter.generateRoute,
-            home: BlocBuilder<UserInfoBloc, UserInfoState>(
+            home: BlocBuilder<AuthBloc, AuthState>(
+              bloc: context.read<AuthBloc>()..add(WatchAuthEvent()),
               builder: (context, state) {
-                debugPrint(
-                    'UserInfoBloc error in app.dart ${state.errorMessage}');
-                if (state.isLoading) {
-                  return const SplashScreen();
-                } else {
-                  return BlocBuilder<AuthBloc, AuthState>(
-                    bloc: context.read<AuthBloc>()..add(WatchAuthEvent()),
-                    builder: (context, state) {
-                      return state is AuthenticatedState
-                          ? const MainScreen()
-                          : const LoginScreen();
-                    },
-                  );
-                }
+                return state is AuthenticatedState
+                    ? const MainScreen()
+                    : const LoginScreen();
               },
             ),
           ),

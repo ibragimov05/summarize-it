@@ -9,6 +9,7 @@ import 'package:summarize_it/logic/blocs/auth/auth_bloc.dart';
 import 'package:summarize_it/logic/cubits/dark_theme/dark_theme_cubit.dart';
 import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/custom_list_tile.dart';
 import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/title_text.dart';
+import 'package:summarize_it/ui/widgets/loading_shimmer_widget.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../logic/blocs/user_info/user_info_bloc.dart';
@@ -25,33 +26,25 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      const CircleAvatar(backgroundColor: AppColors.green900),
-                      5.w(),
-                      BlocBuilder<UserInfoBloc, UserInfoState>(
-                        builder: (context, state) {
-                          return Text(
-                            "${state.firstName}",
-                            style: AppTextStyles.workSansMain
-                                .copyWith(fontSize: 18),
-                          );
-                        },
+            BlocBuilder<UserInfoBloc, UserInfoState>(
+              builder: (context, state) {
+                if (state.isLoading) {
+                  return const LoadingShimmerWidget(isProfileScreen: true);
+                }
+                return Row(
+                  children: [
+                    const CircleAvatar(backgroundColor: AppColors.green900),
+                    5.w(),
+                    Expanded(
+                      child: Text(
+                        state.firstName ?? 'unnamed',
+                        style:
+                            AppTextStyles.workSansMain.copyWith(fontSize: 18),
                       ),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(LogoutEvent());
-                  },
-                  icon: const Icon(Icons.logout),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
             Expanded(
               child: ListView(
@@ -125,7 +118,13 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            IconButton(
+              onPressed: () {
+                context.read<AuthBloc>().add(LogoutEvent());
+              },
+              icon: const Icon(Icons.logout),
+            ),
           ],
         ),
       ),

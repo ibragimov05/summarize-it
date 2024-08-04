@@ -4,3 +4,4 @@ export 'generative_ai/generative_ai_bloc.dart';
 export 'books/books_bloc.dart';
 export 'observer/all_observer.dart';
 export 'auth/auth_bloc.dart';
+export 'user_info/user_info_bloc.dart';
