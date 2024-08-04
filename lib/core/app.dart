@@ -24,7 +24,7 @@ class _SummarizeItState extends State<SummarizeIt> {
       builder: (context, state) {
         return ToastificationWrapper(
           child: MaterialApp(
-            debugShowCheckedModeBanner: false,
+            debugShowCheckedModeBanner: true,
             theme: ThemeData(
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: AppColors.green900,
