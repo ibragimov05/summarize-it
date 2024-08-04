@@ -31,8 +31,8 @@ class BookPages extends StatelessWidget {
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) =>
-                          BookImageWidget(bookPath: state.filePath!),
+                      builder: (context) => BookImageWidget(
+                          pressedPageIndex: index, bookPath: state.filePath!),
                     ),
                   );
                 }

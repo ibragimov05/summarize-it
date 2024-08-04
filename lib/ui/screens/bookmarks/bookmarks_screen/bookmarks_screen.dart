@@ -40,41 +40,40 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
           Expanded(
             child: BlocBuilder<BooksBloc, BooksState>(
               bloc: context.read<BooksBloc>()
-                ..add(
-                    GetBookEvent(uid: FirebaseAuth.instance.currentUser!.uid)),
+                ..add(GetBookEvent(
+                  uid: FirebaseAuth.instance.currentUser!.uid,
+                )),
               builder: (context, state) {
                 if (state is LoadingBookState) {
                   return const CustomCircularProgressIndicator();
                 } else if (state is ErrorBookState) {
                   return Center(child: Text(state.message));
                 }
-                if (state is LoadedBookState ||
-                    state is LoadedSearchBookState) {
-                  final List<Book> books = state is LoadedBookState
-                      ? state.books
-                      : (state as LoadedSearchBookState).books;
-                  return Column(
-                    children: [
-                      if (books.isNotEmpty || state is LoadedSearchBookState)
-                        SearchBooksTextField(books: books),
-                      Expanded(
-                        child: FadingEdgeScrollView.fromScrollView(
-                          gradientFractionOnStart: 0.3,
-                          child: ListView.builder(
-                            controller: _scrollController,
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              right: 16,
-                              top: 10,
-                            ),
-                            itemCount: books.length,
-                            itemBuilder: (context, index) =>
-                                ShowSummaryWidget(book: books[index]),
-                          ),
-                        ),
-                      )
-                    ],
-                  );
+                if (state is LoadedBookState) {
+                  final List<Book> books = state.books;
+                  return books.isNotEmpty
+                      ? Column(
+                          children: [
+                            SearchBooksTextField(books: books),
+                            Expanded(
+                              child: FadingEdgeScrollView.fromScrollView(
+                                gradientFractionOnStart: 0.3,
+                                child: ListView.builder(
+                                  controller: _scrollController,
+                                  padding: const EdgeInsets.only(
+                                    left: 16,
+                                    right: 16,
+                                    top: 10,
+                                  ),
+                                  itemCount: books.length,
+                                  itemBuilder: (context, index) =>
+                                      ShowSummaryWidget(book: books[index]),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      : _noSavedBooks();
                 }
                 return _noSavedBooks();
               },

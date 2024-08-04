@@ -15,12 +15,6 @@ final class LoadedBookState extends BooksState {
 
 final class AddBookSuccessState extends BooksState {}
 
-final class LoadedSearchBookState extends BooksState {
-  final List<Book> books;
-
-  LoadedSearchBookState({required this.books});
-}
-
 final class ErrorBookState extends BooksState {
   final String message;
 

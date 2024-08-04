@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
@@ -126,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocConsumer<GenerativeAiBloc, GenerativeAiStates>(
             listener: (context, state) {
               if (state is LoadedGenerativeAiState) {
+                Vibrate.vibrate();
                 Navigator.pushNamed(context, AppRouter.summaryScreen);
               } else if (state is ErrorGenerativeAiState) {
                 debugPrint(

@@ -58,7 +58,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
               .contains(event.bookName.toLowerCase()))
           .toList();
 
-      emit(LoadedSearchBookState(books: books));
+      emit(LoadedBookState(books: books));
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));
     }
