@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
@@ -16,7 +15,7 @@ import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/ui/widgets/loading_shimmer_widget.dart';
 
 import 'widgets/clear_book_pages.dart';
-import 'widgets/greeting_message.dart';
+import 'widgets/home_screen_main_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,14 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
       RoundedLoadingButtonController();
   final RoundedLoadingButtonController _openDocButtonController =
       RoundedLoadingButtonController();
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<BooksBloc>().add(GetBookEvent(
-          uid: FirebaseAuth.instance.currentUser!.uid,
-        ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     );
                   }
-                  return const GreetingMessage();
+                  return const HomeScreenMainWidget();
                 },
               );
             },

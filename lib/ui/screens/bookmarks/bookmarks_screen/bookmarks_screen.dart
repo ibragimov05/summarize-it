@@ -1,6 +1,6 @@
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import 'package:summarize_it/core/utils/app_assets.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
@@ -10,7 +10,7 @@ import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/search
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/show_summary_widget.dart';
 import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
 
-import '../../../../core/utils/device_screen.dart';
+import '../../../widgets/animation_widget_with_bloc.dart';
 
 class BookmarksScreen extends StatefulWidget {
   const BookmarksScreen({super.key});
@@ -20,6 +20,7 @@ class BookmarksScreen extends StatefulWidget {
 }
 
 class _BookmarksScreenState extends State<BookmarksScreen> {
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,15 +49,20 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                           children: [
                             SearchBooksTextField(books: state.books),
                             Expanded(
-                              child: ListView.builder(
-                                padding: const EdgeInsets.only(
-                                  left: 16,
-                                  right: 16,
-                                  top: 10,
+                              child: FadingEdgeScrollView.fromScrollView(
+                                gradientFractionOnStart: 0.3,
+                                child: ListView.builder(
+                                  controller: _scrollController,
+                                  padding: const EdgeInsets.only(
+                                    left: 16,
+                                    right: 16,
+                                    top: 10,
+                                  ),
+                                  itemCount: state.books.length,
+                                  itemBuilder: (context, index) =>
+                                      ShowSummaryWidget(
+                                          book: state.books[index]),
                                 ),
-                                itemCount: state.books.length,
-                                itemBuilder: (context, index) =>
-                                    ShowSummaryWidget(book: state.books[index]),
                               ),
                             )
                           ],
@@ -75,11 +81,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
   Widget _noSavedBooks() => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset(
-            AppAssets.lottieDuck,
-            height: DeviceScreen.w(context) / 2.5,
-            width: DeviceScreen.w(context) / 2.5,
-          ),
+          const AnimationWidgetWithBloc(animationPath: AppAssets.lottieDuck),
           Center(
             child: Text(
               AppConstants.noSavedBooks,

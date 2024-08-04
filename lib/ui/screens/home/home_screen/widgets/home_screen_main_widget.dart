@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summarize_it/core/utils/app_assets.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
@@ -12,16 +13,18 @@ import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/show_s
 import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
 
 import '../../../../../data/models/book.dart';
+import '../../../../widgets/animation_widget_with_bloc.dart';
 
-class GreetingMessage extends StatefulWidget {
-  const GreetingMessage({super.key});
+class HomeScreenMainWidget extends StatefulWidget {
+  const HomeScreenMainWidget({super.key});
 
   @override
-  State<GreetingMessage> createState() => _GreetingMessageState();
+  State<HomeScreenMainWidget> createState() => _HomeScreenMainWidgetState();
 }
 
-class _GreetingMessageState extends State<GreetingMessage> {
+class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
   final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -106,14 +109,20 @@ class _GreetingMessageState extends State<GreetingMessage> {
             ],
           ),
         ),
-        BlocBuilder<BooksBloc, BooksState>(
+        BlocConsumer<BooksBloc, BooksState>(
+          listener: (context, state) {
+            if (state is ErrorBookState) {
+              AppFunctions.showErrorSnackBar(
+                  context, 'Something went wrong! Please try again');
+            }
+          },
           builder: (context, state) {
             if (state is LoadedBookState) {
               List<Book> pastSevenDaySummaries =
                   AppFunctions.getPast7DaysSummaries(books: state.books);
-              return pastSevenDaySummaries.isNotEmpty
-                  ? Expanded(
-                      child: FadingEdgeScrollView.fromScrollView(
+              return Expanded(
+                child: pastSevenDaySummaries.isNotEmpty
+                    ? FadingEdgeScrollView.fromScrollView(
                         gradientFractionOnStart: 0.3,
                         child: ListView.builder(
                           padding: const EdgeInsets.only(
@@ -128,12 +137,18 @@ class _GreetingMessageState extends State<GreetingMessage> {
                             isDismissible: false,
                           ),
                         ),
+                      )
+                    : const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AnimationWidgetWithBloc(
+                              animationPath: AppAssets.lottieSearch,
+                            ),
+                             Text(AppConstants.noSummaryFound),
+                          ],
+                        ),
                       ),
-                    )
-                  : const Center(child: Text('No summaries found'));
-            } else if (state is ErrorBookState) {
-              return Center(
-                child: Text(state.message),
               );
             }
             return const CustomCircularProgressIndicator();

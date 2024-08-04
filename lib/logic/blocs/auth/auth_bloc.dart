@@ -64,6 +64,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(LoadingAuthState());
     try {
       HiveConstants.box.delete(HiveConstants.userInfo);
+      HiveConstants.box.delete(HiveConstants.isDark);
+      HiveConstants.box.delete(HiveConstants.showAnimations);
       await _authRepository.logout();
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));

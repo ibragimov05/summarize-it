@@ -58,7 +58,7 @@ class ShowSummaryWidget extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: AppColors.green900.withOpacity(0.05),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: isDismissible ? null : BorderRadius.circular(12),
           ),
           child: Stack(
             children: [
@@ -68,11 +68,11 @@ class ShowSummaryWidget extends StatelessWidget {
                 child: Container(
                   height: 18,
                   width: 18,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.green500,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
+                      topLeft: const Radius.circular(15),
+                      bottomRight: Radius.circular(isDismissible ? 0 : 15),
                     ),
                   ),
                 ),

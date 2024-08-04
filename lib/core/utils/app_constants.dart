@@ -66,6 +66,7 @@ class AppConstants {
   static const String register = 'Register';
 
   static bool themeValue = false;
+  static bool animationValue = false;
 
   /// summary screen
   static const String noResultsFound = 'No results found! Sorry :(';
@@ -77,6 +78,8 @@ class AppConstants {
   static const String chooseSummaryLength = 'Choose summary length';
   static const String clearScreen = 'Clear screen from book pages';
   static const String infoAboutBook = 'Info about book';
+  static const String noSummaryFound =
+      'Summary not found. You can add a new one by summarizing the book.';
 
   static const String bookFacts = 'Facts about book:';
   static const String awesome = 'Awesome!';
@@ -94,4 +97,5 @@ class AppConstants {
   static const String changePassword = 'Change password';
   static const String language = 'Language';
   static const String darkMode = 'Dark mode';
+  static const String animations = 'Animations';
 }

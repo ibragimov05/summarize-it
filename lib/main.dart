@@ -49,6 +49,7 @@ void main() async {
                   ..add(GetUserInfoEvent()),
           ),
           BlocProvider(create: (BuildContext context) => DarkThemeCubit()),
+          BlocProvider(create: (BuildContext context) => AnimationCubit()),
           BlocProvider(create: (BuildContext context) => TabBoxCubit()),
           BlocProvider(create: (BuildContext context) => FilePickerBloc()),
           BlocProvider(create: (BuildContext context) => PdfToImageBloc()),

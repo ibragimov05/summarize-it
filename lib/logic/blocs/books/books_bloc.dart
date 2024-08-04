@@ -54,12 +54,14 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     try {
       if (event.bookName.trim().isEmpty) {
         emit(LoadedBookState(books: event.books));
+        
       } else {
         final books = event.books
             .where((element) => element.title
                 .toLowerCase()
                 .contains(event.bookName.toLowerCase()))
             .toList();
+        
         emit(LoadedBookState(books: books));
       }
     } catch (e) {

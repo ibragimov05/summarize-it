@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:summarize_it/core/utils/device_screen.dart';
+import 'package:summarize_it/ui/widgets/animation_widget_with_bloc.dart';
+
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset(
-            'assets/lottie/search.json',
-            width: DeviceScreen.w(context) / 2.5,
-            height: DeviceScreen.w(context) / 2.5,
-          ),
-          const Text(
+          AnimationWidgetWithBloc(animationPath: 'assets/lottie/search.json'),
+          Text(
             'Search screen',
             style: TextStyle(
               fontSize: 20,

@@ -11,7 +11,8 @@ import 'package:summarize_it/logic/blocs/observer/all_observer.dart';
 class AppSettings {
   static Future<void> setUp() async {
     await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform);
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     await dotenv.load(fileName: '.env');
     await Hive.initFlutter();
 
@@ -20,6 +21,8 @@ class AppSettings {
 
     AppConstants.themeValue =
         HiveConstants.box.get(HiveConstants.isDark) ?? false;
+    AppConstants.animationValue =
+        HiveConstants.box.get(HiveConstants.showAnimations) ?? true;
 
     Bloc.observer = AppBlocObserver();
   }

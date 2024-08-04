@@ -20,6 +20,9 @@ class AppAssets {
   static const String icoMoon = 'assets/icons/profile/moon.svg';
   static const String icoSun = 'assets/icons/profile/sun.svg';
   static const String icoInfo = 'assets/icons/profile/info.svg';
+  static const String tickCircle = 'assets/icons/profile/tick-circle.svg';
 
   static const String lottieDuck = 'assets/lottie/duck.json';
+  static const String lottieSearch = 'assets/lottie/search.json';
+
 }

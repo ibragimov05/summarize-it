@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -33,7 +34,7 @@ class AudioCubit extends Cubit<bool> {
         emit(false);
       });
     } catch (e) {
-      // Handle error, possibly emit an error state
+      debugPrint('error audio cubit: $e');
     }
   }
 
