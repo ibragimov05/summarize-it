@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/logic/blocs/file_picker/file_picker_bloc.dart';
-import 'package:summarize_it/ui/screens/home/home_screen/widgets/book_image_widget.dart';
+import 'package:summarize_it/ui/screens/home/pdf_view_screen/pdf_view_screen.dart';
 
 import '../../../../../core/utils/device_screen.dart';
 
@@ -31,7 +31,7 @@ class BookPages extends StatelessWidget {
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) => BookImageWidget(
+                      builder: (context) => PdfViewScreen(
                           pressedPageIndex: index, bookPath: state.filePath!),
                     ),
                   );

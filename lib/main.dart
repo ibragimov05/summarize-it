@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/app_settings.dart';
 import 'package:summarize_it/core/app.dart';
+import 'package:summarize_it/logic/cubits/pdf_page_cubit/pdf_page_cubit.dart';
 
 import 'data/repositories/all_repositories.dart';
 import 'data/services/all_services.dart';
@@ -58,6 +59,7 @@ void main() async {
             create: (BuildContext context) =>
                 BooksBloc(bookRepository: context.read<BooksRepository>()),
           ),
+          BlocProvider(create: (BuildContext context) => PdfPageCubit()),
         ],
         child: const SummarizeIt(),
       ),
