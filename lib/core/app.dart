@@ -26,6 +26,11 @@ class _SummarizeItState extends State<SummarizeIt> {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              textSelectionTheme: TextSelectionThemeData(
+                cursorColor: AppColors.green900,
+                selectionColor: AppColors.green900.withOpacity(0.1),
+                selectionHandleColor: AppColors.green900,
+              ),
               scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
               appBarTheme: AppBarTheme(
                 backgroundColor: AppColors.summarizeItWhite,

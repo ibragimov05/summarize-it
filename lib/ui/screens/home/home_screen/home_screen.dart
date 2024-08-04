@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
@@ -33,38 +34,44 @@ class _HomeScreenState extends State<HomeScreen> {
       RoundedLoadingButtonController();
 
   @override
+  void initState() {
+    super.initState();
+    context.read<BooksBloc>().add(GetBookEvent(
+          uid: FirebaseAuth.instance.currentUser!.uid,
+        ));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: AppColors.summarizeItTransparent,
-        shadowColor: AppColors.summarizeItWhite,
         title: BlocBuilder<UserInfoBloc, UserInfoState>(
           builder: (context, state) {
             if (state.isLoading) {
-              return const LoadingShimmerWidget(isProfileScreen: false);
+              return const LoadingShimmerWidget();
             }
             return Row(
               children: [
-                const CircleAvatar(backgroundColor: AppColors.green900),
-                5.w(),
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hi, ${state.firstName ?? 'unnamed'}",
-                        style:
-                            AppTextStyles.workSansMain.copyWith(fontSize: 17),
-                        overflow: TextOverflow.ellipsis, // Prevents overflow
+                        "Hi, ${state.firstName?.capitalize() ?? 'unnamed'}",
+                        style: AppTextStyles.workSansMain.copyWith(
+                          fontSize: 17,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        AppFunctions.getGreetinsText(),
+                        AppFunctions.getGreetinsText,
                         style: AppTextStyles.workSansMain.copyWith(
                           fontSize: 13,
                           color: AppColors.greyscale400,
                           fontWeight: FontWeight.w400,
                         ),
-                        overflow: TextOverflow.ellipsis, // Prevents overflow
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

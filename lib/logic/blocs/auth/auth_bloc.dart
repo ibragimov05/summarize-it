@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,6 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         super(InitialAuthState()) {
     on<LoginUserEvent>(_loginUser);
     on<RegisterUserEvent>(_onRegisterUser);
+    on<ResetPasswordEvent>(_onResetPassword);
     on<LogoutEvent>(_onLogoutUser);
     on<WatchAuthEvent>(_onWatchAuth);
   }
@@ -52,6 +54,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(ErrorAuthState(errorMessage: e.toString()));
     }
   }
+
+  void _onResetPassword(ResetPasswordEvent event, Emitter<AuthState> emit) =>
+      _authRepository.resetPassword(
+        email: FirebaseAuth.instance.currentUser?.email ?? 'null',
+      );
 
   void _onLogoutUser(LogoutEvent event, Emitter<AuthState> emit) async {
     emit(LoadingAuthState());

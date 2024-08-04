@@ -11,39 +11,74 @@ import 'package:summarize_it/logic/blocs/all_blocs.dart';
 
 class ShowSummaryWidget extends StatelessWidget {
   final Book book;
+  final bool isDismissible;
 
-  const ShowSummaryWidget({super.key, required this.book});
+  const ShowSummaryWidget({
+    super.key,
+    required this.book,
+    this.isDismissible = true,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Dismissible(
-            behavior: HitTestBehavior.translucent,
-            direction: DismissDirection.endToStart,
-            key: Key(book.id),
-            background: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              color: AppColors.error400,
-              alignment: Alignment.centerRight,
-              child: SvgPicture.asset('assets/icons/trash.svg'),
-            ),
-            onDismissed: (direction) {
-              context.read<BooksBloc>().add(DeleteBookEvent(id: book.id));
-            },
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(
-                context,
-                AppRouter.bookmarkedSummaryScreen,
-                arguments: book,
+        if (isDismissible)
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Dismissible(
+              behavior: HitTestBehavior.translucent,
+              direction: DismissDirection.endToStart,
+              key: Key(book.id),
+              background: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                color: AppColors.error400,
+                alignment: Alignment.centerRight,
+                child: SvgPicture.asset('assets/icons/trash.svg'),
               ),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppColors.green900.withOpacity(0.05),
+              onDismissed: (direction) {
+                context.read<BooksBloc>().add(DeleteBookEvent(id: book.id));
+              },
+              child: _summaryWidget(context),
+            ),
+          )
+        else
+          _summaryWidget(context),
+        15.h(),
+      ],
+    );
+  }
+
+  Widget _summaryWidget(BuildContext context) => GestureDetector(
+        onTap: () => Navigator.pushNamed(
+          context,
+          AppRouter.bookmarkedSummaryScreen,
+          arguments: book,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.green900.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Container(
+                  height: 18,
+                  width: 18,
+                  decoration: const BoxDecoration(
+                    color: AppColors.green500,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    ),
+                  ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -92,11 +127,8 @@ class ShowSummaryWidget extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
+            ],
           ),
         ),
-        15.h(),
-      ],
-    );
-  }
+      );
 }

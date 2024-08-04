@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/data/models/book.dart';
 
 class AppFunctions {
   static bool isAndroid() {
@@ -70,7 +72,7 @@ class AppFunctions {
     );
   }
 
-  static String getGreetinsText() {
+  static String get getGreetinsText {
     final int now = DateTime.now().hour;
     if (now >= 5 && now < 12) {
       return 'Good morning.';
@@ -82,4 +84,20 @@ class AppFunctions {
       return 'Greetings!';
     }
   }
+
+  static List<Book> getPast7DaysSummaries({required List<Book> books}) {
+    final DateTime sevenDaysBackDate = DateTime.now().subtract(
+      const Duration(days: 7),
+    );
+    final List<Book> result = [];
+    for (var book in books) {
+      if (book.summaryAddedDate.toDate().isAfter(sevenDaysBackDate)) {
+        result.add(book);
+      }
+    }
+    return result;
+  }
+
+  static double get randomNumber =>
+      -50 + Random().nextInt(50 - -50 + 1).toDouble();
 }

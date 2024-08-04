@@ -7,7 +7,8 @@ class BooksRepository {
   BooksRepository({required FirebaseBookService firebaseBookService})
       : _firebaseBookService = firebaseBookService;
 
-  Stream<List<Book>> getBooks({required String uid}) => _firebaseBookService.getBooks(uid);
+  Stream<List<Book>> getBooks({required String uid}) =>
+      _firebaseBookService.getBooks(uid);
 
   void addBook(Book book) => _firebaseBookService.addBok(book);
 

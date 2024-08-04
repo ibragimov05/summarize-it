@@ -6,6 +6,7 @@ import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/icon_with
 class CustomListTile extends StatelessWidget {
   final String icoPath;
   final String text;
+  final bool shouldAddArrow;
   final void Function() onTap;
 
   const CustomListTile({
@@ -13,6 +14,7 @@ class CustomListTile extends StatelessWidget {
     required this.icoPath,
     required this.text,
     required this.onTap,
+    this.shouldAddArrow = false,
   });
 
   @override
@@ -37,7 +39,10 @@ class CustomListTile extends StatelessWidget {
                 ),
               ],
             ),
-            const Icon(Icons.arrow_forward_ios_rounded),
+            if (shouldAddArrow)
+              const Icon(Icons.arrow_forward_ios_rounded)
+            else
+              const SizedBox(),
           ],
         ),
       ),

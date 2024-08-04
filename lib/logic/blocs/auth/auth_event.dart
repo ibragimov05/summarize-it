@@ -24,6 +24,8 @@ final class RegisterUserEvent extends AuthEvent {
   });
 }
 
+final class ResetPasswordEvent extends AuthEvent {}
+
 final class WatchAuthEvent extends AuthEvent {}
 
 final class LogoutEvent extends AuthEvent {}
