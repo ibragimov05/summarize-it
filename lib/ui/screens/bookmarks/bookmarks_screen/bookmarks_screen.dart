@@ -1,10 +1,12 @@
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/core/utils/app_assets.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/data/models/book.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/search_books_text_field.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/show_summary_widget.dart';
@@ -37,37 +39,42 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
           ),
           Expanded(
             child: BlocBuilder<BooksBloc, BooksState>(
+              bloc: context.read<BooksBloc>()
+                ..add(
+                    GetBookEvent(uid: FirebaseAuth.instance.currentUser!.uid)),
               builder: (context, state) {
                 if (state is LoadingBookState) {
                   return const CustomCircularProgressIndicator();
                 } else if (state is ErrorBookState) {
                   return Center(child: Text(state.message));
                 }
-                if (state is LoadedBookState) {
-                  return state.books.isNotEmpty
-                      ? Column(
-                          children: [
-                            SearchBooksTextField(books: state.books),
-                            Expanded(
-                              child: FadingEdgeScrollView.fromScrollView(
-                                gradientFractionOnStart: 0.3,
-                                child: ListView.builder(
-                                  controller: _scrollController,
-                                  padding: const EdgeInsets.only(
-                                    left: 16,
-                                    right: 16,
-                                    top: 10,
-                                  ),
-                                  itemCount: state.books.length,
-                                  itemBuilder: (context, index) =>
-                                      ShowSummaryWidget(
-                                          book: state.books[index]),
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      : _noSavedBooks();
+                if (state is LoadedBookState ||
+                    state is LoadedSearchBookState) {
+                  final List<Book> books = state is LoadedBookState
+                      ? state.books
+                      : (state as LoadedSearchBookState).books;
+                  return Column(
+                    children: [
+                      if (books.isNotEmpty || state is LoadedSearchBookState)
+                        SearchBooksTextField(books: books),
+                      Expanded(
+                        child: FadingEdgeScrollView.fromScrollView(
+                          gradientFractionOnStart: 0.3,
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            padding: const EdgeInsets.only(
+                              left: 16,
+                              right: 16,
+                              top: 10,
+                            ),
+                            itemCount: books.length,
+                            itemBuilder: (context, index) =>
+                                ShowSummaryWidget(book: books[index]),
+                          ),
+                        ),
+                      )
+                    ],
+                  );
                 }
                 return _noSavedBooks();
               },

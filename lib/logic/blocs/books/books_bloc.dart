@@ -52,18 +52,13 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
 
   void _searchBook(SearchBookEvent event, Emitter<BooksState> emit) {
     try {
-      if (event.bookName.trim().isEmpty) {
-        emit(LoadedBookState(books: event.books));
-        
-      } else {
-        final books = event.books
-            .where((element) => element.title
-                .toLowerCase()
-                .contains(event.bookName.toLowerCase()))
-            .toList();
-        
-        emit(LoadedBookState(books: books));
-      }
+      final books = event.books
+          .where((element) => element.title
+              .toLowerCase()
+              .contains(event.bookName.toLowerCase()))
+          .toList();
+
+      emit(LoadedSearchBookState(books: books));
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));
     }

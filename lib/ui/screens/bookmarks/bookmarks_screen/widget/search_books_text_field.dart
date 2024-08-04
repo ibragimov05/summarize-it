@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,14 +23,20 @@ class _SearchBooksTextFieldState extends State<SearchBooksTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final bookBloc = context.read<BooksBloc>();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
         controller: _textEditingController,
         onChanged: (String value) {
-          context.read<BooksBloc>().add(
-                SearchBookEvent(bookName: value, books: widget.books),
-              );
+          if (value.trim().isEmpty) {
+            bookBloc
+                .add(GetBookEvent(uid: FirebaseAuth.instance.currentUser!.uid));
+          } else {
+            context.read<BooksBloc>().add(
+                  SearchBookEvent(bookName: value, books: widget.books),
+                );
+          }
         },
         style: AppTextStyles.workSansMain,
         decoration: InputDecoration(
