@@ -7,10 +7,11 @@ import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/device_screen.dart';
 import 'package:summarize_it/logic/blocs/books/books_bloc.dart';
 import 'package:summarize_it/logic/cubits/all_cubit.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/show_summary_widget.dart';
-import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
+import 'package:summarize_it/ui/screens/home/home_screen/widgets/recent_summaries_shimmer_widget.dart';
 
 import '../../../../../data/models/book.dart';
 import '../../../../widgets/animation_widget_with_bloc.dart';
@@ -138,19 +139,29 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                           ),
                         ),
                       )
-                    : const Center(
+                    : Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            AnimationWidgetWithBloc(
+                            const AnimationWidgetWithBloc(
                               animationPath: AppAssets.lottieSearch,
                             ),
-                            Text(AppConstants.noSummaryFound),
+                            SizedBox(
+                              width: DeviceScreen.w(context) / 1.3,
+                              child: Text(
+                                AppConstants.noSummaryFound,
+                                style: AppTextStyles.workSansW600.copyWith(
+                                  fontSize: 16,
+                                  color: AppColors.green800,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ],
                         ),
                       );
               }
-              return const CustomCircularProgressIndicator();
+              return const RecentSummariesShimmerWidget();
             },
           ),
         ),
