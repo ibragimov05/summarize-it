@@ -16,7 +16,6 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     on<GetBookEvent>(_getBooks);
     on<AddBookEvent>(_addBook);
     on<DeleteBookEvent>(_deleteBook);
-    on<SearchBookEvent>(_searchBook);
   }
 
   void _getBooks(GetBookEvent event, Emitter<BooksState> emit) async {
@@ -45,20 +44,6 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   void _deleteBook(DeleteBookEvent event, Emitter<BooksState> emit) {
     try {
       _bookRepository.deleteBook(event.id);
-    } catch (e) {
-      emit(ErrorBookState(message: e.toString()));
-    }
-  }
-
-  void _searchBook(SearchBookEvent event, Emitter<BooksState> emit) {
-    try {
-      final books = event.books
-          .where((element) => element.title
-              .toLowerCase()
-              .contains(event.bookName.toLowerCase()))
-          .toList();
-
-      emit(LoadedBookState(books: books));
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));
     }

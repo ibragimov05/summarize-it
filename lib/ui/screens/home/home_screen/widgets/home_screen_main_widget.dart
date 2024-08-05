@@ -109,19 +109,19 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
             ],
           ),
         ),
-        BlocConsumer<BooksBloc, BooksState>(
-          listener: (context, state) {
-            if (state is ErrorBookState) {
-              AppFunctions.showErrorSnackBar(
-                  context, 'Something went wrong! Please try again');
-            }
-          },
-          builder: (context, state) {
-            if (state is LoadedBookState) {
-              List<Book> pastSevenDaySummaries =
-                  AppFunctions.getPast7DaysSummaries(books: state.books);
-              return Expanded(
-                child: pastSevenDaySummaries.isNotEmpty
+        Expanded(
+          child: BlocConsumer<BooksBloc, BooksState>(
+            listener: (context, state) {
+              if (state is ErrorBookState) {
+                AppFunctions.showErrorSnackBar(
+                    context, 'Something went wrong! Please try again');
+              }
+            },
+            builder: (context, state) {
+              if (state is LoadedBookState) {
+                List<Book> pastSevenDaySummaries =
+                    AppFunctions.getPast7DaysSummaries(books: state.books);
+                return pastSevenDaySummaries.isNotEmpty
                     ? FadingEdgeScrollView.fromScrollView(
                         gradientFractionOnStart: 0.3,
                         child: ListView.builder(
@@ -145,14 +145,14 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                             AnimationWidgetWithBloc(
                               animationPath: AppAssets.lottieSearch,
                             ),
-                             Text(AppConstants.noSummaryFound),
+                            Text(AppConstants.noSummaryFound),
                           ],
                         ),
-                      ),
-              );
-            }
-            return const CustomCircularProgressIndicator();
-          },
+                      );
+              }
+              return const CustomCircularProgressIndicator();
+            },
+          ),
         ),
       ],
     );

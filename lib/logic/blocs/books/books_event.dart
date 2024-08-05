@@ -21,10 +21,3 @@ final class DeleteBookEvent extends BooksEvent {
 
   DeleteBookEvent({required this.id});
 }
-
-final class SearchBookEvent extends BooksEvent {
-  final String bookName;
-  final List<Book> books;
-
-  SearchBookEvent({required this.bookName, required this.books});
-}
