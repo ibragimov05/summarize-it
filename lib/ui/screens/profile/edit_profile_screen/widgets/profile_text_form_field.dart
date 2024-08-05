@@ -68,6 +68,9 @@ class _ProfileTextFormFieldState extends State<ProfileTextFormField> {
               borderSide:
                   const BorderSide(color: AppColors.error900, width: 1.5),
             ),
+            errorStyle: AppTextStyles.workSansW500.copyWith(
+              color: AppColors.error900,
+            ),
             hoverColor: Colors.red,
           ),
           controller: widget.textEditingController,

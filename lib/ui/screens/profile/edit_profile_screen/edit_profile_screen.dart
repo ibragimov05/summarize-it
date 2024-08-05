@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/app_functions.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/ui/screens/profile/edit_profile_screen/widgets/profile_text_form_field.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
-import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
-import 'package:summarize_it/ui/widgets/regular_button.dart';
+import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
 
 import '../../../../logic/blocs/user_info/user_info_bloc.dart';
+import '/core/utils/all_utils.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -24,6 +23,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
 
+  final RoundedLoadingButtonController _buttonController =
+      RoundedLoadingButtonController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,52 +35,71 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: BlocBuilder<UserInfoBloc, UserInfoState>(
-          builder: (context, state) {
-            if (state.isLoading) {
-              return const CustomCircularProgressIndicator();
-            } else {
-              _firstNameTextController.text = state.firstName ?? 'unnamed';
-              _secondNameTextController.text = state.lastName ?? 'unnamed';
-              _emailTextController.text = state.email ?? 'email';
-              return Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        ProfileTextFormField(
-                          labelText: 'First name',
-                          textEditingController: _firstNameTextController,
-                          validator: (p0) =>
-                              AppFunctions.textValidator(p0, 'first name'),
-                        ),
-                        ProfileTextFormField(
-                          labelText: 'Second name',
-                          textEditingController: _secondNameTextController,
-                          validator: (p0) =>
-                              AppFunctions.textValidator(p0, 'second name'),
-                        ),
-                        ProfileTextFormField(
-                          labelText: 'Email',
-                          textEditingController: _emailTextController,
-                          validator: (p0) => null,
-                          isEnabled: false,
-                        ),
-                      ],
-                    ),
-                    RegularButton(
-                      w: double.infinity,
-                      buttonLabel: 'Save changes',
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {}
-                      },
-                    ),
-                  ],
-                ),
+        child: BlocConsumer<UserInfoBloc, UserInfoState>(
+          buildWhen: (previous, current) =>
+              previous.isLoading != current.isLoading && !current.isLoading,
+          listener: (context, state) {
+            if (!state.isLoading) {
+              _buttonController.reset();
+              Navigator.of(context).pop();
+              AppFunctions.showToast(
+                message: AppConstants.infoChangedSuccessfully,
+                context: context,
               );
             }
+          },
+          builder: (context, state) {
+            _firstNameTextController.text = state.firstName ?? 'unnamed';
+            _secondNameTextController.text = state.lastName ?? 'unnamed';
+            _emailTextController.text = state.email ?? 'email';
+            return Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      ProfileTextFormField(
+                        labelText: 'First name',
+                        isEnabled: state.isLoading ? false : true,
+                        textEditingController: _firstNameTextController,
+                        validator: (p0) =>
+                            AppFunctions.textValidator(p0, 'first name'),
+                      ),
+                      ProfileTextFormField(
+                        labelText: 'Second name',
+                        isEnabled: state.isLoading ? false : true,
+                        textEditingController: _secondNameTextController,
+                        validator: (p0) =>
+                            AppFunctions.textValidator(p0, 'second name'),
+                      ),
+                      ProfileTextFormField(
+                        labelText: 'Email',
+                        textEditingController: _emailTextController,
+                        validator: (p0) => null,
+                        isEnabled: false,
+                      ),
+                    ],
+                  ),
+                  CustomMainGreenButton(
+                    w: DeviceScreen.w(context),
+                    buttonText: 'Save changes',
+                    buttonController: _buttonController,
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        _buttonController.start();
+                        context.read<UserInfoBloc>().add(EditUserInfoEvent(
+                              newFirstName: _firstNameTextController.text,
+                              newSecondName: _secondNameTextController.text,
+                            ));
+                      } else {
+                        _buttonController.reset();
+                      }
+                    },
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ),
