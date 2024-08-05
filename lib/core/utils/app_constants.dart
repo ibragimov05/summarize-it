@@ -100,4 +100,5 @@ class AppConstants {
   static const String language = 'Language';
   static const String darkMode = 'Dark mode';
   static const String animations = 'Animations';
+  static const String infoChangedSuccessfully = 'Your informations has been changed successfully';
 }

@@ -1,3 +1,4 @@
+import '../models/app_response.dart';
 import '../models/user_model.dart';
 import '../services/dio/user_dio_service.dart';
 
@@ -24,5 +25,16 @@ class UserRepository {
         lastName: lastName,
         email: email,
         uid: uid,
+      );
+
+  Future<AppResponse> editUserInfo({
+    required String userId,
+    required String firstName,
+    required String secondName,
+  }) =>
+      _userDioService.editUserInfo(
+        userId: userId,
+        firstName: firstName,
+        secondName: secondName,
       );
 }

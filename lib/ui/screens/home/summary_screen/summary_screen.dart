@@ -2,15 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:summarize_it/core/utils/app_functions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/regular_button.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/device_screen.dart';
 
+import '../../../../core/utils/all_utils.dart';
 import '../../../widgets/audio_play_pause_widget.dart';
 
 class SummaryScreen extends StatefulWidget {

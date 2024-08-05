@@ -38,4 +38,17 @@ final class UserInfoState {
       isLoading: isLoading ?? this.isLoading,
     );
   }
+
+  @override
+  String toString() {
+    return """
+$id,
+$uid,
+$firstName,
+$lastName,
+$email,
+$errorMessage + '--------------------------------------------------',
+$isLoading,
+""";
+  }
 }

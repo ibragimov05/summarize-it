@@ -11,3 +11,10 @@ final class AddUserInfoEvent extends UserInfoEvents {
 
   AddUserInfoEvent({required this.email, required this.uid});
 }
+
+final class EditUserInfoEvent extends UserInfoEvents {
+  final String newFirstName;
+  final String newSecondName;
+
+  EditUserInfoEvent({required this.newFirstName, required this.newSecondName});
+}

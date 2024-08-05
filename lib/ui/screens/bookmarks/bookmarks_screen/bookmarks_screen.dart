@@ -1,16 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/core/utils/app_assets.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/data/models/book.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/found_books_widget.dart';
 import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
 
 import '../../../widgets/animation_widget_with_bloc.dart';
+import '../../../../core/utils/all_utils.dart';
 
 class BookmarksScreen extends StatefulWidget {
   const BookmarksScreen({super.key});
@@ -36,10 +32,6 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
           ),
           Expanded(
             child: BlocBuilder<BooksBloc, BooksState>(
-              bloc: context.read<BooksBloc>()
-                ..add(GetBookEvent(
-                  uid: FirebaseAuth.instance.currentUser!.uid,
-                )),
               builder: (context, state) {
                 if (state is LoadingBookState) {
                   return const CustomCircularProgressIndicator();

@@ -2,19 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/book_pages.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/custom_slider.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/helper_buttons.dart';
-import 'package:summarize_it/core/utils/ai_constants.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/app_functions.dart';
-import 'package:summarize_it/core/utils/app_router.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/ui/widgets/loading_shimmer_widget.dart';
 
+import '../../../../core/utils/all_utils.dart';
 import 'widgets/clear_book_pages.dart';
 import 'widgets/home_screen_main_widget.dart';
 

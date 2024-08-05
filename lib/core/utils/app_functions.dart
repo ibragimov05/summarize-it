@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/data/models/book.dart';
+import 'package:toastification/toastification.dart';
 
 class AppFunctions {
   static bool isAndroid() {
@@ -96,6 +97,17 @@ class AppFunctions {
       }
     }
     return result;
+  }
+
+  static showToast({required String message, required BuildContext context}) {
+    toastification.show(
+      context: context,
+      type: ToastificationType.success,
+      autoCloseDuration: const Duration(seconds: 5),
+      description: Text(message, style: AppTextStyles.workSansW500),
+      icon: const Icon(Icons.error),
+      closeButtonShowType: CloseButtonShowType.onHover,
+    );
   }
 
   static double get randomNumber =>

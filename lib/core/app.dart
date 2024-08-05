@@ -4,7 +4,7 @@ import 'package:toastification/toastification.dart';
 
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/logic/cubits/dark_theme/dark_theme_cubit.dart';
-import 'package:summarize_it/ui/screens/onboarding/login_screen/login_screen.dart';
+import 'package:summarize_it/ui/screens/auth/login_screen/login_screen.dart';
 import 'package:summarize_it/ui/screens/main_screen/main_screen.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_router.dart';

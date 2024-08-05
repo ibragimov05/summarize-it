@@ -14,6 +14,7 @@ class DioClient {
   static final _singletonConstructor = DioClient._private();
 
   factory DioClient() => _singletonConstructor;
+
   Future<Response> getAudioDownloadUrl(String text) async {
     final response = await _dio.post(
       'https://api.v7.unrealspeech.com/speech',
@@ -73,5 +74,19 @@ class DioClient {
     );
 
     return response;
+  }
+
+  Future<Response> updateData({
+    required String url,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      final response = await _dio.put(url, data: data);
+      return response;
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

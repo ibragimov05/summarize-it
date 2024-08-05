@@ -60,7 +60,7 @@ class _PdfViewScreenState extends State<PdfViewScreen> {
               builder: (context, state) {
                 return Center(
                   child: Text(
-                    'Page ${state["currentPage"] ?? 0 + 1} out of ${state["totalPages"] ?? 0}',
+                    'Page ${state["currentPage"]! + 1} out of ${state["totalPages"] ?? 0}',
                     style: AppTextStyles.workSansW600.copyWith(
                       color: AppColors.green900,
                     ),

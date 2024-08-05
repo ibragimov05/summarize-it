@@ -2,19 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
-import 'package:summarize_it/ui/screens/onboarding/login_screen/widgets/login_screen_text.dart';
+import 'package:summarize_it/ui/screens/auth/login_screen/widgets/login_screen_text.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
 import 'package:summarize_it/ui/widgets/custom_text_field.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/app_functions.dart';
-import 'package:summarize_it/core/utils/app_router.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../../../core/utils/device_screen.dart';
+import '../../../../core/utils/all_utils.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

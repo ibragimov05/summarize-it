@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart' as f;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
 import 'package:summarize_it/core/network/dio_client.dart';
+import 'package:summarize_it/data/models/app_response.dart';
 import 'package:summarize_it/data/models/user_model.dart';
 
 class UserDioService {
@@ -81,6 +82,35 @@ class UserDioService {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future<AppResponse> editUserInfo({
+    required String userId,
+    required String firstName,
+    required String secondName,
+  }) async {
+    final AppResponse appResponse = AppResponse();
+
+    try {
+      final String idToken = await _getIdToken() ?? '';
+      final String url =
+          '$_baseUrl/$_firebaseCustomKey/users/$userId.json?auth=$idToken';
+
+      appResponse.data = await _dio.updateData(url: url, data: {
+        'first-name': firstName,
+        'last-name': secondName,
+      });
+      appResponse.isSuccess = true;
+      return appResponse;
+    } catch (e) {
+      if (e is DioException) {
+        appResponse.errorMessage = "${e.response?.data["message"]}";
+        appResponse.errorStatusCode = e.response?.statusCode;
+      } else {
+        appResponse.errorMessage = e.toString();
+      }
+      return appResponse;
     }
   }
 
