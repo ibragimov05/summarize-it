@@ -4,7 +4,6 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/logic/cubits/all_cubit.dart';
-import 'package:summarize_it/logic/cubits/pdf_page_cubit/pdf_page_cubit.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 
 class PdfViewScreen extends StatefulWidget {

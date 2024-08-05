@@ -15,26 +15,32 @@ class DioClient {
 
   factory DioClient() => _singletonConstructor;
 
-  Future<Response> getAudioDownloadUrl(String text) async {
-    final response = await _dio.post(
-      'https://api.v7.unrealspeech.com/speech',
-      data: {
-        'Text': text,
-        'VoiceId': 'Dan',
-        'Bitrate': '192k',
-        'Speed': '0',
-        'Pitch': '1',
-        'TimestampType': 'sentence',
-      },
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer ${dotenv.get('UNREAL_SPEECH_KEY')}',
-          'x-rapid-api-host': 'open-ai-text-to-speech1.p.rapidapi.com',
-          'Content-Type': 'application/json',
+  Future<Response> getAudioDownloadUrl({required String summary}) async {
+    try {
+      final response = await _dio.post(
+        'https://api.v7.unrealspeech.com/speech',
+        data: {
+          'Text': summary,
+          'VoiceId': 'Dan',
+          'Bitrate': '192k',
+          'Speed': '0',
+          'Pitch': '1',
+          'TimestampType': 'sentence',
         },
-      ),
-    );
-    return response;
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${dotenv.get('UNREAL_SPEECH_KEY')}',
+            'x-rapid-api-host': 'open-ai-text-to-speech1.p.rapidapi.com',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      return response;
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<Response> get({

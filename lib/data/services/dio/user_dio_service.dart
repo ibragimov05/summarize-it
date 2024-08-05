@@ -102,7 +102,6 @@ class UserDioService {
         'last-name': secondName,
       });
       appResponse.isSuccess = true;
-      return appResponse;
     } catch (e) {
       if (e is DioException) {
         appResponse.errorMessage = "${e.response?.data["message"]}";
@@ -110,8 +109,8 @@ class UserDioService {
       } else {
         appResponse.errorMessage = e.toString();
       }
-      return appResponse;
     }
+    return appResponse;
   }
 
   Future<String?> _getIdToken() async {

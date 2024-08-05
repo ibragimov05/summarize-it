@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/logic/cubits/audio/audio_cubit.dart';
+
+import '../../logic/cubits/audio_cubit/audio_cubit.dart';
 
 class AudioPlayPauseWidget extends StatelessWidget {
   final String summary;
