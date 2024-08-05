@@ -1,5 +1,7 @@
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
+import 'package:summarize_it/core/utils/app_constants.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/data/models/book.dart';
 
 import 'search_books_text_field.dart';
@@ -45,10 +47,11 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
           },
         ),
         Expanded(
-          child: FadingEdgeScrollView.fromScrollView(
-            gradientFractionOnStart: 0.3,
-            child: ListView.builder(
-              controller: _scrollController,
+          child: _booksList.isNotEmpty
+              ? FadingEdgeScrollView.fromScrollView(
+                  gradientFractionOnStart: 0.3,
+                  child: ListView.builder(
+                    controller: _scrollController,
               padding: const EdgeInsets.only(
                 left: 16,
                 right: 16,
@@ -58,8 +61,14 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
               itemBuilder: (context, index) =>
                   ShowSummaryWidget(book: _booksList[index]),
             ),
-          ),
-        )
+                )
+              : Center(
+                  child: Text(
+                    AppConstants.noBooksFoundMatchingQuery,
+                    style: AppTextStyles.workSansW600.copyWith(fontSize: 15),
+                  ),
+                ),
+        ),
       ],
     );
   }

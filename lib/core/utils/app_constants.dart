@@ -86,6 +86,8 @@ class AppConstants {
 
   static const String noSavedBooks = 'There is no saved books';
   static const String bookmarks = 'Bookmarks';
+  static const String noBooksFoundMatchingQuery =
+      'No books were found matching your query.';
 
   /// profile screen
   static const String profileInfo = 'Profile info';
