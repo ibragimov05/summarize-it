@@ -49,14 +49,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  audio_session:
-    dependency: transitive
-    description:
-      name: audio_session
-      sha256: "343e83bc7809fbda2591a49e525d6b63213ade10c76f15813be9aed6657b3261"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.21"
   bloc:
     dependency: "direct main"
     description:
@@ -209,22 +201,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  connectivity_plus:
-    dependency: "direct main"
-    description:
-      name: connectivity_plus
-      sha256: "3e7d1d9dbae40ae82cbe6c23c518f0c4ffe32764ee9749b9a99d32cbac8734f6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.4"
-  connectivity_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: connectivity_plus_platform_interface
-      sha256: "42657c1715d48b167930d5f34d00222ac100475f73d10162ddf43e714932f204"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   convert:
     dependency: transitive
     description:
@@ -265,14 +241,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.6"
-  dbus:
-    dependency: transitive
-    description:
-      name: dbus
-      sha256: "365c771ac3b0e58845f39ec6deebc76e3276aa9922b0cc60840712094d9047ac"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.10"
   dio:
     dependency: "direct main"
     description:
@@ -289,22 +257,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  easy_localization:
-    dependency: "direct main"
-    description:
-      name: easy_localization
-      sha256: fa59bcdbbb911a764aa6acf96bbb6fa7a5cf8234354fc45ec1a43a0349ef0201
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.7"
-  easy_logger:
-    dependency: transitive
-    description:
-      name: easy_logger
-      sha256: c764a6e024846f33405a2342caf91c62e357c24b02c04dbc712ef232bf30ffb7
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   equatable:
     dependency: transitive
     description:
@@ -401,30 +353,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.17.4"
-  firebase_storage:
-    dependency: "direct main"
-    description:
-      name: firebase_storage
-      sha256: ef5c4dee182ea60774b1fa65984674586ec48d3df2b872545c6e9e01e6d26160
-      url: "https://pub.dev"
-    source: hosted
-    version: "12.1.2"
-  firebase_storage_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_storage_platform_interface
-      sha256: "889db34d0369f7c0f3b40af058d6e1ea5a6622e0a4592483bf5923327071f5d0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.27"
-  firebase_storage_web:
-    dependency: transitive
-    description:
-      name: firebase_storage_web
-      sha256: "95aeed3265f5aacee98f8ede842bae5b34360fe8a5f09b2a811688f3ac7f7c99"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.9.12"
   fixnum:
     dependency: transitive
     description:
@@ -462,11 +390,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
-  flutter_localizations:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   flutter_markdown:
     dependency: "direct main"
     description:
@@ -653,30 +576,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
-  just_audio:
-    dependency: "direct main"
-    description:
-      name: just_audio
-      sha256: ee50602364ba83fa6308f5512dd560c713ec3e1f2bc75f0db43618f0d82ef71a
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.39"
-  just_audio_platform_interface:
-    dependency: transitive
-    description:
-      name: just_audio_platform_interface
-      sha256: "0243828cce503c8366cc2090cefb2b3c871aa8ed2f520670d76fd47aa1ab2790"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.3.0"
-  just_audio_web:
-    dependency: transitive
-    description:
-      name: just_audio_web
-      sha256: "0edb481ad4aa1ff38f8c40f1a3576013c3420bf6669b686fe661627d49bc606c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.11"
   leak_tracker:
     dependency: transitive
     description:
@@ -773,14 +672,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  nm:
-    dependency: transitive
-    description:
-      name: nm
-      sha256: "2c9aae4127bdc8993206464fcc063611e0e36e72018696cd9631023a31b24254"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.0"
   package_config:
     dependency: transitive
     description:
@@ -941,62 +832,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
-  shared_preferences:
-    dependency: transitive
-    description:
-      name: shared_preferences
-      sha256: c272f9cabca5a81adc9b0894381e9c1def363e980f960fa903c604c471b22f68
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
-  shared_preferences_android:
-    dependency: transitive
-    description:
-      name: shared_preferences_android
-      sha256: "041be4d9d2dc6079cf342bc8b761b03787e3b71192d658220a56cac9c04a0294"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0"
-  shared_preferences_foundation:
-    dependency: transitive
-    description:
-      name: shared_preferences_foundation
-      sha256: "671e7a931f55a08aa45be2a13fe7247f2a41237897df434b30d2012388191833"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.0"
-  shared_preferences_linux:
-    dependency: transitive
-    description:
-      name: shared_preferences_linux
-      sha256: "2ba0510d3017f91655b7543e9ee46d48619de2a2af38e5c790423f7007c7ccc1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
-  shared_preferences_platform_interface:
-    dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      sha256: "57cbf196c486bc2cf1f02b85784932c6094376284b3ad5779d1b1c6c6a816b80"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shared_preferences_web:
-    dependency: transitive
-    description:
-      name: shared_preferences_web
-      sha256: "59dc807b94d29d52ddbb1b3c0d3b9d0a67fc535a64e62a5542c8db0513fcb6c2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shared_preferences_windows:
-    dependency: transitive
-    description:
-      name: shared_preferences_windows
-      sha256: "398084b47b7f92110683cac45c6dc4aae853db47e470e5ddcd52cab7f7196ab2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
   shelf:
     dependency: transitive
     description:
