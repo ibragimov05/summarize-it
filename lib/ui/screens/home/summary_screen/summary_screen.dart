@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
         surfaceTintColor: AppColors.summarizeItTransparent,
         shadowColor: AppColors.summarizeItWhite,
         leading: const ArrowBackButton(),
-        title: const Text(AppConstants.summaryOfBook),
+        title: Text(context.tr('summaryOfBook')),
         actions: [
           BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
             builder: (context, state) {
@@ -38,7 +39,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                       builder: (context) => BookInfoDialog(book: state.book),
                     );
                   },
-                  tooltip: AppConstants.infoAboutBook,
+                  tooltip: context.tr('infoAboutBook'),
                   icon: const Icon(Icons.info_outline),
                 );
               }
@@ -60,8 +61,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
               ),
             );
           }
-          return const Center(
-            child: Text(AppConstants.noResultsFound),
+          return Center(
+            child: Text(context.tr('noResultsFound')),
           );
         },
       ),
@@ -92,7 +93,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                       }
                       return RegularButton(
                         w: DeviceScreen.w(context) / 1.5,
-                        buttonLabel: AppConstants.save,
+                        buttonLabel: context.tr('save'),
                         onTap: () => context.read<BooksBloc>().add(AddBookEvent(
                               book: state.book,
                               userID: FirebaseAuth.instance.currentUser!.uid,

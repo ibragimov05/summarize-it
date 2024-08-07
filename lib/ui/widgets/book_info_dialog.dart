@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
@@ -14,7 +15,6 @@ class BookInfoDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-
       title: Text(
         book.title,
         style: AppTextStyles.workSansMain.copyWith(
@@ -42,7 +42,7 @@ class BookInfoDialog extends StatelessWidget {
           ),
           10.h(),
           Text(
-            AppConstants.bookFacts,
+            context.tr('bookFacts'),
             style: AppTextStyles.workSansMain.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 15,
@@ -68,7 +68,7 @@ class BookInfoDialog extends StatelessWidget {
           ),
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
-            AppConstants.awesome,
+            context.tr('awesome'),
             style: AppTextStyles.workSansMain.copyWith(
               color: AppColors.green900,
             ),

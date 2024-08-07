@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/core/utils/app_assets.dart';
@@ -27,25 +28,25 @@ class ProfileScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  const TitleText(text: AppConstants.profileInfo),
+                  TitleText(text: context.tr("profileInfo")),
                   CustomListTile(
                     icoPath: AppAssets.icoUser,
-                    text: AppConstants.profile,
+                    text: context.tr("profile"),
                     shouldAddArrow: true,
                     onTap: () {
                       Navigator.pushNamed(context, AppRouter.editProfileScreen);
                     },
                   ),
-                  const TitleText(text: AppConstants.security),
+                  TitleText(text: context.tr("security")),
                   CustomListTile(
                     icoPath: AppAssets.icoKey,
-                    text: AppConstants.changePassword,
+                    text: context.tr("changePassword"),
                     shouldAddArrow: true,
                     onTap: () {},
                   ),
                   CustomListTile(
                     icoPath: AppAssets.icoLock,
-                    text: AppConstants.forgotPassword,
+                    text: context.tr("forgotPassword"),
                     onTap: () {
                       context.read<AuthBloc>().add(ResetPasswordEvent());
                       AppFunctions.showSnackBar(
@@ -54,10 +55,10 @@ class ProfileScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  const TitleText(text: AppConstants.general),
+                  TitleText(text: context.tr("general")),
                   CustomListTile(
                     icoPath: AppAssets.icoLanguageCircle,
-                    text: AppConstants.language,
+                    text: context.tr("language"),
                     shouldAddArrow: true,
                     onTap: () {},
                   ),
@@ -65,7 +66,7 @@ class ProfileScreen extends StatelessWidget {
                     builder: (context, state) {
                       return SettingsToggleRow(
                         icoPath: AppAssets.icoMoon,
-                        text: AppConstants.darkMode,
+                        text: context.tr("darkMode"),
                         value: state,
                         onChanged: (value) =>
                             context.read<DarkThemeCubit>().toggleTheme(),
@@ -76,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                     builder: (context, state) {
                       return SettingsToggleRow(
                         icoPath: AppAssets.tickCircle,
-                        text: AppConstants.animations,
+                        text: context.tr("animations"),
                         value: state,
                         onChanged: (value) => context
                             .read<AnimationCubit>()
@@ -84,10 +85,10 @@ class ProfileScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  const TitleText(text: AppConstants.about),
+                  TitleText(text: context.tr("about")),
                   CustomListTile(
                     icoPath: AppAssets.icoInfo,
-                    text: AppConstants.helpAndSupport,
+                    text: context.tr("helpAndSupport"),
                     onTap: () {},
                   ),
                 ],

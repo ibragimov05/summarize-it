@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
@@ -29,7 +30,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         //     email: _emailTextController.text);
         if (mounted) {
           AppFunctions.showSnackBar(
-              context, AppConstants.resetPasswordEmailSent);
+              context, context.tr('resetPasswordEmailSent'));
           _emailTextController.clear();
           _buttonController.reset();
         }
@@ -63,11 +64,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    AppConstants.forgotPassword,
+                    context.tr('forgotPassword'),
                     style: AppTextStyles.workSansMain.copyWith(fontSize: 24),
                   ),
                   Text(
-                    AppConstants.recoverYourAccountPassword,
+                    context.tr('recoverYourAccountPassword'),
                     style: AppTextStyles.workSansMain.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -82,7 +83,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 10),
               child: Text(
-                AppConstants.email,
+                context.tr('email'),
                 style: AppTextStyles.workSansMain.copyWith(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -93,7 +94,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             Form(
               key: _formKey,
               child: CustomTextFormField(
-                hintText: AppConstants.hintTextEmail,
+                hintText: context.tr('hintTextEmail'),
                 isObscure: false,
                 validator: AppFunctions.emailValidator,
                 isKeyboardDone: true,
@@ -110,7 +111,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: CustomMainGreenButton(
           buttonController: _buttonController,
-          buttonText: AppConstants.continueText,
+          buttonText: context.tr('continueText'),
           onTap: _onContinueTap,
         ),
       ),

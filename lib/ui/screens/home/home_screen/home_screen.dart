@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
@@ -44,14 +45,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hi, ${state.firstName?.capitalize() ?? 'unnamed'}",
+                        context.tr('hi', namedArgs: {
+                          'name': state.firstName?.capitalize() ?? 'unnamed'
+                        }),
                         style: AppTextStyles.workSansMain.copyWith(
                           fontSize: 17,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        AppFunctions.getGreetinsText,
+                        context.tr(AppFunctions.getGreetinsText),
                         style: AppTextStyles.workSansMain.copyWith(
                           fontSize: 13,
                           color: AppColors.greyscale400,
@@ -128,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     '<-----> error GenerativeAiBloc: ${state.message} <----->');
                 AppFunctions.showErrorSnackBar(
                   context,
-                  'Something went wrong. Please, try again!',
+                  context.tr('somethingWentWrong'),
                 );
               }
             },
@@ -176,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        AppConstants.chooseSummaryLength,
+                        context.tr('chooseSummaryLength'),
                         style: AppTextStyles.workSansMain.copyWith(),
                       ),
                     ),

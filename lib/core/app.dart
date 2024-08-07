@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
-
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/logic/cubits/dark_theme/dark_theme_cubit.dart';
 import 'package:summarize_it/ui/screens/auth/login_screen/login_screen.dart';
@@ -25,6 +25,9 @@ class _SummarizeItState extends State<SummarizeIt> {
         return ToastificationWrapper(
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
             theme: ThemeData(
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: AppColors.green900,

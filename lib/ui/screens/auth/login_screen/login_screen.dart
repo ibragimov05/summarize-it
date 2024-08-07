@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
+import 'package:summarize_it/main.dart';
 import 'package:summarize_it/ui/screens/auth/login_screen/widgets/login_screen_text.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
 import 'package:summarize_it/ui/widgets/custom_text_field.dart';
@@ -46,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    AppConstants.welcomeBack,
+                    context.tr('welcomeBack'),
                     style: AppTextStyles.workSansMain.copyWith(
                       fontSize: 25,
                       color: AppColors.summarizeItWhite,
@@ -84,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0),
                     child: Text(
-                      AppConstants.signIn,
+                      context.tr('signIn'),
                       style: AppTextStyles.workSansMain.copyWith(fontSize: 25),
                     ),
                   ),
@@ -140,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () => Navigator.pushNamed(
                                 context, AppRouter.forgotPassword),
                             child: Text(
-                              AppConstants.forgotPassword,
+                              context.tr('forgotPassword'),
                               style: AppTextStyles.workSansMain.copyWith(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
@@ -182,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     builder: (context, state) {
                       return CustomMainGreenButton(
-                        buttonText: AppConstants.signIn,
+                        buttonText: context.tr('signIn'),
                         buttonController: _roundedLoadingButtonController,
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
@@ -204,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        AppConstants.doNotHaveAnAccount,
+                        context.tr('doNotHaveAnAccount'),
                         style: AppTextStyles.workSansMain.copyWith(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -216,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () =>
                             Navigator.pushNamed(context, AppRouter.signUp),
                         child: Text(
-                          AppConstants.signUp,
+                          context.tr('signUp'),
                           style: AppTextStyles.workSansMain.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,

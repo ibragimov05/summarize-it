@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
@@ -31,7 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const ArrowBackButton(),
-        title: const Text(AppConstants.profile),
+        title:  Text(context.tr('profile')),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -43,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               _buttonController.reset();
               Navigator.of(context).pop();
               AppFunctions.showToast(
-                message: AppConstants.infoChangedSuccessfully,
+                message: context.tr('infoChangedSuccessfully'),
                 context: context,
               );
             }

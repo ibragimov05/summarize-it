@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
+import 'package:summarize_it/main.dart';
 import 'package:summarize_it/ui/screens/auth/sign_up_screen/widgets/sign_up_text_style.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
@@ -25,29 +27,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final RoundedLoadingButtonController _buttonController =
       RoundedLoadingButtonController();
 
-  final Map<String, TextEditingController> _textControllers = {
-    AppConstants.firstName: TextEditingController(),
-    AppConstants.lastName: TextEditingController(),
-    AppConstants.email: TextEditingController(),
-    AppConstants.password: TextEditingController(),
-    AppConstants.confirmPassword: TextEditingController(),
-  };
+  final _firstNameTextController = TextEditingController();
+  final _lastNameTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+  final _confirmPasswordTextController = TextEditingController();
 
   String? _confirmPasswordValidator(String? password) {
     if (password == null || password.trim().isEmpty) {
       return 'Please, enter your password';
-    } else if (_textControllers[AppConstants.password]!.text !=
-        _textControllers[AppConstants.confirmPassword]!.text) {
+    } else if (_passwordTextController.text !=
+        _confirmPasswordTextController.text) {
       return 'Password should be similar';
     } else {
       return null;
     }
-  }
-
-  @override
-  void dispose() {
-    _textControllers.forEach((key, controller) => controller.dispose());
-    super.dispose();
   }
 
   @override
@@ -64,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         appBar: AppBar(
           surfaceTintColor: AppColors.summarizeItTransparent,
           leading: const ArrowBackButton(),
-          title: const Text(AppConstants.signUp),
+          title: Text(context.tr('signUp')),
         ),
         body: Form(
           key: _formKey,
@@ -73,59 +67,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
             padding: const EdgeInsets.only(top: 5, right: 20, left: 20),
             children: <Widget>[
               Text(
-                AppConstants.completeYourAccount,
+                context.tr('completeYourAccount'),
                 style: AppTextStyles.workSansMain.copyWith(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
-              const SignUpTextStyle(text: AppConstants.firstName),
+              SignUpTextStyle(text: context.tr('firstName')),
               CustomTextFormField(
-                hintText: AppConstants.hintTextFirstName,
+                hintText: context.tr('hintTextFirstName'),
                 isObscure: false,
                 validator: (String? text) => AppFunctions.textValidator(
-                    text, AppConstants.firstName.toLowerCase()),
+                    text, context.tr('firstName').toLowerCase()),
                 isKeyboardDone: false,
                 textInputType: TextInputType.text,
-                textEditingController:
-                    _textControllers[AppConstants.firstName]!,
+                textEditingController: _firstNameTextController,
               ),
-              const SignUpTextStyle(text: AppConstants.lastName),
+              SignUpTextStyle(text: context.tr('lastName')),
               CustomTextFormField(
-                hintText: AppConstants.hintTextLastName,
+                hintText: context.tr('hintTextLastName'),
                 isObscure: false,
                 validator: (String? text) => AppFunctions.textValidator(
-                    text, AppConstants.lastName.toLowerCase()),
+                    text, context.tr('lastName').toLowerCase()),
                 isKeyboardDone: false,
                 textInputType: TextInputType.text,
-                textEditingController: _textControllers[AppConstants.lastName]!,
+                textEditingController: _lastNameTextController,
               ),
-              const SignUpTextStyle(text: AppConstants.email),
+              SignUpTextStyle(text: context.tr('email')),
               CustomTextFormField(
-                hintText: AppConstants.hintTextEmail,
+                hintText: context.tr('hintTextEmail'),
                 isObscure: false,
                 validator: AppFunctions.emailValidator,
                 isKeyboardDone: false,
                 textInputType: TextInputType.emailAddress,
-                textEditingController: _textControllers[AppConstants.email]!,
+                textEditingController: _emailTextController,
               ),
-              const SignUpTextStyle(text: AppConstants.password),
+              SignUpTextStyle(text: context.tr('password')),
               CustomTextFormField(
-                hintText: AppConstants.hintTextPassword,
+                hintText: context.tr('hintTextPassword'),
                 isObscure: true,
                 validator: (String? password) =>
                     AppFunctions.passwordValidator(password, true),
                 isKeyboardDone: false,
                 textInputType: TextInputType.text,
-                textEditingController: _textControllers[AppConstants.password]!,
+                textEditingController: _passwordTextController,
               ),
-              const SignUpTextStyle(text: AppConstants.confirmPassword),
+              SignUpTextStyle(text: context.tr('confirmPassword')),
               CustomTextFormField(
-                hintText: AppConstants.hintTextConfirmPassword,
+                hintText: context.tr('hintTextConfirmPassword'),
                 isObscure: true,
                 validator: _confirmPasswordValidator,
                 isKeyboardDone: true,
                 textInputType: TextInputType.text,
-                textEditingController:
-                    _textControllers[AppConstants.confirmPassword]!,
+                textEditingController: _confirmPasswordTextController,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 30, bottom: 25),
@@ -134,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (state is AuthenticatedState) {
                       context.read<UserInfoBloc>().add(
                             AddUserInfoEvent(
-                              email: _textControllers[AppConstants.email]!.text,
+                              email: _emailTextController.text,
                               uid: FirebaseAuth.instance.currentUser?.uid ??
                                   'null',
                             ),
@@ -149,23 +141,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   child: CustomMainGreenButton(
                     buttonController: _buttonController,
-                    buttonText: AppConstants.signUp,
+                    buttonText: context.tr('signUp'),
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
                         _buttonController.start();
                         context.read<AuthBloc>().add(
                               RegisterUserEvent(
-                                firstName:
-                                    _textControllers[AppConstants.firstName]!
-                                        .text,
-                                secondName:
-                                    _textControllers[AppConstants.lastName]!
-                                        .text,
-                                email:
-                                    _textControllers[AppConstants.email]!.text,
-                                password:
-                                    _textControllers[AppConstants.password]!
-                                        .text,
+                                firstName: _firstNameTextController.text,
+                                secondName: _lastNameTextController.text,
+                                email: _emailTextController.text,
+                                password: _passwordTextController.text,
                               ),
                             );
                       }
@@ -177,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    AppConstants.alreadyHaveAnAccount,
+                    context.tr('alreadyHaveAnAccount'),
                     style: AppTextStyles.workSansMain.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -192,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                     },
                     child: Text(
-                      AppConstants.login,
+                      context.tr('login'),
                       style: AppTextStyles.workSansMain.copyWith(
                         fontSize: 16,
                         color: AppColors.green900,
@@ -206,5 +191,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _firstNameTextController.dispose();
+    _lastNameTextController.dispose();
+    _emailTextController.dispose();
+    _passwordTextController.dispose();
+    _confirmPasswordTextController.dispose();
+    super.dispose();
   }
 }

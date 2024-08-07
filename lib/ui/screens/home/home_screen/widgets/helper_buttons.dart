@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
@@ -34,9 +35,9 @@ class HelperButtons extends StatelessWidget {
               onPressed:
                   state is LoadingGenerativeAiState ? null : onOpenDocTap,
               successColor: AppColors.green900.withOpacity(0.5),
-              child: const Text(
-                'Open documents',
-                style: TextStyle(color: Colors.white),
+              child: Text(
+                tr('openDocuments'),
+                style: const TextStyle(color: Colors.white),
               ),
             );
           },
@@ -48,9 +49,9 @@ class HelperButtons extends StatelessWidget {
           controller: submitButtonController,
           onPressed: onSubmitTap,
           successColor: AppColors.green900,
-          child: const Text(
-            'Submit book',
-            style: TextStyle(color: Colors.white),
+          child: Text(
+            tr('submitBook'),
+            style: const TextStyle(color: Colors.white),
           ),
         )
       ],

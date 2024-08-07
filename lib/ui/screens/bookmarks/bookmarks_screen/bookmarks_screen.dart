@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/data/models/book.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
+import 'package:summarize_it/main.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/found_books_widget.dart';
 import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
 
@@ -23,7 +25,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
         children: [
           Center(
             child: Text(
-              AppConstants.bookmarks,
+              context.tr('bookmarks'),
               style: AppTextStyles.workSansMain.copyWith(
                 fontSize: 22,
                 color: AppColors.green900,
@@ -59,7 +61,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
           const AnimationWidgetWithBloc(animationPath: AppAssets.lottieDuck),
           Center(
             child: Text(
-              AppConstants.noSavedBooks,
+              context.tr('noSavedBooks'),
               style: AppTextStyles.workSansW600.copyWith(
                 fontSize: 18,
                 color: AppColors.green900,

@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:summarize_it/logic/blocs/user_info/user_info_bloc.dart';
 import 'package:summarize_it/logic/cubits/tab_box_cubit/tab_box_cubit.dart';
+import 'package:summarize_it/main.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/bookmarks_screen.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/home_screen.dart';
 import 'package:summarize_it/ui/screens/search/search_screen/search_screen.dart';
@@ -63,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
                           'assets/icons/tab_box/${AppConstants.tabBox[i].toLowerCase()}${state == i ? '-2' : ''}.svg',
                         ),
                         Text(
-                          AppConstants.tabBox[i],
+                          tr('tabBox$i'),
                           style: AppTextStyles.workSansMain.copyWith(
                             fontWeight: FontWeight.w400,
                             color: state == i

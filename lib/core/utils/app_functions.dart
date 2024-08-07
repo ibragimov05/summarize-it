@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
@@ -76,13 +77,13 @@ class AppFunctions {
   static String get getGreetinsText {
     final int now = DateTime.now().hour;
     if (now >= 5 && now < 12) {
-      return 'Good morning.';
+      return 'goodMorning';
     } else if (now >= 12 && now <= 18) {
-      return 'Good afternoon.';
+      return 'goodAfternoon';
     } else if (now > 18 || now < 4) {
-      return 'Good evening.';
+      return 'goodEvening';
     } else {
-      return 'Greetings!';
+      return 'greetings';
     }
   }
 
