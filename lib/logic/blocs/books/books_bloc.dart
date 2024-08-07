@@ -15,6 +15,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
         super(InitialBookState()) {
     on<GetBookEvent>(_getBooks);
     on<AddBookEvent>(_addBook);
+    on<AddAudioUrlEvent>(_addAudioUrl);
     on<DeleteBookEvent>(_deleteBook);
   }
 
@@ -30,14 +31,25 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     }
   }
 
-  void _addBook(AddBookEvent event, Emitter<BooksState> emit) {
+  void _addBook(AddBookEvent event, Emitter<BooksState> emit) async {
     emit(LoadingBookState());
     try {
       event.book.userId = event.userID;
-      _bookRepository.addBook(event.book);
-      emit(AddBookSuccessState());
+      final bookId = await _bookRepository.addBook(event.book);
+      emit(AddBookSuccessState(addedBookId: bookId));
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));
+    }
+  }
+
+  void _addAudioUrl(AddAudioUrlEvent event, Emitter<BooksState> emit) {
+    try {
+      _bookRepository.addAudioUrl(
+        bookId: event.bookId,
+        audioUrl: event.audioUrl,
+      );
+    } catch (e) {
+      debugPrint('$e');
     }
   }
 

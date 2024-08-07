@@ -42,7 +42,7 @@ class AiConstants {
       or sections to ensure clarity and thoroughness. Additionally,
       please highlight any significant quotes or passages that stand
       out, as these often provide valuable insights into the author's
-      message and intent. Aim for 1000 plus words
+      message and intent. Aim for 1000 plus, up to maximum 3000 words
       if you can, focusing on delivering a
       balanced overview that reflects the book's depth and richness.
       $responseType.

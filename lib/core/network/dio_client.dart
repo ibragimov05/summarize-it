@@ -46,11 +46,13 @@ class DioClient {
   Future<Response> get({
     required String url,
     Map<String, dynamic>? queryParams,
+    Options? options,
   }) async {
     try {
       final response = await _dio.get(
         url,
         queryParameters: queryParams,
+        options: options,
       );
       return response;
     } catch (e) {

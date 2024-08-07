@@ -1,15 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
+import 'package:summarize_it/ui/screens/home/summary_screen/widgets/summary_screen_floating_action_button.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
-import 'package:summarize_it/ui/widgets/regular_button.dart';
 
 import '../../../../core/utils/all_utils.dart';
-import '../../../widgets/audio_play_pause_widget.dart';
 
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});
@@ -67,47 +65,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
-          builder: (context, state) {
-            if (state is LoadedGenerativeAiState) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  AudioPlayPauseWidget(summary: state.book.summary),
-                  BlocConsumer<BooksBloc, BooksState>(
-                    listener: (context, bookState) {
-                      if (bookState is AddBookSuccessState) {
-                        AppFunctions.showSnackBar(
-                          context,
-                          'New summary has been saved successfully!',
-                        );
-                      }
-                    },
-                    builder: (context, bookState) {
-                      if (bookState is LoadingBookState) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return RegularButton(
-                        w: DeviceScreen.w(context) / 1.5,
-                        buttonLabel: context.tr('save'),
-                        onTap: () => context.read<BooksBloc>().add(AddBookEvent(
-                              book: state.book,
-                              userID: FirebaseAuth.instance.currentUser!.uid,
-                            )),
-                      );
-                    },
-                  ),
-                ],
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
-      ),
+      floatingActionButton: const SummaryFloatButton(),
     );
   }
 }

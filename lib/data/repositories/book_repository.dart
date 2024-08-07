@@ -10,7 +10,10 @@ class BooksRepository {
   Stream<List<Book>> getBooks({required String uid}) =>
       _firebaseBookService.getBooks(uid);
 
-  void addBook(Book book) => _firebaseBookService.addBok(book);
+  Future<String> addBook(Book book) => _firebaseBookService.addBok(book);
+
+  void addAudioUrl({required String bookId, required String audioUrl}) =>
+      _firebaseBookService.addAudioUrl(bookId: bookId, audioUrl: audioUrl);
 
   void deleteBook(String id) {
     _firebaseBookService.deleteBook(id);

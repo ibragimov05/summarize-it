@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:summarize_it/data/models/book.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
-import 'package:summarize_it/ui/widgets/audio_play_pause_widget.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -45,7 +44,10 @@ class BookmarkedSummaryScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: AudioPlayPauseWidget(summary: book.summary),
+      floatingActionButton: FilledButton(
+        onPressed: () {},
+        child: const Icon(Icons.play_arrow),
+      ),
     );
   }
 }

@@ -39,6 +39,7 @@ class Settings {
     final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
     final UserDioService userHttpService = UserDioService();
     final FirebaseBookService firebaseBookService = FirebaseBookService();
+    final AudioService audioService = AudioService();
 
     /// registering repositories using get it
     getIt.registerLazySingleton(
@@ -47,6 +48,8 @@ class Settings {
         () => UserRepository(userHttpService: userHttpService));
     getIt.registerLazySingleton(
         () => BooksRepository(firebaseBookService: firebaseBookService));
+    getIt.registerLazySingleton(
+        () => AudioRepository(audioService: audioService));
 
     /// registering blocs && cubits
     getIt.registerLazySingleton(
@@ -61,6 +64,9 @@ class Settings {
     getIt.registerLazySingleton(() => BooksBloc(
           bookRepository: getIt.get<BooksRepository>(),
         ));
+    getIt.registerLazySingleton(
+      () => AudioPlayerBloc(audioRepository: getIt.get<AudioRepository>()),
+    );
 
     getIt.registerLazySingleton(() => DarkThemeCubit());
     getIt.registerLazySingleton(() => AnimationCubit());

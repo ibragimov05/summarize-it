@@ -13,7 +13,11 @@ final class LoadedBookState extends BooksState {
   LoadedBookState({required this.books});
 }
 
-final class AddBookSuccessState extends BooksState {}
+final class AddBookSuccessState extends BooksState {
+  final String addedBookId;
+
+  AddBookSuccessState({required this.addedBookId});
+}
 
 final class ErrorBookState extends BooksState {
   final String message;

@@ -16,6 +16,13 @@ final class AddBookEvent extends BooksEvent {
   AddBookEvent({required this.book, required this.userID});
 }
 
+final class AddAudioUrlEvent extends BooksEvent {
+  final String bookId;
+  final String audioUrl;
+
+  AddAudioUrlEvent({required this.bookId, required this.audioUrl});
+}
+
 final class DeleteBookEvent extends BooksEvent {
   final String id;
 

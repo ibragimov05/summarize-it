@@ -25,6 +25,7 @@ void main() async {
           BlocProvider.value(value: getIt.get<BooksBloc>()),
           BlocProvider.value(value: getIt.get<DarkThemeCubit>()),
           BlocProvider.value(value: getIt.get<AnimationCubit>()),
+          BlocProvider.value(value: getIt.get<AudioPlayerBloc>()),
           BlocProvider.value(value: getIt.get<TabBoxCubit>()),
           BlocProvider.value(value: getIt.get<FilePickerBloc>()),
           BlocProvider.value(value: getIt.get<PdfToImageBloc>()),
