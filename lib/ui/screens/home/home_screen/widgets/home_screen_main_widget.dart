@@ -171,7 +171,7 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                       ),
                     );
             }
-            return const SliverToBoxAdapter(
+            return const SliverFillRemaining(
               child: RecentSummariesShimmerWidget(),
             );
           },
@@ -180,6 +180,7 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
     );
   }
 }
+
 
 class CustomSliverPersistentHeader extends SliverPersistentHeaderDelegate {
   final double minHeight;

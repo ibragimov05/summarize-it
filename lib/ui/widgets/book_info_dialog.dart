@@ -1,11 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/data/models/book.dart';
-import 'package:intl/intl.dart';
 
 class BookInfoDialog extends StatelessWidget {
   final Book book;

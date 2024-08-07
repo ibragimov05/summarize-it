@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:summarize_it/main.dart';
 import 'package:summarize_it/ui/screens/onboarding/onboarding_screen/widgets/ellipse_widget.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';

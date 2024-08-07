@@ -81,5 +81,6 @@
     "language": "Language",
     "darkMode": "Dark mode",
     "animations": "Animations",
-    "infoChangedSuccessfully": "Your information has been changed successfully"
+    "infoChangedSuccessfully": "Your information has been changed successfully",
+    "appLang":"App language"
 }

@@ -1,17 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/core/utils/app_assets.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/app_functions.dart';
-import 'package:summarize_it/core/utils/app_router.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/all_utils.dart';
 import 'package:summarize_it/logic/blocs/auth/auth_bloc.dart';
 import 'package:summarize_it/logic/cubits/all_cubit.dart';
 import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/custom_list_tile.dart';
+import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/edit_language_modal.dart';
 import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/title_text.dart';
 
-import '../../../../core/utils/app_colors.dart';
 import 'widgets/settings_toggle_row.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -60,7 +56,13 @@ class ProfileScreen extends StatelessWidget {
                     icoPath: AppAssets.icoLanguageCircle,
                     text: context.tr("language"),
                     shouldAddArrow: true,
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) =>
+                            EditLanguageModal(currentLocale: context.locale),
+                      );
+                    },
                   ),
                   BlocBuilder<DarkThemeCubit, bool>(
                     builder: (context, state) {
