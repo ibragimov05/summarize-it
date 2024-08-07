@@ -52,19 +52,25 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
                   gradientFractionOnStart: 0.3,
                   child: ListView.builder(
                     controller: _scrollController,
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 10,
-              ),
-              itemCount: _booksList.length,
-              itemBuilder: (context, index) =>
-                  ShowSummaryWidget(book: _booksList[index]),
-            ),
+                    padding: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      top: 10,
+                    ),
+                    itemCount: _booksList.length,
+                    itemBuilder: (context, index) => ShowSummaryWidget(
+                      book: _booksList[index],
+                      onDismissed: () {
+                        setState(() {
+                          _booksList.removeAt(index);
+                        });
+                      },
+                    ),
+                  ),
                 )
               : Center(
                   child: Text(
-                  context.tr('noBooksFoundMatchingQuery'),
+                    context.tr('noBooksFoundMatchingQuery'),
                     style: AppTextStyles.workSansW600.copyWith(fontSize: 15),
                   ),
                 ),

@@ -64,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
                           'assets/icons/tab_box/${AppConstants.tabBox[i].toLowerCase()}${state == i ? '-2' : ''}.svg',
                         ),
                         Text(
-                          tr('tabBox$i'),
+                          context.tr('tabBox$i'),
                           style: AppTextStyles.workSansMain.copyWith(
                             fontWeight: FontWeight.w400,
                             color: state == i

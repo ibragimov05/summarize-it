@@ -12,10 +12,12 @@ import 'package:summarize_it/logic/blocs/all_blocs.dart';
 class ShowSummaryWidget extends StatelessWidget {
   final Book book;
   final bool isDismissible;
+  final VoidCallback? onDismissed;
 
   const ShowSummaryWidget({
     super.key,
     required this.book,
+     this.onDismissed,
     this.isDismissible = true,
   });
 
@@ -38,6 +40,7 @@ class ShowSummaryWidget extends StatelessWidget {
               ),
               onDismissed: (direction) {
                 context.read<BooksBloc>().add(DeleteBookEvent(id: book.id));
+                onDismissed!();
               },
               child: _summaryWidget(context),
             ),
