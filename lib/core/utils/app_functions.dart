@@ -112,4 +112,8 @@ class AppFunctions {
 
   static double get randomNumber =>
       -50 + Random().nextInt(50 - -50 + 1).toDouble();
+
+  static bool isLight(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light;
+  }
 }

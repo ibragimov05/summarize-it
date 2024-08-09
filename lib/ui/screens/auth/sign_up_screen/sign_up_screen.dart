@@ -56,7 +56,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         appBar: AppBar(
           surfaceTintColor: AppColors.summarizeItTransparent,
           leading: const ArrowBackButton(),
-          title: Text(context.tr('signUp')),
+          title: Text(
+            context.tr('signUp'),
+            style: AppTextStyles.workSansW600,
+          ),
         ),
         body: Form(
           key: _formKey,
@@ -151,6 +154,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 password: _passwordTextController.text,
                               ),
                             );
+                      } else {
+                        _buttonController.reset();
                       }
                     },
                   ),
@@ -164,7 +169,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: AppTextStyles.workSansMain.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.greyscale500,
+                      color: AppFunctions.isLight(context)
+                          ? AppColors.greyscale500
+                          : AppColors.greyscale100,
                     ),
                   ),
                   5.w(),
@@ -178,7 +185,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       context.tr('login'),
                       style: AppTextStyles.workSansMain.copyWith(
                         fontSize: 16,
-                        color: AppColors.green900,
+                        color: AppFunctions.isLight(context)
+                            ? AppColors.green900
+                            : AppColors.green600,
                       ),
                     ),
                   ),

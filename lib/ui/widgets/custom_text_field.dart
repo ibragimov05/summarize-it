@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:summarize_it/core/utils/app_assets.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/all_utils.dart'
+    show AppAssets, AppColors, AppTextStyles, AppFunctions;
 
 class CustomTextFormField extends StatefulWidget {
   final String hintText;
@@ -48,7 +47,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xFFf7f8fd),
+                    color: AppFunctions.isLight(context)
+                        ? const Color(0xFFf7f8fd)
+                        : AppColors.summarizeItBlack,
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: TextFormField(
@@ -60,11 +61,23 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     obscureText: _isObscure,
                     decoration: InputDecoration(
                       suffixIcon: _passwordToggleObscure(),
-                      border:
-                          const OutlineInputBorder(borderSide: BorderSide.none),
+                      border: OutlineInputBorder(
+                        borderSide: AppFunctions.isLight(context)
+                            ? BorderSide.none
+                            : const BorderSide(color: AppColors.green100),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: AppFunctions.isLight(context)
+                            ? BorderSide.none
+                            : const BorderSide(color: AppColors.green100),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
                       hintText: widget.hintText,
                       hintStyle: AppTextStyles.workSansMain.copyWith(
-                        color: AppColors.greyscale400,
+                        color: AppFunctions.isLight(context)
+                            ? AppColors.greyscale400
+                            : AppColors.greyscale100,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -90,7 +103,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                             key: ValueKey<String>(field.errorText ?? ''),
                             style: AppTextStyles.workSansMain.copyWith(
                               fontSize: 12,
-                              color: AppColors.error900,
+                              color: AppFunctions.isLight(context)
+                                  ? AppColors.error900
+                                  : AppColors.error500,
                               fontWeight: FontWeight.w500,
                             ),
                           ),

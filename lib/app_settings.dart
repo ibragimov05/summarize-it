@@ -26,6 +26,8 @@ class Settings {
     Hive.registerAdapter(UserModelAdapter());
     HiveConstants.box = await Hive.openBox(HiveConstants.boxName);
 
+    // AppConstants.themeValue =
+    //     (HiveConstants.box.get(HiveConstants.isDark).toString()).toThemeMode;
     AppConstants.themeValue =
         HiveConstants.box.get(HiveConstants.isDark) ?? false;
     AppConstants.animationValue =
@@ -77,3 +79,10 @@ class Settings {
     getIt.registerLazySingleton(() => PdfPageCubit());
   }
 }
+
+// extension on String {
+//   bool get toThemeMode {
+//     if (this == 'true') return true;
+//     return false;
+//   }
+// }

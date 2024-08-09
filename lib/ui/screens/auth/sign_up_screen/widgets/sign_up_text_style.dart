@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 
+import '../../../../../core/utils/app_functions.dart';
+
 class SignUpTextStyle extends StatelessWidget {
   final String text;
   const SignUpTextStyle({super.key, required this.text});
@@ -13,7 +15,9 @@ class SignUpTextStyle extends StatelessWidget {
       child: Text(
         text,
         style: AppTextStyles.workSansMain.copyWith(
-          color: AppColors.greyscale400,
+          color: AppFunctions.isLight(context)
+              ? AppColors.greyscale400
+              : AppColors.greyscale100,
           fontWeight: FontWeight.w500,
         ),
       ),

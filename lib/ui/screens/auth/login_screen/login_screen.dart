@@ -11,7 +11,6 @@ import 'package:toastification/toastification.dart';
 
 import '../../../../core/utils/all_utils.dart';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -52,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 25,
                       color: AppColors.summarizeItWhite,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     'Lorem ipsum doler sit amet',
@@ -71,9 +71,11 @@ class _LoginScreenState extends State<LoginScreen> {
               width: double.infinity,
               height: DeviceScreen.h(context) / 1.5,
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: const BoxDecoration(
-                color: AppColors.scaffoldBackgroundColor,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: AppFunctions.isLight(context)
+                    ? AppColors.scaffoldBackgroundColor
+                    : AppColors.summarizeItBlack,
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(40),
                   topLeft: Radius.circular(40),
                 ),
@@ -145,7 +147,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: AppTextStyles.workSansMain.copyWith(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
-                                color: AppColors.error900,
+                                color: AppFunctions.isLight(context)
+                                    ? AppColors.error900
+                                    : AppColors.error600,
                               ),
                             ),
                           ),
@@ -209,7 +213,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: AppTextStyles.workSansMain.copyWith(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.greyscale400,
+                          color: AppFunctions.isLight(context)
+                              ? AppColors.greyscale400
+                              : AppColors.greyscale100,
                         ),
                       ),
                       5.w(),
@@ -221,7 +227,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: AppTextStyles.workSansMain.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.green900,
+                            color: AppFunctions.isLight(context)
+                                ? AppColors.green900
+                                : AppColors.green800,
                           ),
                         ),
                       ),

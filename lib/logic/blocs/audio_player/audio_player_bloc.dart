@@ -30,11 +30,12 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerStates> {
     emit(LoadingAudioPlayerState());
 
     try {
-      final audioUrl = await audioRepository.downloadAudio(event.summary);
-      // emit(LoadedAudioPlayerState(
-      //   'https://firebasestorage.googleapis.com/v0/b/summarize-it-8ae05.appspot.com/o/audios%2F%5B%232099e%5D.mp3?alt=media&token=eaefbdc7-a405-45b0-9ec9-8ec2617fb616',
-      // ));
-      emit(LoadedAudioPlayerState(audioUrl: audioUrl));
+      // final audioUrl = await audioRepository.downloadAudio(event.summary);
+      emit(LoadedAudioPlayerState(
+        audioUrl:
+            'https://firebasestorage.googleapis.com/v0/b/summarize-it-8ae05.appspot.com/o/audios%2F%5B%232099e%5D.mp3?alt=media&token=eaefbdc7-a405-45b0-9ec9-8ec2617fb616',
+      ));
+      // emit(LoadedAudioPlayerState(audioUrl: audioUrl));
     } catch (e) {
       emit(ErrorAudioPlayerState(message: e.toString()));
     }
