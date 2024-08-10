@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:summarize_it/core/utils/device_screen.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show DeviceScreen, SizedBoxExtension;
 
 class LoadingShimmerWidget extends StatelessWidget {
   const LoadingShimmerWidget({super.key});
@@ -19,7 +20,7 @@ class LoadingShimmerWidget extends StatelessWidget {
             children: [
               _shimmerContainer(context),
               5.h(),
-               _shimmerContainer(context),
+              _shimmerContainer(context),
             ],
           ),
         ],
@@ -31,7 +32,7 @@ class LoadingShimmerWidget extends StatelessWidget {
         width: DeviceScreen.w(context) / 3,
         height: 10.0,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular( 5),
+          borderRadius: BorderRadius.circular(5),
           color: Colors.white,
         ),
       );

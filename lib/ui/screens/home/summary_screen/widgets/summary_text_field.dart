@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show AppColors, AppTextStyles;
 
 class SummaryTextFormField extends StatelessWidget {
   final TextEditingController _textEditingController;

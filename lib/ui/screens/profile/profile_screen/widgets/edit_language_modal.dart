@@ -1,9 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:summarize_it/core/utils/all_utils.dart';
 import 'package:summarize_it/data/models/language.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:summarize_it/ui/widgets/regular_button.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show
+        DeviceScreen,
+        AppFunctions,
+        AppColors,
+        AppTextStyles,
+        SizedBoxExtension;
 
 class EditLanguageModal extends StatefulWidget {
   final Locale currentLocale;

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show AppColors, AppTextStyles;
 
 class CustomMainGreenButton extends StatelessWidget {
   final double? w;
@@ -9,13 +10,12 @@ class CustomMainGreenButton extends StatelessWidget {
   final RoundedLoadingButtonController buttonController;
   final void Function() onTap;
 
-  const CustomMainGreenButton({
-    super.key,
-    required this.buttonController,
-    required this.buttonText,
-    required this.onTap,
-    this.w
-  });
+  const CustomMainGreenButton(
+      {super.key,
+      required this.buttonController,
+      required this.buttonText,
+      required this.onTap,
+      this.w});
 
   @override
   Widget build(BuildContext context) {

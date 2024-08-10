@@ -1,12 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/hive_box_constants.dart';
-import 'package:summarize_it/data/models/user_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:summarize_it/firebase_options.dart';
+import 'package:summarize_it/data/models/user_model.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show HiveConstants, AppConstants;
 
 import 'logic/blocs/all_blocs.dart';
 import 'logic/cubits/all_cubit.dart';
@@ -33,7 +34,7 @@ class Settings {
     AppConstants.animationValue =
         HiveConstants.box.get(HiveConstants.showAnimations) ?? true;
 
-    Bloc.observer = AppBlocObserver();
+    Bloc.observer = const AppBlocObserver();
   }
 
   static void dependencySetUp() {

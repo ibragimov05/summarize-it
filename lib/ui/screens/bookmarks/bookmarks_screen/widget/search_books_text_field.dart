@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:summarize_it/core/utils/app_assets.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/utils.dart'
+    show AppTextStyles, AppAssets, AppColors;
 
 class SearchBooksTextField extends StatefulWidget {
   final void Function(String) onChanged;
@@ -14,7 +13,6 @@ class SearchBooksTextField extends StatefulWidget {
 }
 
 class _SearchBooksTextFieldState extends State<SearchBooksTextField> {
-
   @override
   Widget build(BuildContext context) {
     return Padding(

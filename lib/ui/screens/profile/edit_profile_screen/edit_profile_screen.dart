@@ -1,13 +1,14 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/ui/screens/profile/edit_profile_screen/widgets/profile_text_form_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:summarize_it/ui/screens/profile/edit_profile_screen/widgets/profile_text_form_field.dart';
 
 import '../../../../logic/blocs/user_info/user_info_bloc.dart';
-import '/core/utils/all_utils.dart';
+
+import '../../../../core/utils/utils.dart' show AppFunctions, DeviceScreen;
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -32,7 +33,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const ArrowBackButton(),
-        title:  Text(context.tr('profile')),
+        title: Text(context.tr('profile')),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

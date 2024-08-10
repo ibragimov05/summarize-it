@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-import '../../../../../core/utils/app_functions.dart';
+import '../../../../../core/utils/utils.dart'
+    show AppTextStyles, AppFunctions, AppColors;
 
 class SignUpTextStyle extends StatelessWidget {
   final String text;

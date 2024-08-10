@@ -1,16 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
-import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:summarize_it/ui/widgets/loading_shimmer_widget.dart';
+import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/book_pages.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/custom_slider.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/helper_buttons.dart';
-import 'package:summarize_it/ui/widgets/loading_shimmer_widget.dart';
 
-import '../../../../core/utils/all_utils.dart';
 import 'widgets/clear_book_pages.dart';
+import '../../../../core/utils/utils.dart';
 import 'widgets/home_screen_main_widget.dart';
 
 class HomeScreen extends StatefulWidget {

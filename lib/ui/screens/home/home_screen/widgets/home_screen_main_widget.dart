@@ -1,20 +1,23 @@
-import 'package:carousel_slider_plus/carousel_slider_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/core/utils/app_assets.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/app_functions.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/core/utils/device_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:carousel_slider_plus/carousel_slider_plus.dart';
 import 'package:summarize_it/logic/blocs/books/books_bloc.dart';
-import 'package:summarize_it/logic/cubits/all_cubit.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/show_summary_widget.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/recent_summaries_shimmer_widget.dart';
 
 import '../../../../../data/models/book.dart';
+import '../../../../../logic/cubits/tab_box_cubit/tab_box_cubit.dart';
 import '../../../../widgets/animation_widget_with_bloc.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show
+        AppConstants,
+        AppFunctions,
+        AppColors,
+        AppTextStyles,
+        DeviceScreen,
+        AppAssets;
 
 class HomeScreenMainWidget extends StatefulWidget {
   const HomeScreenMainWidget({super.key});

@@ -1,11 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:summarize_it/ui/screens/onboarding/onboarding_screen/widgets/ellipse_widget.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
 
-import '../../../../core/utils/device_screen.dart';
+import '../../../../core/utils/utils.dart'
+    show AppColors, AppConstants, AppTextStyles, DeviceScreen;
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

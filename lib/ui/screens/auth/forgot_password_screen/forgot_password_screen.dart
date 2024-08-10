@@ -1,13 +1,14 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
 import 'package:summarize_it/ui/widgets/custom_text_field.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_functions.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/core/utils/utils.dart'
+    show AppColors, AppFunctions, AppTextStyles;
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -22,11 +23,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final RoundedLoadingButtonController _buttonController =
       RoundedLoadingButtonController();
 
+  String get _email => _emailTextController.text;
+
   void _onContinueTap() async {
     if (_formKey.currentState!.validate()) {
       try {
-        // await FirebaseAuthService.resetPassword(
-        //     email: _emailTextController.text);
+        context.read<AuthBloc>().add(ResetPasswordEvent(email: _email));
         if (mounted) {
           AppFunctions.showSnackBar(
               context, context.tr('resetPasswordEmailSent'));

@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show AppColors, AppTextStyles;
 
 class RegularButton extends StatelessWidget {
   final double w;

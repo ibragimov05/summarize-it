@@ -15,12 +15,14 @@ class AudioService {
       final summaryAudioUrl = response.data['OutputUri'];
 
       final audioResponse = await _dioClient.get(
-          url: summaryAudioUrl,
-          options: Options(
-            responseType: ResponseType.bytes,
-          ));
+        url: summaryAudioUrl,
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      );
 
       final firebaseAudioUrl = await uploadToFirebase(audioResponse.data);
+
       return firebaseAudioUrl;
     } on FirebaseException catch (e) {
       throw (e.message ?? 'Unknown Error');
@@ -37,7 +39,7 @@ class AudioService {
     final path = ref.child("audios").child("$filename.mp3");
     final uploadTask = path.putData(audioBytes);
 
-    await uploadTask.whenComplete(() {});
+    await uploadTask;
     return await path.getDownloadURL();
   }
 }

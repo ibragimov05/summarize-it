@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:summarize_it/core/utils/all_utils.dart'
+import 'package:summarize_it/core/utils/utils.dart'
     show AppAssets, AppColors, AppTextStyles, AppFunctions;
 
 class CustomTextFormField extends StatefulWidget {

@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/logic/blocs/all_blocs.dart';
 
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../logic/blocs/generative_ai/generative_ai_bloc.dart';
 
 class HelperButtons extends StatelessWidget {
   final RoundedLoadingButtonController openDocButtonController;

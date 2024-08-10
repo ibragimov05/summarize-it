@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:summarize_it/core/utils/all_utils.dart';
 import 'package:summarize_it/logic/cubits/all_cubit.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show AppFunctions, AppTextStyles, AppColors;
 
 class PdfViewScreen extends StatefulWidget {
   final int pressedPageIndex;

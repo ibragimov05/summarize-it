@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart' as f;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
 import 'package:summarize_it/core/network/dio_client.dart';
@@ -114,7 +114,7 @@ class UserDioService {
   }
 
   Future<String?> _getIdToken() async {
-    final f.User? user = f.FirebaseAuth.instance.currentUser;
+    final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       return await user.getIdToken();
     }

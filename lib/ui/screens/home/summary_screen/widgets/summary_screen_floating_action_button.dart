@@ -1,16 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/app_functions.dart';
-import '../../../../../core/utils/device_screen.dart';
-import '../../../../../logic/blocs/audio_player/audio_player_bloc.dart';
 import '../../../../../logic/blocs/books/books_bloc.dart';
+import '../../../../../logic/blocs/audio_player/audio_player_bloc.dart';
 import '../../../../../logic/blocs/generative_ai/generative_ai_bloc.dart';
 import '../../../../widgets/regular_button.dart';
+
+import '../../../../../core/utils/utils.dart'
+    show AppFunctions, DeviceScreen, AppColors;
 
 class SummaryFloatButton extends StatefulWidget {
   const SummaryFloatButton({super.key});

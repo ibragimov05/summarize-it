@@ -7,3 +7,4 @@ export "app_router.dart";
 export "app_text_styles.dart";
 export "device_screen.dart";
 export "extensions.dart";
+export 'hive_box_constants.dart';

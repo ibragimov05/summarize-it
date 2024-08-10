@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/core/utils/all_utils.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show AppTextStyles, AppColors, AppFunctions, SizedBoxExtension;
 
 class ProfileTextFormField extends StatefulWidget {
   final String labelText;

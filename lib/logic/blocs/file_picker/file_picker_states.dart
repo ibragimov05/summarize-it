@@ -10,7 +10,7 @@ final class LoadedFilePickerState extends FilePickerStates {
   final String? filePath;
   final File? file;
 
-  LoadedFilePickerState({required this.filePath,required this.file});
+  LoadedFilePickerState({required this.filePath, required this.file});
 }
 
 final class ErrorFilePickerState extends FilePickerStates {

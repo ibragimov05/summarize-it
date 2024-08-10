@@ -24,7 +24,11 @@ final class RegisterUserEvent extends AuthEvent {
   });
 }
 
-final class ResetPasswordEvent extends AuthEvent {}
+final class ResetPasswordEvent extends AuthEvent {
+  final String email;
+
+  ResetPasswordEvent({required this.email});
+}
 
 final class WatchAuthEvent extends AuthEvent {}
 

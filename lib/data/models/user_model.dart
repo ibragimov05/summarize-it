@@ -30,14 +30,4 @@ class UserModel {
         lastName: json['last-name'],
         email: json['email'],
       );
-
-  @override
-  String toString() {
-    return """Id: $id,
-uid: $uid,    
-firstName: $firstName,
-lastName: $lastName,
-email: $email,
-""";
-  }
 }

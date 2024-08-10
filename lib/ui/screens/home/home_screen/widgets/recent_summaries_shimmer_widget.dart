@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:summarize_it/core/utils/device_screen.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
+import 'package:summarize_it/core/utils/utils.dart'
+    show DeviceScreen, SizedBoxExtension;
 
 class RecentSummariesShimmerWidget extends StatelessWidget {
   const RecentSummariesShimmerWidget({super.key});

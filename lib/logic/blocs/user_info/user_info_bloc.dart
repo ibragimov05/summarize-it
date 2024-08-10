@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:summarize_it/core/utils/hive_box_constants.dart';
-import 'package:summarize_it/data/models/app_response.dart';
-import 'package:summarize_it/data/models/user_model.dart';
 import 'package:summarize_it/data/repositories/user_repository.dart';
+import 'package:summarize_it/data/models/models.dart'
+    show UserModel, AppResponse;
 
 part 'user_info_event.dart';
 part 'user_info_state.dart';
@@ -39,7 +39,6 @@ class UserInfoBloc extends Bloc<UserInfoEvents, UserInfoState> {
 
       emit(state.copyWith(isLoading: false));
     } catch (e) {
-      debugPrint("UserInfoBloc _onGetUserInfo: ${e.toString()}");
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
@@ -105,7 +104,6 @@ class UserInfoBloc extends Bloc<UserInfoEvents, UserInfoState> {
         ));
       }
     } catch (e) {
-      debugPrint("UserInfoBloc()._onEditUserInfo: $e");
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }

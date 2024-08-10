@@ -46,7 +46,9 @@ class _BookPagesState extends State<BookPages> {
                       context,
                       CupertinoPageRoute(
                         builder: (context) => PdfViewScreen(
-                            pressedPageIndex: index, bookPath: state.filePath!),
+                          pressedPageIndex: index,
+                          bookPath: state.filePath!,
+                        ),
                       ),
                     );
                   }

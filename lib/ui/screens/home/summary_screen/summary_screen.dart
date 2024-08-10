@@ -1,13 +1,13 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:summarize_it/logic/blocs/all_blocs.dart';
-import 'package:summarize_it/ui/screens/home/summary_screen/widgets/summary_screen_floating_action_button.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
+import 'package:summarize_it/ui/screens/home/summary_screen/widgets/summary_screen_floating_action_button.dart';
 
-import '../../../../core/utils/all_utils.dart';
+import '../../../../core/utils/utils.dart' show AppColors;
+import '../../../../logic/blocs/generative_ai/generative_ai_bloc.dart';
 
 class SummaryScreen extends StatefulWidget {
   const SummaryScreen({super.key});

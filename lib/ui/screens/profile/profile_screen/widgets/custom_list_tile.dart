@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/icon_with_bloc_builder.dart';
+
+import 'package:summarize_it/core/utils/utils.dart'
+    show SizedBoxExtension, AppTextStyles;
 
 class CustomListTile extends StatelessWidget {
   final String icoPath;
