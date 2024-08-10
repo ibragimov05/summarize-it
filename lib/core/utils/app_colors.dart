@@ -5,6 +5,7 @@ class AppColors {
   static const Color scaffoldBackgroundColor = Color(0xFFfefefe);
   static const Color summarizeItTransparent = Colors.transparent;
   static Color summarizeItBlack = const Color(0xFF181725);
+  static const Color mainBlackColor = Color(0xFF141118);
 
   static const Color greyscale900 = Color(0xFF101426);
   static const Color greyscale800 = Color(0xFF151A30);

@@ -72,6 +72,7 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
                   child: Text(
                     context.tr('noBooksFoundMatchingQuery'),
                     style: AppTextStyles.workSansW600.copyWith(fontSize: 15),
+                    textAlign: TextAlign.center,
                   ),
                 ),
         ),

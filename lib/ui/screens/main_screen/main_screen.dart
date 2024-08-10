@@ -67,9 +67,13 @@ class _MainScreenState extends State<MainScreen> {
                           context.tr('tabBox$i'),
                           style: AppTextStyles.workSansMain.copyWith(
                             fontWeight: FontWeight.w400,
-                            color: state == i
-                                ? AppColors.greyscale900
-                                : AppColors.greyscale400,
+                            color: AppFunctions.isLight(context)
+                                ? state == i
+                                    ? AppColors.greyscale900
+                                    : AppColors.greyscale400
+                                : state == i
+                                    ? AppColors.green900
+                                    : AppColors.greyscale400,
                           ),
                         ),
                       ],

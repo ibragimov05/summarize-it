@@ -13,7 +13,7 @@ void main() async {
 
   await Settings.appSetUp();
   Settings.dependencySetUp();
-  
+
   runApp(
     EasyLocalization(
       path: 'assets/translations',

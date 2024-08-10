@@ -44,7 +44,13 @@ class _SummarizeItState extends State<SummarizeIt> {
                 ),
               ),
             ),
-            darkTheme: ThemeData.dark(),
+            darkTheme: ThemeData.dark().copyWith(
+              textSelectionTheme: TextSelectionThemeData(
+                cursorColor: AppColors.green900,
+                selectionColor: AppColors.green900.withOpacity(0.1),
+                selectionHandleColor: AppColors.green900,
+              ),
+            ),
             themeMode: state ? ThemeMode.dark : ThemeMode.light,
             onGenerateRoute: AppRouter.generateRoute,
             home: BlocBuilder<AuthBloc, AuthState>(

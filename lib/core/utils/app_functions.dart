@@ -49,6 +49,7 @@ class AppFunctions {
   static void showErrorSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: isLight(context) ? null : AppColors.greyscale100,
         content: Text(
           message,
           style: AppTextStyles.workSansMain.copyWith(
@@ -63,13 +64,16 @@ class AppFunctions {
   static void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-          content: Text(
-        message,
-        style: AppTextStyles.workSansMain.copyWith(
-          fontWeight: FontWeight.w500,
-          color: AppColors.greyscale100,
+        backgroundColor: isLight(context) ? null : AppColors.greyscale100,
+        content: Text(
+          message,
+          style: AppTextStyles.workSansMain.copyWith(
+            fontWeight: FontWeight.w500,
+            color:
+                isLight(context) ? AppColors.greyscale100 : AppColors.green900,
+          ),
         ),
-      )),
+      ),
     );
   }
 

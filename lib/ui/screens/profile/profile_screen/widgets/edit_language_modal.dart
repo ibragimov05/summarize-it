@@ -1,11 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
+import 'package:summarize_it/core/utils/all_utils.dart';
 import 'package:summarize_it/data/models/language.dart';
 import 'package:summarize_it/ui/widgets/regular_button.dart';
-import '../../../../../core/utils/device_screen.dart';
 
 class EditLanguageModal extends StatefulWidget {
   final Locale currentLocale;
@@ -33,9 +31,11 @@ class _EditLanguageModalState extends State<EditLanguageModal> {
       width: double.infinity,
       height: DeviceScreen.h(context) / 2.5,
       padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: AppFunctions.isLight(context)
+            ? AppColors.summarizeItWhite
+            : AppColors.mainBlackColor,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
@@ -54,11 +54,7 @@ class _EditLanguageModalState extends State<EditLanguageModal> {
                 (index) {
                   final language = languages[index];
                   return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
-                    },
+                    onTap: () => setState(() => _selectedIndex = index),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6.0),
                       child: Row(

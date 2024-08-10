@@ -7,6 +7,7 @@ import 'package:summarize_it/logic/cubits/all_cubit.dart';
 import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/custom_list_tile.dart';
 import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/edit_language_modal.dart';
 import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/title_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'widgets/settings_toggle_row.dart';
 
@@ -44,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                     icoPath: AppAssets.icoLock,
                     text: context.tr("forgotPassword"),
                     onTap: () {
-                      context.read<AuthBloc>().add(ResetPasswordEvent());
+                      // context.read<AuthBloc>().add(ResetPasswordEvent());
                       AppFunctions.showSnackBar(
                         context,
                         'Link to reset your password has been sent to your email!',
@@ -91,7 +92,8 @@ class ProfileScreen extends StatelessWidget {
                   CustomListTile(
                     icoPath: AppAssets.icoInfo,
                     text: context.tr("helpAndSupport"),
-                    onTap: () {},
+                    onTap: () async => await launchUrl(
+                        Uri.parse('https://t.me/Fazliddin3303')),
                   ),
                 ],
               ),
@@ -103,7 +105,9 @@ class ProfileScreen extends StatelessWidget {
                 height: 55,
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: AppColors.green900.withOpacity(0.1),
+                  color: AppFunctions.isLight(context)
+                      ? AppColors.green900.withOpacity(0.1)
+                      : AppColors.greyscale100,
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(
                     color: AppColors.green900,

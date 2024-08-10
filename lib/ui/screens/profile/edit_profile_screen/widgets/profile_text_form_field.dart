@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
+import 'package:summarize_it/core/utils/all_utils.dart';
 
 class ProfileTextFormField extends StatefulWidget {
   final String labelText;
@@ -76,8 +74,11 @@ class _ProfileTextFormFieldState extends State<ProfileTextFormField> {
           controller: widget.textEditingController,
           validator: widget.validator,
           cursorColor: AppColors.green900,
-          style: AppTextStyles.workSansW500
-              .copyWith(color: AppColors.greyscale900),
+          style: AppTextStyles.workSansW500.copyWith(
+            color: AppFunctions.isLight(context)
+                ? AppColors.greyscale900
+                : AppColors.greyscale100,
+          ),
         ),
         20.h(),
       ],

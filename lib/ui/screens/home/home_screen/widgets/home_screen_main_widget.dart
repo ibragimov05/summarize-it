@@ -36,7 +36,9 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                 return Container(
                   margin: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: AppColors.green900.withOpacity(0.1),
+                    color: AppFunctions.isLight(context)
+                        ? AppColors.green900.withOpacity(0.1)
+                        : AppColors.greyscale100.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Stack(
@@ -50,7 +52,9 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                           height: 200,
                           width: 200,
                           decoration: BoxDecoration(
-                            color: AppColors.green400.withOpacity(0.5),
+                            color: AppFunctions.isLight(context)
+                                ? AppColors.green400.withOpacity(0.5)
+                                : AppColors.greyscale300.withOpacity(0.1),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -64,7 +68,9 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                             style: AppTextStyles.workSansMain.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
-                              color: AppColors.green900,
+                              color: AppFunctions.isLight(context)
+                                  ? AppColors.green900
+                                  : AppColors.greyscale100,
                             ),
                           ),
                         ),
@@ -93,15 +99,18 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
             maxHeight: kToolbarHeight,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              decoration:
-                  const BoxDecoration(color: Colors.white, boxShadow: []),
+              color: AppFunctions.isLight(context)
+                  ? AppColors.summarizeItWhite
+                  : AppColors.mainBlackColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     context.tr('summaryOfPast7Days'),
                     style: AppTextStyles.workSansW600.copyWith(
-                      color: AppColors.green900,
+                      color: AppFunctions.isLight(context)
+                          ? AppColors.green900
+                          : AppColors.greyscale100,
                     ),
                   ),
                   GestureDetector(
@@ -110,7 +119,9 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                     child: Text(
                       context.tr('showAll'),
                       style: AppTextStyles.workSansW500.copyWith(
-                        color: AppColors.greyscale400,
+                        color: AppFunctions.isLight(context)
+                            ? AppColors.greyscale400
+                            : AppColors.greyscale300.withOpacity(0.5),
                       ),
                     ),
                   ),
@@ -180,7 +191,6 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
     );
   }
 }
-
 
 class CustomSliverPersistentHeader extends SliverPersistentHeaderDelegate {
   final double minHeight;

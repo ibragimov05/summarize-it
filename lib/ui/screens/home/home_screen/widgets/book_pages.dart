@@ -34,7 +34,10 @@ class _BookPagesState extends State<BookPages> {
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
               ),
-              padding: const EdgeInsets.only(bottom: kToolbarHeight + 60),
+              padding: const EdgeInsets.only(
+                bottom: kToolbarHeight * 2.5,
+                top: kToolbarHeight,
+              ),
               itemCount: widget.files.length,
               itemBuilder: (ctx, index) => GestureDetector(
                 onTap: () {

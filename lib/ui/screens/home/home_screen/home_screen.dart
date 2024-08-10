@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: AppColors.summarizeItTransparent,
+        
         title: BlocBuilder<UserInfoBloc, UserInfoState>(
           builder: (context, state) {
             if (state.isLoading) {

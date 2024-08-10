@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_router.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
+import 'package:summarize_it/core/utils/all_utils.dart';
 import 'package:summarize_it/data/models/book.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 
@@ -17,7 +14,7 @@ class ShowSummaryWidget extends StatelessWidget {
   const ShowSummaryWidget({
     super.key,
     required this.book,
-     this.onDismissed,
+    this.onDismissed,
     this.isDismissible = true,
   });
 
@@ -60,7 +57,9 @@ class ShowSummaryWidget extends StatelessWidget {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.green900.withOpacity(0.05),
+            color: AppFunctions.isLight(context)
+                ? AppColors.green900.withOpacity(0.05)
+                : AppColors.greyscale100.withOpacity(0.05),
             borderRadius: isDismissible ? null : BorderRadius.circular(12),
           ),
           child: Stack(
