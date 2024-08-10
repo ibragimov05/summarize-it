@@ -62,14 +62,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Column(
                     children: [
                       ProfileTextFormField(
-                        labelText: 'First name',
+                        labelText: context.tr('hintTextFirstName'),
                         isEnabled: state.isLoading ? false : true,
                         textEditingController: _firstNameTextController,
                         validator: (p0) =>
                             AppFunctions.textValidator(p0, 'first name'),
                       ),
                       ProfileTextFormField(
-                        labelText: 'Second name',
+                        labelText: context.tr('hintTextLastName'),
                         isEnabled: state.isLoading ? false : true,
                         textEditingController: _secondNameTextController,
                         validator: (p0) =>
@@ -85,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   CustomMainGreenButton(
                     w: DeviceScreen.w(context),
-                    buttonText: 'Save changes',
+                    buttonText: context.tr('save'),
                     buttonController: _buttonController,
                     onTap: () {
                       if (_formKey.currentState!.validate()) {

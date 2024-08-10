@@ -20,37 +20,40 @@ class BookmarksScreen extends StatefulWidget {
 class _BookmarksScreenState extends State<BookmarksScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          Center(
-            child: Text(
-              context.tr('bookmarks'),
-              style: AppTextStyles.workSansMain.copyWith(
-                fontSize: 22,
-                color: AppColors.green900,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: SafeArea(
+        child: Column(
+          children: [
+            Center(
+              child: Text(
+                context.tr('bookmarks'),
+                style: AppTextStyles.workSansMain.copyWith(
+                  fontSize: 22,
+                  color: AppColors.green900,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: BlocBuilder<BooksBloc, BooksState>(
-              builder: (context, state) {
-                if (state is LoadingBookState) {
-                  return const CustomCircularProgressIndicator();
-                } else if (state is ErrorBookState) {
-                  return Center(child: Text(state.message));
-                }
-                if (state is LoadedBookState) {
-                  final List<Book> books = state.books;
-                  return books.isNotEmpty
-                      ? FoundBooksWidget(books: books)
-                      : _noSavedBooks();
-                }
-                return _noSavedBooks();
-              },
+            Expanded(
+              child: BlocBuilder<BooksBloc, BooksState>(
+                builder: (context, state) {
+                  if (state is LoadingBookState) {
+                    return const CustomCircularProgressIndicator();
+                  } else if (state is ErrorBookState) {
+                    return Center(child: Text(state.message));
+                  }
+                  if (state is LoadedBookState) {
+                    final List<Book> books = state.books;
+                    return books.isNotEmpty
+                        ? FoundBooksWidget(books: books)
+                        : _noSavedBooks();
+                  }
+                  return _noSavedBooks();
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

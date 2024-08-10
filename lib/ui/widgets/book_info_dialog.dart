@@ -26,14 +26,18 @@ class BookInfoDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Author name: ${book.author}',
+            context.tr('authorName', namedArgs: {'name': book.author}),
             style: AppTextStyles.workSansMain.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 15,
             ),
           ),
           Text(
-            'Published date: ${DateFormat('dd-MMMM-y').format(book.bookPublishedDate.toDate())}',
+            context.tr('publishedDate', namedArgs: {
+              'date': '${DateFormat('dd').format(book.bookPublishedDate.toDate())} '
+                  '${context.tr('months.${DateFormat('MM').format(book.bookPublishedDate.toDate())}')} '
+                  '${DateFormat('y').format(book.bookPublishedDate.toDate())}'
+            }),
             style: AppTextStyles.workSansMain.copyWith(
               fontWeight: FontWeight.w500,
               fontSize: 15,

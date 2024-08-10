@@ -122,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Log out',
+                    context.tr('logout'),
                     style: AppTextStyles.workSansW500.copyWith(
                       fontSize: 18,
                       color: AppColors.green900,

@@ -75,7 +75,7 @@ class _EditLanguageModalState extends State<EditLanguageModal> {
                               ),
                               10.w(),
                               Text(
-                                language.language,
+                                context.tr(language.language),
                                 style: AppTextStyles.workSansW600.copyWith(
                                   fontSize: 18,
                                 ),

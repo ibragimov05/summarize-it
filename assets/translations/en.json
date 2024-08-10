@@ -80,5 +80,25 @@
     "darkMode": "Dark mode",
     "animations": "Animations",
     "infoChangedSuccessfully": "Your information has been changed successfully",
-    "appLang":"App language"
+    "appLang": "App language",
+    "logout": "Log out",
+    "uzbek": "Uzbek",
+    "english": "English",
+    "russian": "Russian",
+    "authorName": "Author name: {name}",
+    "publishedDate": "Published Date: {date}",
+    "months": {
+        "01": "January",
+        "02": "February",
+        "03": "March",
+        "04": "April",
+        "05": "May",
+        "06": "June",
+        "07": "July",
+        "08": "August",
+        "09": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December"
+    }
 }
