@@ -29,168 +29,173 @@ class HomeScreenMainWidget extends StatefulWidget {
 class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: SizedBox(
-            height: 200,
-            child: CarouselSlider(
-              items: AppConstants.homeScreenMessages.map((message) {
-                return Container(
-                  margin: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: AppFunctions.isLight(context)
-                        ? AppColors.green900.withOpacity(0.1)
-                        : AppColors.greyscale100.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        bottom: AppFunctions.randomNumber,
-                        right: AppFunctions.randomNumber,
-                        left: AppFunctions.randomNumber,
-                        top: AppFunctions.randomNumber,
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          decoration: BoxDecoration(
-                            color: AppFunctions.isLight(context)
-                                ? AppColors.green400.withOpacity(0.5)
-                                : AppColors.greyscale300.withOpacity(0.1),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Center(
-                          child: Text(
-                            context.tr(message),
-                            textAlign: TextAlign.start,
-                            style: AppTextStyles.workSansMain.copyWith(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: AppFunctions.isLight(context)
-                                  ? AppColors.green900
-                                  : AppColors.greyscale100,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-              options: CarouselOptions(
-                height: double.infinity,
-                autoPlay: true,
-                viewportFraction: 1,
-                autoPlayInterval: const Duration(seconds: 10),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                autoPlayCurve: Curves.easeIn,
-                pauseAutoPlayOnTouch: true,
-                scrollDirection: Axis.horizontal,
-              ),
-            ),
-          ),
-        ),
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: CustomSliverPersistentHeader(
-            minHeight: kToolbarHeight,
-            maxHeight: kToolbarHeight,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              color: AppFunctions.isLight(context)
-                  ? AppColors.summarizeItWhite
-                  : AppColors.mainBlackColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    context.tr('summaryOfPast7Days'),
-                    style: AppTextStyles.workSansW600.copyWith(
+    return RefreshIndicator(
+      onRefresh: () async {
+        // context.read<BooksBloc>().add(GetBookEvent(uid: uid));
+      },
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 200,
+              child: CarouselSlider(
+                items: AppConstants.homeScreenMessages.map((message) {
+                  return Container(
+                    margin: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
                       color: AppFunctions.isLight(context)
-                          ? AppColors.green900
-                          : AppColors.greyscale100,
+                          ? AppColors.green900.withOpacity(0.1)
+                          : AppColors.greyscale100.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () =>
-                        context.read<TabBoxCubit>().changeTabBoxIndex(2),
-                    child: Text(
-                      context.tr('showAll'),
-                      style: AppTextStyles.workSansW500.copyWith(
-                        color: AppFunctions.isLight(context)
-                            ? AppColors.greyscale400
-                            : AppColors.greyscale300.withOpacity(0.5),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        BlocConsumer<BooksBloc, BooksState>(
-          listener: (context, state) {
-            if (state is ErrorBookState) {
-              AppFunctions.showErrorSnackBar(
-                  context, context.tr('somethingWentWrong'));
-            }
-          },
-          builder: (context, state) {
-            if (state is LoadedBookState) {
-              List<Book> pastSevenDaySummaries =
-                  AppFunctions.getPast7DaysSummaries(books: state.books);
-              return pastSevenDaySummaries.isNotEmpty
-                  ? SliverPadding(
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        bottom: kToolbarHeight + 10,
-                      ),
-                      sliver: SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) => ShowSummaryWidget(
-                            book: pastSevenDaySummaries[index],
-                            isDismissible: false,
-                          ),
-                          childCount: pastSevenDaySummaries.length,
-                        ),
-                      ),
-                    )
-                  : SliverFillRemaining(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const AnimationWidgetWithBloc(
-                              animationPath: AppAssets.lottieSearch,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          bottom: AppFunctions.randomNumber,
+                          right: AppFunctions.randomNumber,
+                          left: AppFunctions.randomNumber,
+                          top: AppFunctions.randomNumber,
+                          child: Container(
+                            height: 200,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              color: AppFunctions.isLight(context)
+                                  ? AppColors.green400.withOpacity(0.5)
+                                  : AppColors.greyscale300.withOpacity(0.1),
+                              shape: BoxShape.circle,
                             ),
-                            SizedBox(
-                              width: DeviceScreen.w(context) / 1.3,
-                              child: Text(
-                                context.tr('noSummaryFound'),
-                                style: AppTextStyles.workSansW600.copyWith(
-                                  fontSize: 16,
-                                  color: AppColors.green800,
-                                ),
-                                textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Center(
+                            child: Text(
+                              context.tr(message),
+                              textAlign: TextAlign.start,
+                              style: AppTextStyles.workSansMain.copyWith(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: AppFunctions.isLight(context)
+                                    ? AppColors.green900
+                                    : AppColors.greyscale100,
                               ),
                             ),
-                          ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                options: CarouselOptions(
+                  height: double.infinity,
+                  autoPlay: true,
+                  viewportFraction: 1,
+                  autoPlayInterval: const Duration(seconds: 10),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.easeIn,
+                  pauseAutoPlayOnTouch: true,
+                  scrollDirection: Axis.horizontal,
+                ),
+              ),
+            ),
+          ),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: CustomSliverPersistentHeader(
+              minHeight: kToolbarHeight,
+              maxHeight: kToolbarHeight,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                color: AppFunctions.isLight(context)
+                    ? AppColors.summarizeItWhite
+                    : AppColors.mainBlackColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      context.tr('summaryOfPast7Days'),
+                      style: AppTextStyles.workSansW600.copyWith(
+                        color: AppFunctions.isLight(context)
+                            ? AppColors.green900
+                            : AppColors.greyscale100,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () =>
+                          context.read<TabBoxCubit>().changeTabBoxIndex(2),
+                      child: Text(
+                        context.tr('showAll'),
+                        style: AppTextStyles.workSansW500.copyWith(
+                          color: AppFunctions.isLight(context)
+                              ? AppColors.greyscale400
+                              : AppColors.greyscale300.withOpacity(0.5),
                         ),
                       ),
-                    );
-            }
-            return const SliverFillRemaining(
-              child: RecentSummariesShimmerWidget(),
-            );
-          },
-        ),
-      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          BlocConsumer<BooksBloc, BooksState>(
+            listener: (context, state) {
+              if (state is ErrorBookState) {
+                AppFunctions.showErrorSnackBar(
+                    context, context.tr('somethingWentWrong'));
+              }
+            },
+            builder: (context, state) {
+              if (state is LoadedBookState) {
+                List<Book> pastSevenDaySummaries =
+                    AppFunctions.getPast7DaysSummaries(books: state.books);
+                return pastSevenDaySummaries.isNotEmpty
+                    ? SliverPadding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          bottom: kToolbarHeight + 10,
+                        ),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => ShowSummaryWidget(
+                              book: pastSevenDaySummaries[index],
+                              isDismissible: false,
+                            ),
+                            childCount: pastSevenDaySummaries.length,
+                          ),
+                        ),
+                      )
+                    : SliverFillRemaining(
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const AnimationWidgetWithBloc(
+                                animationPath: AppAssets.lottieSearch,
+                              ),
+                              SizedBox(
+                                width: DeviceScreen.w(context) / 1.3,
+                                child: Text(
+                                  context.tr('noSummaryFound'),
+                                  style: AppTextStyles.workSansW600.copyWith(
+                                    fontSize: 16,
+                                    color: AppColors.green800,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+              }
+              return const SliverFillRemaining(
+                child: RecentSummariesShimmerWidget(),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
