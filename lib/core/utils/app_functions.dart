@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:summarize_it/core/utils/ai_constants.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/data/models/book.dart';
@@ -62,8 +63,10 @@ class AppFunctions {
   }
 
   static void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
         backgroundColor: isLight(context) ? null : AppColors.greyscale100,
         content: Text(
           message,
@@ -77,7 +80,7 @@ class AppFunctions {
     );
   }
 
-  static String get getGreetinsText {
+  static String get getGreetingsText {
     final int now = DateTime.now().hour;
     if (now >= 5 && now < 12) {
       return 'goodMorning';
@@ -119,5 +122,14 @@ class AppFunctions {
 
   static bool isLight(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light;
+  }
+
+  static SummaryLanguage getLanguageEnum(String languageCode) {
+    if (languageCode == 'uz') {
+      return SummaryLanguage.uzbek;
+    } else if (languageCode == 'ru') {
+      return SummaryLanguage.russian;
+    }
+    return SummaryLanguage.english;
   }
 }

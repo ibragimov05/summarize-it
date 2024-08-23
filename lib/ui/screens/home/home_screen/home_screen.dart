@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        context.tr(AppFunctions.getGreetinsText),
+                        context.tr(AppFunctions.getGreetingsText),
                         style: AppTextStyles.workSansMain.copyWith(
                           fontSize: 13,
                           color: AppColors.greyscale400,
@@ -202,16 +202,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   context.read<FilePickerBloc>().add(SelectFileEvent());
                 },
                 onSubmitTap: state is LoadedPdfToImageState
-                    ? () {
-                        context.read<GenerativeAiBloc>().add(
+                    ? () => context.read<GenerativeAiBloc>().add(
                               SummarizeAiEvent(
                                 files: state.files,
                                 summaryLength:
                                     SummaryLength.values[_summaryLength - 1],
                                 buttonController: _submitButtonController,
+                                summaryLanguage: AppFunctions.getLanguageEnum(
+                                  context.locale.languageCode,
+                                ),
                               ),
-                            );
-                      }
+                            )
                     : null,
               ),
             ],

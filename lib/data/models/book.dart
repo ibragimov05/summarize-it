@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Book {
   final String id;
   String userId;
+  final String summaryLanguage;
   final String title;
   final String summary;
   final String author;
@@ -17,6 +18,7 @@ class Book {
   Book({
     required this.id,
     required this.userId,
+    required this.summaryLanguage,
     required this.title,
     required this.summary,
     required this.author,
@@ -33,6 +35,7 @@ class Book {
     return Book(
       id: map['id'] ?? DateTime.now().microsecondsSinceEpoch.toString(),
       userId: map['user-uid'] ?? 'null',
+      summaryLanguage: map['summary-language'] ?? 'en',
       title: map['title'] ?? 'null',
       summary: map['summary'] ?? 'null',
       author: map['author'] ?? 'null',
@@ -51,6 +54,7 @@ class Book {
       'user-uid': userId,
       'title': title,
       'summary': summary,
+      'summary-language': summaryLanguage,
       'author': author,
       'rate': rate,
       'rate-of-the-book': rateOfTheBook,

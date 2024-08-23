@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:summarize_it/firebase_options.dart';
@@ -34,7 +33,7 @@ class Settings {
     AppConstants.animationValue =
         HiveConstants.box.get(HiveConstants.showAnimations) ?? true;
 
-    Bloc.observer = const AppBlocObserver();
+    // Bloc.observer = const AppBlocObserver();
   }
 
   static void dependencySetUp() {

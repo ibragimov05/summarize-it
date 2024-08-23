@@ -10,14 +10,9 @@ import '../../../widgets/animation_widget_with_bloc.dart';
 import '../../../../core/utils/utils.dart'
     show AppTextStyles, AppColors, AppAssets;
 
-class BookmarksScreen extends StatefulWidget {
+class BookmarksScreen extends StatelessWidget {
   const BookmarksScreen({super.key});
 
-  @override
-  State<BookmarksScreen> createState() => _BookmarksScreenState();
-}
-
-class _BookmarksScreenState extends State<BookmarksScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -46,9 +41,9 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                     final List<Book> books = state.books;
                     return books.isNotEmpty
                         ? FoundBooksWidget(books: books)
-                        : _noSavedBooks();
+                        : _noSavedBooks(context);
                   }
-                  return _noSavedBooks();
+                  return _noSavedBooks(context);
                 },
               ),
             ),
@@ -58,7 +53,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
     );
   }
 
-  Widget _noSavedBooks() => Column(
+  Widget _noSavedBooks(BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const AnimationWidgetWithBloc(animationPath: AppAssets.lottieDuck),

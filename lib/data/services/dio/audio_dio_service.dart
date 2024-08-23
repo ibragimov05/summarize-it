@@ -3,17 +3,55 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:summarize_it/core/network/dio_client.dart';
 
 class AudioService {
   final DioClient _dioClient = DioClient();
 
-  Future<String> downloadAudio(String summary) async {
+  Future<String> downloadAudio({
+    required String summary,
+    required String summaryLang,
+  }) async {
     try {
-      final response = await _dioClient.getAudioDownloadUrl(summary: summary);
-
-      final summaryAudioUrl = response.data['OutputUri'];
-
+      String summaryAudioUrl = '';
+      if (summaryLang == 'uz') {
+        final response = await _dioClient.post(
+          url: 'https://uzbekvoice.ai/api/v1/tts',
+          data: {
+            "text": summary,
+            "model": "fotima-neutral",
+            "blocking": "true",
+            "webhook_notification_url": "https://example.com",
+          },
+          options: Options(
+            headers: {
+              'Authorization': dotenv.get('UZBEK_VOICE_AI'),
+            },
+          ),
+        );
+        summaryAudioUrl = response.data['result']['url'];
+      } else {
+        final response = await _dioClient.post(
+          url: 'https://api.v7.unrealspeech.com/speech',
+          data: {
+            'Text': summary,
+            'VoiceId': 'Dan',
+            'Bitrate': '192k',
+            'Speed': '0',
+            'Pitch': '1',
+            'TimestampType': 'sentence',
+          },
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer ${dotenv.get('UNREAL_SPEECH_KEY')}',
+              'x-rapid-api-host': 'open-ai-text-to-speech1.p.rapidapi.com',
+              'Content-Type': 'application/json',
+            },
+          ),
+        );
+        summaryAudioUrl = response.data['OutputUri'];
+      }
       final audioResponse = await _dioClient.get(
         url: summaryAudioUrl,
         options: Options(

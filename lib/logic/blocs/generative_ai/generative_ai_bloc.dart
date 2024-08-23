@@ -36,7 +36,10 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
 
       final content = [
         Content.multi([
-          TextPart(AiConstants.summarizePrompt(event.summaryLength)),
+          TextPart(AiConstants.summarizePrompt(
+            summaryLanguage: event.summaryLanguage,
+            summaryLength: event.summaryLength,
+          )),
           ...dataParts,
         ]),
       ];
@@ -50,6 +53,7 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
         data['summary-added-date'] = Timestamp.now();
         data['published-date'] =
             Timestamp.fromDate(DateTime.parse(data['published-date']));
+        data['summary-language'] = event.summaryLanguage.toString();
         final book = Book.fromMap(data);
         emit(
           LoadedGenerativeAiState(book: book),

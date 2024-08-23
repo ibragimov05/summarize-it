@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:summarize_it/data/repositories/book_repository.dart';
 import '../../../data/models/book.dart';
@@ -33,10 +34,15 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
 
   void _addBook(AddBookEvent event, Emitter<BooksState> emit) async {
     emit(LoadingBookState());
+
     try {
       event.book.userId = event.userID;
+
       final bookId = await _bookRepository.addBook(event.book);
+
       emit(AddBookSuccessState(addedBookId: bookId));
+
+      add(GetBookEvent(uid: FirebaseAuth.instance.currentUser!.uid));
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));
     }

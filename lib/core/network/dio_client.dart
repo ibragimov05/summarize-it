@@ -63,9 +63,14 @@ class DioClient {
   Future<Response> post({
     required String url,
     required Map<String, dynamic>? data,
+    Options? options,
   }) async {
     try {
-      final response = await _dio.post(url, data: data);
+      final response = await _dio.post(
+        url,
+        data: data,
+        options: options,
+      );
       return response;
     } catch (e) {
       rethrow;

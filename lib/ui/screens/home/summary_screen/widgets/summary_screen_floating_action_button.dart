@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:summarize_it/app_settings.dart';
 
 import '../../../../../logic/blocs/books/books_bloc.dart';
 import '../../../../../logic/blocs/audio_player/audio_player_bloc.dart';
@@ -41,8 +42,9 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                       showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (context) =>
-                            Lottie.asset('assets/lottie/ai.json'),
+                        builder: (context) => Lottie.asset(
+                          'assets/lottie/ai.json',
+                        ),
                       );
                     } else if (audioState is LoadedAudioPlayerState) {
                       _audioUrl = audioState.audioUrl;
@@ -62,15 +64,21 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                       debugPrint(audioState.message);
                       Navigator.of(context).pop();
                       AppFunctions.showErrorSnackBar(
-                          context, context.tr('somethingWentWrong'));
+                        context,
+                        context.tr('somethingWentWrong'),
+                      );
                     }
                   },
                   builder: (context, audioState) {
                     return GestureDetector(
                       onTap: () {
                         if (!_isDownloaded) {
-                          context.read<AudioPlayerBloc>().add(
-                              DownloadAudioEvent(summary: state.book.summary));
+                          context
+                              .read<AudioPlayerBloc>()
+                              .add(DownloadAudioEvent(
+                                summary: state.book.summary,
+                                summaryLanguage: context.locale.languageCode,
+                              ));
                           _isDownloaded = true;
                         }
                         if (audioState is LoadedAudioPlayerState) {
@@ -103,7 +111,7 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                   },
                 ),
 
-                //! save summary
+                /// save summary
                 BlocConsumer<BooksBloc, BooksState>(
                   listener: (context, bookState) {
                     if (bookState is AddBookSuccessState) {
@@ -125,6 +133,7 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                               userID: FirebaseAuth.instance.currentUser!.uid,
                             ));
                         _isBookSaved = true;
+                        setState(() {});
                       },
                     );
                   },
@@ -140,7 +149,7 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
 
   @override
   void dispose() {
-    context.read<AudioPlayerBloc>().add(DisposeAudioEvent());
+    getIt.get<AudioPlayerBloc>().add(DisposeAudioEvent());
     super.dispose();
   }
 }

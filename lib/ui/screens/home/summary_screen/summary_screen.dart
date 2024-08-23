@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
+import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/screens/home/summary_screen/widgets/summary_screen_floating_action_button.dart';
@@ -18,6 +20,7 @@ class SummaryScreen extends StatefulWidget {
 
 class _SummaryScreenState extends State<SummaryScreen> {
   bool isPlaying = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +53,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
         builder: (context, state) {
           if (state is LoadedGenerativeAiState) {
             return Markdown(
+              styleSheet: MarkdownStyleSheet(
+                a: AppTextStyles.workSansW500,
+                blockquote: AppTextStyles.workSansW800,
+              ),
               data: state.book.summary,
               padding: const EdgeInsets.only(
                 bottom: kToolbarHeight + 20,

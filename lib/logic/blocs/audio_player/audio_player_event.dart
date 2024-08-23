@@ -4,8 +4,12 @@ sealed class AudioPlayerEvent {}
 
 final class DownloadAudioEvent extends AudioPlayerEvent {
   final String summary;
+  final String summaryLanguage;
 
-  DownloadAudioEvent({required this.summary});
+  DownloadAudioEvent({
+    required this.summary,
+    required this.summaryLanguage,
+  });
 }
 
 final class PlayAudioEvent extends AudioPlayerEvent {

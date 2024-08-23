@@ -27,17 +27,21 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerStates> {
   }
 
   void _download(DownloadAudioEvent event, emit) async {
-    emit(LoadingAudioPlayerState());
+    if (_audioPlayer.playing) {
+      _audioPlayer.pause();
+    } else if (_audioPlayer.processingState == ProcessingState.idle) {
+      emit(LoadingAudioPlayerState());
 
-    try {
-      // final audioUrl = await audioRepository.downloadAudio(event.summary);
-      emit(LoadedAudioPlayerState(
-        audioUrl:
-            'https://firebasestorage.googleapis.com/v0/b/summarize-it-8ae05.appspot.com/o/audios%2F%5B%232099e%5D.mp3?alt=media&token=eaefbdc7-a405-45b0-9ec9-8ec2617fb616',
-      ));
-      // emit(LoadedAudioPlayerState(audioUrl: audioUrl));
-    } catch (e) {
-      emit(ErrorAudioPlayerState(message: e.toString()));
+      try {
+        final audioUrl = await audioRepository.downloadAudio(
+          summary: event.summary,
+          summaryLang: event.summaryLanguage,
+        );
+
+        emit(LoadedAudioPlayerState(audioUrl: audioUrl));
+      } catch (e) {
+        emit(ErrorAudioPlayerState(message: e.toString()));
+      }
     }
   }
 
@@ -67,7 +71,15 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerStates> {
     DisposeAudioEvent event,
     Emitter<AudioPlayerStates> emit,
   ) async {
+    _audioPlayer.pause();
     await _audioPlayer.dispose();
     emit(InitialAudioPlayerState());
+  }
+
+  @override
+  Future<void> close() async {
+    _audioPlayer.pause();
+    await _audioPlayer.dispose();
+    return super.close();
   }
 }

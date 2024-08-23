@@ -1,39 +1,53 @@
-enum SummaryLength {
-  short,
-  medium,
-  long,
-}
+enum SummaryLength { short, medium, long }
+
+enum SummaryLanguage { uzbek, english, russian }
 
 class AiConstants {
-  static String summarizePrompt(SummaryLength summaryLength) {
+  static String summarizePrompt({
+    required SummaryLength summaryLength,
+    required SummaryLanguage summaryLanguage,
+  }) {
     switch (summaryLength) {
       case SummaryLength.short:
-        return shortSummary;
+        return _shortSummary + _responseLanguage(summaryLanguage);
       case SummaryLength.medium:
-        return mediumSummary;
+        return _mediumSummary + _responseLanguage(summaryLanguage);
       case SummaryLength.long:
-        return longSummary;
+        return _longSummary + _responseLanguage(summaryLanguage);
       default:
         return '';
     }
   }
 
-  static const String shortSummary = '''
+  static String _responseLanguage(SummaryLanguage lang) {
+    switch (lang) {
+      case SummaryLanguage.uzbek:
+        return '\nAnd please make sure to give me all the response in Uzbek language and latin uzbek alphabet. It is very crucial!!!';
+      case SummaryLanguage.english:
+        return '\nAnd please make sure to give me all the response in English language. It is very crucial!!!';
+      case SummaryLanguage.russian:
+        return '\nAnd please make sure to give me all the response in Russian language. It is very crucial!!!';
+      default:
+        return '';
+    }
+  }
+
+  static const String _shortSummary = '''
       Please read the entire book and provide a brief summary. 
       Focus on the main points and key themes, and keep the summary 
       concise—around 3-5 sentences. Ensure the summary captures 
-      the essence of the book's message. $responseType
+      the essence of the book's message. $_responseType
       Here is the text of the book: ''';
 
-  static const String mediumSummary = '''
+  static const String _mediumSummary = '''
       Please read the entire book and provide a comprehensive summary. 
       Cover the main points, key themes, and important details. 
       If possible, break down the summary by major sections or chapters. 
       Aim for a length of 1-2 paragraphs, and ensure the summary 
-      accurately reflects the book's message and content. $responseType
+      accurately reflects the book's message and content. $_responseType
       Here is the text of the book: ''';
 
-  static const String longSummary = '''
+  static const String _longSummary = '''
       Please read the entire book and provide an in-depth summary.
       Include the main points, key themes, and important details.
       Break down the summary by chapters or sections if applicable,
@@ -45,11 +59,11 @@ class AiConstants {
       message and intent. Aim for 1000 plus, up to maximum 3000 words
       if you can, focusing on delivering a
       balanced overview that reflects the book's depth and richness.
-      $responseType.
-      It is crucial for not to make errors, please!
+      $_responseType.
+      It is crucial not to make errors, please!
       Here is the text of the book: ''';
 
-  static const String responseType = '''
+  static const String _responseType = '''
       Along with the summary, please include the following details:
       - "title": The book's title as a string.
       - "summary": The book's summary as generated.
