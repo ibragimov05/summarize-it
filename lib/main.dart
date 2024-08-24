@@ -17,16 +17,19 @@ void main() async {
   runApp(
     EasyLocalization(
       path: 'assets/translations',
-      supportedLocales: const [Locale('en'), Locale('uz'), Locale('ru')],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('uz'),
+      ],
       fallbackLocale: const Locale('en'),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider.value(value: getIt.get<AuthBloc>()),
-          BlocProvider.value(value: getIt.get<UserInfoBloc>()),
+          BlocProvider.value(
+              value: getIt.get<AuthBloc>()..add(WatchAuthEvent())),
+          BlocProvider.value(value: getIt.get<UserBloc>()),
           BlocProvider.value(value: getIt.get<BooksBloc>()),
           BlocProvider.value(value: getIt.get<DarkThemeCubit>()),
           BlocProvider.value(value: getIt.get<AnimationCubit>()),
-          BlocProvider.value(value: getIt.get<AudioPlayerBloc>()),
           BlocProvider.value(value: getIt.get<TabBoxCubit>()),
           BlocProvider.value(value: getIt.get<FilePickerBloc>()),
           BlocProvider.value(value: getIt.get<PdfToImageBloc>()),

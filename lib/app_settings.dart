@@ -1,12 +1,12 @@
+import 'package:bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:summarize_it/core/utils/utils.dart';
+import 'package:summarize_it/data/services/shared_prefs/animation_prefs_service.dart';
+import 'package:summarize_it/data/services/shared_prefs/theme_mode_prefs_service.dart';
 import 'package:summarize_it/firebase_options.dart';
-import 'package:summarize_it/data/models/user_model.dart';
-
-import 'package:summarize_it/core/utils/utils.dart'
-    show HiveConstants, AppConstants;
 
 import 'logic/blocs/all_blocs.dart';
 import 'logic/cubits/all_cubit.dart';
@@ -21,22 +21,20 @@ class Settings {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     await dotenv.load(fileName: '.env');
-    await Hive.initFlutter();
 
-    Hive.registerAdapter(UserModelAdapter());
-    HiveConstants.box = await Hive.openBox(HiveConstants.boxName);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    // AppConstants.themeValue =
-    //     (HiveConstants.box.get(HiveConstants.isDark).toString()).toThemeMode;
-    AppConstants.themeValue =
-        HiveConstants.box.get(HiveConstants.isDark) ?? false;
-    AppConstants.animationValue =
-        HiveConstants.box.get(HiveConstants.showAnimations) ?? true;
+    getIt.registerSingleton(preferences);
+
+    AppConstants.themeValue = ThemeModePrefsService.get ?? false;
+    AppConstants.animationValue = AnimationPrefsService.get ?? true;
 
     // Bloc.observer = const AppBlocObserver();
   }
 
-  static void dependencySetUp() {
+  static void dependencySetUp()  {
+
+
     /// getting instances of services
     final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
     final UserDioService userHttpService = UserDioService();
@@ -61,7 +59,7 @@ class Settings {
       ),
     );
     getIt.registerLazySingleton(
-      () => UserInfoBloc(userRepository: getIt.get<UserRepository>()),
+      () => UserBloc(userRepository: getIt.get<UserRepository>()),
     );
     getIt.registerLazySingleton(() => BooksBloc(
           bookRepository: getIt.get<BooksRepository>(),

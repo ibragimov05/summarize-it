@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
@@ -72,45 +71,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: AppTextStyles.workSansMain.copyWith(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
+
+              /// [FIRST NAME]
               SignUpTextStyle(text: context.tr('firstName')),
               CustomTextFormField(
                 hintText: context.tr('hintTextFirstName'),
-                isObscure: false,
                 validator: (String? text) => AppFunctions.textValidator(
                     text, context.tr('firstName').toLowerCase()),
-                isKeyboardDone: false,
-                textInputType: TextInputType.text,
                 textEditingController: _firstNameTextController,
               ),
+
+              /// [Last NAME]
               SignUpTextStyle(text: context.tr('lastName')),
               CustomTextFormField(
                 hintText: context.tr('hintTextLastName'),
-                isObscure: false,
                 validator: (String? text) => AppFunctions.textValidator(
                     text, context.tr('lastName').toLowerCase()),
-                isKeyboardDone: false,
-                textInputType: TextInputType.text,
                 textEditingController: _lastNameTextController,
               ),
+
+              /// [EMAIL]
               SignUpTextStyle(text: context.tr('email')),
               CustomTextFormField(
                 hintText: context.tr('hintTextEmail'),
-                isObscure: false,
                 validator: AppFunctions.emailValidator,
-                isKeyboardDone: false,
                 textInputType: TextInputType.emailAddress,
                 textEditingController: _emailTextController,
               ),
+
+              /// [PASSWORD]
               SignUpTextStyle(text: context.tr('password')),
               CustomTextFormField(
                 hintText: context.tr('hintTextPassword'),
                 isObscure: true,
                 validator: (String? password) =>
                     AppFunctions.passwordValidator(password, true),
-                isKeyboardDone: false,
                 textInputType: TextInputType.text,
                 textEditingController: _passwordTextController,
               ),
+
+              /// [PASSWORD CONFIRMATION]
               SignUpTextStyle(text: context.tr('confirmPassword')),
               CustomTextFormField(
                 hintText: context.tr('hintTextConfirmPassword'),
@@ -120,19 +120,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 textInputType: TextInputType.text,
                 textEditingController: _confirmPasswordTextController,
               ),
+
               Padding(
                 padding: const EdgeInsets.only(top: 30, bottom: 25),
                 child: BlocListener<AuthBloc, AuthState>(
+                  listenWhen: (previous, current) =>
+                      current is AuthenticatedState ||
+                      current is ErrorAuthState,
                   listener: (context, state) {
-                    if (state is AuthenticatedState) {
-                      context.read<UserInfoBloc>().add(
-                            AddUserInfoEvent(
-                              email: _emailTextController.text,
-                              uid: FirebaseAuth.instance.currentUser?.uid ??
-                                  'null',
-                            ),
-                          );
-                    } else if (state is ErrorAuthState) {
+                    if (state is ErrorAuthState) {
                       _buttonController.error();
                       Future.delayed(
                         const Duration(seconds: 3),

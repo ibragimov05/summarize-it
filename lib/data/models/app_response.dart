@@ -6,7 +6,7 @@ class AppResponse {
 
   AppResponse({
     this.data,
-    this.isSuccess = false,
+    this.isSuccess = true,
     this.errorStatusCode,
     this.errorMessage = "",
   });

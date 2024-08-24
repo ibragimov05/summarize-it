@@ -1,5 +1,4 @@
 import '../models/app_response.dart';
-import '../models/user_model.dart';
 import '../services/dio/user_dio_service.dart';
 
 class UserRepository {
@@ -8,33 +7,32 @@ class UserRepository {
   UserRepository({required UserDioService userHttpService})
       : _userDioService = userHttpService;
 
-  Future<UserModel> getUser({
-    required String email,
-    required String uid,
-  }) async =>
-      _userDioService.getUser(email: email, uid: uid);
+  Future<AppResponse> getUser({required String uid}) async =>
+      _userDioService.getUser(uid: uid);
 
-  Future<UserModel> addUser({
+  Future<AppResponse> addUser({
+    required String uid,
+    required String email,
     required String firstName,
     required String lastName,
-    required String email,
-    required String uid,
   }) =>
       _userDioService.addUser(
+        uid: uid,
+        email: email,
         firstName: firstName,
         lastName: lastName,
-        email: email,
-        uid: uid,
       );
 
   Future<AppResponse> editUserInfo({
     required String userId,
-    required String firstName,
-    required String secondName,
+    String? firstName,
+    String? secondName,
+    String? photoPath,
   }) =>
       _userDioService.editUserInfo(
         userId: userId,
         firstName: firstName,
         secondName: secondName,
+        photoPath: photoPath,
       );
 }

@@ -25,11 +25,13 @@ class AppConstants {
     'onboardingTextTitle1',
     'onboardingTextTitle2',
   ];
+
   static List<String> onboardingTexts = [
     'onboardingText0',
     'onboardingText1',
     'onboardingText2',
   ];
+
   static bool themeValue = false;
   static bool animationValue = false;
 }

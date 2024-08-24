@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:summarize_it/app_settings.dart';
+import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:summarize_it/ui/widgets/loading_shimmer_widget.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/book_pages.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/custom_slider.dart';
@@ -33,49 +35,60 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: AppColors.summarizeItTransparent,
-        
-        title: BlocBuilder<UserInfoBloc, UserInfoState>(
-          builder: (context, state) {
-            if (state.isLoading) {
-              return const LoadingShimmerWidget();
-            }
-            return Row(
-              children: [
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.tr('hi', namedArgs: {
-                          'name': state.firstName?.capitalize() ?? 'unnamed'
-                        }),
-                        style: AppTextStyles.workSansMain.copyWith(
-                          fontSize: 17,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        context.tr(AppFunctions.getGreetingsText),
-                        style: AppTextStyles.workSansMain.copyWith(
-                          fontSize: 13,
-                          color: AppColors.greyscale400,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+        title: Row(
+          children: [
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BlocBuilder<UserBloc, UserState>(
+                    buildWhen: (previous, current) =>
+                        current.userStatus == UserStatus.loaded ||
+                        current.userStatus == UserStatus.loading,
+                    builder: (context, state) {
+                      return state.userStatus == UserStatus.loading
+                          ? Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                width: DeviceScreen.w(context) / 3,
+                                height: 20.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          : Text(
+                              context.tr('hi',
+                                  namedArgs: {'name': UserData.firstName}),
+                              style: AppTextStyles.workSansMain.copyWith(
+                                fontSize: 17,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            );
+                    },
                   ),
-                ),
-              ],
-            );
-          },
+                  Text(
+                    context.tr(AppFunctions.getGreetingsText),
+                    style: AppTextStyles.workSansMain.copyWith(
+                      fontSize: 13,
+                      color: AppColors.greyscale400,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
       body: Stack(
         children: [
           Column(
             children: [
-              //! book images
+              /// book images
               BlocConsumer<FilePickerBloc, FilePickerStates>(
                 listener: (context, state) {
                   if (state is LoadedFilePickerState) {
@@ -121,7 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          //! welcome and summarize screen
+
+          /// welcome and summarize screen
           BlocConsumer<GenerativeAiBloc, GenerativeAiStates>(
             listener: (context, state) {
               if (state is LoadedGenerativeAiState) {

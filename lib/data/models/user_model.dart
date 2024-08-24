@@ -1,19 +1,10 @@
-import 'package:hive/hive.dart';
-
-part 'user_model.g.dart';
-
-@HiveType(typeId: 1)
 class UserModel {
-  @HiveField(0)
   final String id;
-  @HiveField(1)
   final String uid;
-  @HiveField(2)
   final String firstName;
-  @HiveField(3)
   final String lastName;
-  @HiveField(4)
   final String email;
+  final String photoUrl;
 
   const UserModel({
     required this.id,
@@ -21,6 +12,7 @@ class UserModel {
     required this.firstName,
     required this.lastName,
     required this.email,
+    required this.photoUrl,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -29,5 +21,20 @@ class UserModel {
         firstName: json['first-name'],
         lastName: json['last-name'],
         email: json['email'],
+        photoUrl: json['photo-url'] ?? 'null',
       );
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'uid': uid,
+        'first-name': firstName,
+        'last-name': lastName,
+        'email': email,
+        'photo-url': photoUrl,
+      };
+
+  @override
+  String toString() {
+    return 'UserModel(id: $id, uid: $uid, firstName: $firstName, lastName: $lastName, email: $email, photoUrl: $photoUrl)';
+  }
 }

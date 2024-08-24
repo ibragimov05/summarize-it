@@ -12,48 +12,53 @@ class UserDioService {
 
   final DioClient _dio = DioClient();
 
-  Future<UserModel> getUser({
-    required String email,
-    required String uid,
-  }) async {
+  Future<AppResponse> getUser({required String uid}) async {
+    final AppResponse appResponse = AppResponse();
+
     try {
       final String idToken = await _getIdToken() ?? '';
 
-      final String url =
-          '$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken';
+      final Response response = await _dio.get(
+        url: '$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken',
+      );
 
-      final Response response = await _dio.get(url: url);
+      final Map<String, dynamic> usersMap = response.data;
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> usersMap = response.data;
+      UserModel? user;
 
-        UserModel? user;
-        usersMap.forEach((key, value) {
-          if (value['email'] == email && value['uid'] == uid) {
-            value['id'] = key;
-            user = UserModel.fromJson(value);
-          }
-        });
-
-        if (user != null) {
-          return user!;
-        } else {
-          throw Exception('Could not find user: ${response.data}');
+      usersMap.forEach((key, value) {
+        if (value['uid'] == uid) {
+          value['id'] = key;
+          user = UserModel.fromJson(value);
         }
+      });
+
+      if (user != null) {
+        appResponse.data = user!;
       } else {
-        throw Exception('Failed to get users: ${response.data}');
+        throw 'could not find user';
       }
     } catch (e) {
-      rethrow;
+      appResponse.isSuccess = false;
+      if (e is DioException) {
+        appResponse.errorMessage = e.response?.data ?? 'error';
+        appResponse.errorStatusCode = e.response?.statusCode;
+      } else {
+        appResponse.errorMessage = e.toString();
+      }
     }
+
+    return appResponse;
   }
 
-  Future<UserModel> addUser({
+  Future<AppResponse> addUser({
     required String firstName,
     required String lastName,
     required String email,
     required String uid,
   }) async {
+    final AppResponse appResponse = AppResponse();
+
     try {
       final String idToken = await _getIdToken() ?? '';
 
@@ -72,26 +77,31 @@ class UserDioService {
         data: userData,
       );
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = response.data;
-        userData['id'] = data['name'];
-        return UserModel.fromJson(userData);
-      } else {
-        throw Exception(
-            'Error adding user: status code ${response.statusCode}, body: ${response.data}');
-      }
+      final Map<String, dynamic> data = response.data;
+
+      userData['id'] = data['name'];
+
+      appResponse.data = UserModel.fromJson(userData);
     } catch (e) {
-      rethrow;
+      if (e is DioException) {
+        appResponse.errorMessage = "${e.response?.data["message"]}";
+        appResponse.errorStatusCode = e.response?.statusCode;
+      } else {
+        appResponse.errorMessage = e.toString();
+      }
     }
+
+    return appResponse;
   }
 
   Future<AppResponse> editUserInfo({
     required String userId,
-    required String firstName,
-    required String secondName,
+    String? firstName,
+    String? secondName,
+    String? photoPath,
   }) async {
     final AppResponse appResponse = AppResponse();
-
+    // TODO edit nullables
     try {
       final String idToken = await _getIdToken() ?? '';
       final String url =
@@ -115,9 +125,9 @@ class UserDioService {
 
   Future<String?> _getIdToken() async {
     final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return await user.getIdToken();
-    }
-    throw Exception('No authenticated user found.');
+
+    if (user != null) return await user.getIdToken();
+
+    return null;
   }
 }

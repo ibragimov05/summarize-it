@@ -106,10 +106,14 @@ class AppFunctions {
     return result;
   }
 
-  static showToast({required String message, required BuildContext context}) {
+  static showToast({
+    required String message,
+    required bool isSuccess,
+    required BuildContext context,
+  }) {
     toastification.show(
       context: context,
-      type: ToastificationType.success,
+      type: isSuccess ? ToastificationType.success : ToastificationType.error,
       autoCloseDuration: const Duration(seconds: 5),
       description: Text(message, style: AppTextStyles.workSansW500),
       icon: const Icon(Icons.error),

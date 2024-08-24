@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:summarize_it/ui/screens/auth/login_screen/login_screen.dart';
-import 'package:summarize_it/ui/screens/main_screen/main_screen.dart';
 import 'package:summarize_it/core/utils/utils.dart'
     show AppColors, AppRouter, AppTextStyles;
 
-import '../logic/blocs/auth/auth_bloc.dart';
 import '../logic/cubits/all_cubit.dart';
 
 class SummarizeIt extends StatefulWidget {
@@ -53,14 +50,6 @@ class _SummarizeItState extends State<SummarizeIt> {
             ),
             themeMode: state ? ThemeMode.dark : ThemeMode.light,
             onGenerateRoute: AppRouter.generateRoute,
-            home: BlocBuilder<AuthBloc, AuthState>(
-              bloc: context.read<AuthBloc>()..add(WatchAuthEvent()),
-              builder: (context, state) {
-                return state is AuthenticatedState
-                    ? const MainScreen()
-                    : const LoginScreen();
-              },
-            ),
           ),
         );
       },

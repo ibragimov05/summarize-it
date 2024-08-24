@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:summarize_it/app_settings.dart';
 
 import 'package:summarize_it/core/utils/utils.dart'
     show AppColors, AppTextStyles, DeviceScreen;
+
+import '../../../../core/utils/user_data.dart';
+import '../../../../data/models/user_model.dart';
+import '../../../../data/services/shared_prefs/user_prefs_service.dart';
+import '../../../../logic/blocs/all_blocs.dart';
+import '../../auth/login_screen/login_screen.dart';
+import '../../main_screen/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,6 +22,44 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3)).then(
+      (value) => _toTheNextScreen(),
+    );
+  }
+
+  Future<void> _toTheNextScreen() async {
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is AuthenticatedState) {
+                getIt.get<UserBloc>().add(const UserEvent.getUserEvent());
+                getIt.get<BooksBloc>().add(GetBookEvent(uid: UserData.uid));
+                return const MainScreen();
+              } else {
+                return const LoginScreen();
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _collectUserData() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    final UserModel? user = UserPrefsService.getUser();
+
+    if (user == null) return;
+
+    UserData.set(user);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

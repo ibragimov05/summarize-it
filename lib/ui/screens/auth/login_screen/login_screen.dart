@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
@@ -7,10 +6,9 @@ import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/auth/login_screen/widgets/login_screen_text.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
 import 'package:summarize_it/ui/widgets/custom_text_field.dart';
-import 'package:toastification/toastification.dart';
 
 import '../../../../core/utils/utils.dart'
-    hide HiveConstants, AppAssets, AiConstants, SummaryLength;
+    hide  AppAssets, AiConstants, SummaryLength;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -159,49 +157,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
 
-                  BlocConsumer<AuthBloc, AuthState>(
+                  BlocListener<AuthBloc, AuthState>(
                     listener: (context, state) {
-                      if (state is AuthenticatedState) {
-                        context.read<UserInfoBloc>().add(
-                              AddUserInfoEvent(
-                                email: _emailController.text,
-                                uid: FirebaseAuth.instance.currentUser?.uid ??
-                                    'null',
-                              ),
-                            );
-                      } else if (state is ErrorAuthState) {
+                      if (state is ErrorAuthState) {
                         _roundedLoadingButtonController.error();
                         Future.delayed(
                           const Duration(seconds: 3),
                           () => _roundedLoadingButtonController.reset(),
                         );
-                        toastification.show(
+                        AppFunctions.showToast(
+                          message: state.errorMessage,
+                          isSuccess: false,
                           context: context,
-                          type: ToastificationType.error,
-                          autoCloseDuration: const Duration(seconds: 5),
-                          description: Text(state.errorMessage,
-                              style: AppTextStyles.workSansW400),
-                          icon: const Icon(Icons.error),
-                          closeButtonShowType: CloseButtonShowType.onHover,
                         );
                       }
                     },
-                    builder: (context, state) {
-                      return CustomMainGreenButton(
-                        buttonText: context.tr('signIn'),
-                        buttonController: _roundedLoadingButtonController,
-                        onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            context.read<AuthBloc>().add(LoginUserEvent(
-                                  email: _emailController.text,
-                                  password: _passwordController.text,
-                                ));
-                          } else {
-                            _roundedLoadingButtonController.reset();
-                          }
-                        },
-                      );
-                    },
+                    child: CustomMainGreenButton(
+                      buttonText: context.tr('signIn'),
+                      buttonController: _roundedLoadingButtonController,
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(LoginUserEvent(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              ));
+                        } else {
+                          _roundedLoadingButtonController.reset();
+                        }
+                      },
+                    ),
                   ),
                   5.h(),
 

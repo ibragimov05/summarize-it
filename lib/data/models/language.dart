@@ -15,5 +15,4 @@ class Language {
 const List<Language> languages =  [
   Language(locale: Locale('uz'), language: 'uzbek', flag: '🇺🇿'),
   Language(locale: Locale('en'), language: 'english', flag: '🇺🇸'),
-  Language(locale: Locale('ru'), language: 'russian', flag: '🇷🇺'),
 ];

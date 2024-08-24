@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/core/utils/hive_box_constants.dart';
+import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/data/repositories/all_repositories.dart';
+import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -44,10 +46,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
 
       await _userRepository.addUser(
+        uid: FirebaseAuth.instance.currentUser?.uid ?? '',
+        email: event.email,
         firstName: event.firstName,
         lastName: event.secondName,
-        email: event.email,
-        uid: _authRepository.currentUser!.uid,
       );
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));
@@ -60,9 +62,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onLogoutUser(LogoutEvent event, Emitter<AuthState> emit) async {
     emit(LoadingAuthState());
     try {
-      HiveConstants.box.delete(HiveConstants.userInfo);
-      HiveConstants.box.delete(HiveConstants.isDark);
-      HiveConstants.box.delete(HiveConstants.showAnimations);
+      await UserPrefsService.clearUser();
+      UserData.toInitial();
       await _authRepository.logout();
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));
@@ -75,9 +76,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     await emit.forEach(
       _authRepository.watchAuth(),
-      onData: (user) {
-        return user == null ? UnauthenticatedState() : AuthenticatedState();
-      },
+      onData: (user) => user == null ? UnauthenticatedState() : AuthenticatedState(),
     );
   }
 }
