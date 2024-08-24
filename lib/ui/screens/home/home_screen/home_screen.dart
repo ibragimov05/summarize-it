@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:summarize_it/app_settings.dart';
 import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:easy_localization/easy_localization.dart';

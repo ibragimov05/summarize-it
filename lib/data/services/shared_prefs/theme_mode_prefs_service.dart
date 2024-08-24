@@ -8,7 +8,6 @@ class ThemeModePrefsService {
       await getIt.get<SharedPreferences>().setBool(_themeModePrefsKey, value);
 
   static bool? get get {
-    print('object');
     return getIt.get<SharedPreferences>().getBool(_themeModePrefsKey);
   }
 

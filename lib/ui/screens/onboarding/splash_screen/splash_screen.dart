@@ -8,8 +8,6 @@ import 'package:summarize_it/core/utils/utils.dart'
     show AppColors, AppTextStyles, DeviceScreen;
 
 import '../../../../core/utils/user_data.dart';
-import '../../../../data/models/user_model.dart';
-import '../../../../data/services/shared_prefs/user_prefs_service.dart';
 import '../../../../logic/blocs/all_blocs.dart';
 import '../../auth/login_screen/login_screen.dart';
 import '../../main_screen/main_screen.dart';
@@ -48,16 +46,6 @@ class _SplashScreenState extends State<SplashScreen> {
         },
       ),
     );
-  }
-
-  Future<void> _collectUserData() async {
-    await Future.delayed(const Duration(seconds: 2));
-
-    final UserModel? user = UserPrefsService.getUser();
-
-    if (user == null) return;
-
-    UserData.set(user);
   }
 
   @override
