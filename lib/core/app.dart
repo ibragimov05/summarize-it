@@ -7,14 +7,9 @@ import 'package:summarize_it/core/utils/utils.dart'
 
 import '../logic/cubits/all_cubit.dart';
 
-class SummarizeIt extends StatefulWidget {
+class SummarizeIt extends StatelessWidget {
   const SummarizeIt({super.key});
 
-  @override
-  State<SummarizeIt> createState() => _SummarizeItState();
-}
-
-class _SummarizeItState extends State<SummarizeIt> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DarkThemeCubit, bool>(

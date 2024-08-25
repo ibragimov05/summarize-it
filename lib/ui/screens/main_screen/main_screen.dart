@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +11,7 @@ import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/bookmarks_scr
 import '../../../logic/cubits/tab_box_cubit/tab_box_cubit.dart';
 
 import '../../../core/utils/utils.dart'
-    show AppColors, AppConstants, AppFunctions, AppTextStyles;
+    show AppColors, AppConstants, AppFunctions, AppRouter, AppTextStyles;
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,6 +21,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  DateTime? _lastPressedAt;
   final List<Widget> _screens = const [
      HomeScreen(),
      ChatScreen(),
@@ -28,48 +30,86 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    Connectivity().onConnectivityChanged.listen(
+      (List<ConnectivityResult> result) {
+        if (!(result.contains(ConnectivityResult.wifi) ||
+            result.contains(ConnectivityResult.mobile))) {
+          if (!mounted) return;
+          Navigator.pushNamed(context, AppRouter.noConnectionScreen);
+        }
+      },
+    );
+  }
+
+  void _onPopInvoked(bool didPop, Object? result) {
+    final now = DateTime.now();
+    final backButtonHasNotBeenPressedOrHasBeenPressedLongTimeAgo =
+        _lastPressedAt == null ||
+            now.difference(_lastPressedAt!) > const Duration(seconds: 2);
+
+    if (backButtonHasNotBeenPressedOrHasBeenPressedLongTimeAgo) {
+      if (context.read<TabBoxCubit>().state.tabBoxCurrentIndex != 0) {
+        context.read<TabBoxCubit>().changeTabBoxIndex(newIndex: 0);
+      } else {
+        _lastPressedAt = now;
+
+        context.read<TabBoxCubit>().increasePopCount();
+
+        AppFunctions.showSnackBar(context, context.tr('pressTwice'));
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TabBoxCubit, int>(
-      builder: (BuildContext context, int state) {
-        return Scaffold(
-          body: _screens[state],
-          bottomNavigationBar: Container(
-            height: 60,
-            padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(color: AppColors.greyscale300),
+    return BlocBuilder<TabBoxCubit, TabBoxState>(
+      builder: (BuildContext context, state) {
+        return PopScope(
+          canPop: state.canPop,
+          onPopInvokedWithResult: _onPopInvoked,
+          child: Scaffold(
+            body: _screens[state.tabBoxCurrentIndex],
+            bottomNavigationBar: Container(
+              height: 60,
+              padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: AppColors.greyscale300),
+                ),
               ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                for (int i = 0; i < 4; i++)
-                  GestureDetector(
-                    onTap: () =>
-                        context.read<TabBoxCubit>().changeTabBoxIndex(i),
-                    child: Column(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/tab_box/${AppConstants.tabBox[i].toLowerCase()}${state == i ? '-2' : ''}.svg',
-                        ),
-                        Text(
-                          context.tr('tabBox$i'),
-                          style: AppTextStyles.workSansMain.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppFunctions.isLight(context)
-                                ? state == i
-                                    ? AppColors.greyscale900
-                                    : AppColors.greyscale400
-                                : state == i
-                                    ? AppColors.green900
-                                    : AppColors.greyscale400,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  for (int i = 0; i < 4; i++)
+                    GestureDetector(
+                      onTap: () => context
+                          .read<TabBoxCubit>()
+                          .changeTabBoxIndex(newIndex: i),
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/tab_box/${AppConstants.tabBox[i].toLowerCase()}${state.tabBoxCurrentIndex == i ? '-2' : ''}.svg',
                           ),
-                        ),
-                      ],
+                          Text(
+                            context.tr('tabBox$i'),
+                            style: AppTextStyles.workSansMain.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: AppFunctions.isLight(context)
+                                  ? state.tabBoxCurrentIndex == i
+                                      ? AppColors.greyscale900
+                                      : AppColors.greyscale400
+                                  : state.tabBoxCurrentIndex == i
+                                      ? AppColors.green900
+                                      : AppColors.greyscale400,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         );

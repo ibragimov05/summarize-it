@@ -26,4 +26,5 @@ class AppAssets {
   static const String lottieSearch = 'assets/lottie/search.json';
   static const String lottieLoadingAi = 'assets/lottie/loading_ai.json';
   static const String lottieSleepDuck = 'assets/lottie/sleep.json';
+  static const String noConnection = 'assets/lottie/no_connection.json';
 }

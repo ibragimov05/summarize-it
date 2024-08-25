@@ -113,8 +113,9 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () =>
-                          context.read<TabBoxCubit>().changeTabBoxIndex(2),
+                      onTap: () => context
+                          .read<TabBoxCubit>()
+                          .changeTabBoxIndex(newIndex: 2),
                       child: Text(
                         context.tr('showAll'),
                         style: AppTextStyles.workSansW500.copyWith(

@@ -110,5 +110,7 @@
     "book_summary": "Summary of the book: {}",
     "made_by": "Made by SummarizeIT. You can download it on Play Store: https://play.google.com/store/apps/details?id=uz.summarize_it.books.summarize_it",
     "summary_language": "Summary language: {}",
-    "edited": "edited"
+    "edited": "edited",
+    "noInternet": "You're currently offline. Please check your connection.",
+    "pressTwice": "Press twice to exit the app."
 }
