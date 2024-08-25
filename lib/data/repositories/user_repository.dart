@@ -27,12 +27,10 @@ class UserRepository {
     required String userId,
     String? firstName,
     String? secondName,
-    String? photoPath,
   }) =>
       _userDioService.editUserInfo(
         userId: userId,
         firstName: firstName,
         secondName: secondName,
-        photoPath: photoPath,
       );
 }

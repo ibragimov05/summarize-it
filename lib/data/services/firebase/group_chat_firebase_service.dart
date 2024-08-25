@@ -17,7 +17,7 @@ class GroupChatFirebaseService {
   }) async =>
       _firestore.doc(messageId).update({
         'text': newMessage,
-        'id-edited': true,
+        'is-edited': true,
       });
 
   Future<void> deleteMessage({required String messageId}) async =>

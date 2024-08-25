@@ -124,6 +124,8 @@ class AppFunctions {
   static double get randomNumber =>
       -50 + Random().nextInt(50 - -50 + 1).toDouble();
 
+  static double get randomDouble => (Random().nextDouble() * 2) - 1;
+
   static bool isLight(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light;
   }
@@ -135,5 +137,17 @@ class AppFunctions {
       return SummaryLanguage.russian;
     }
     return SummaryLanguage.english;
+  }
+
+  static int get getRandomColorForUserProfile {
+    List<Color> colors = [
+      const Color(0xFF4B96D7),
+      const Color(0xFF54B238),
+      const Color(0xFFDB8538),
+      const Color(0xFFD2635C),
+      const Color(0xFF9F6DDE),
+      const Color(0xFFd7458c),
+    ];
+    return colors[Random().nextInt(6)].value;
   }
 }

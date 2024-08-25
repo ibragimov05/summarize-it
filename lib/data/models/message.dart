@@ -6,6 +6,7 @@ class Message {
   final String senderName;
   final String text;
   final bool isEdited;
+  final int senderChatColor;
   final Timestamp timestamp;
 
   const Message({
@@ -14,6 +15,7 @@ class Message {
     required this.senderName,
     required this.text,
     required this.isEdited,
+    required this.senderChatColor,
     required this.timestamp,
   });
 
@@ -24,6 +26,7 @@ class Message {
       senderName: query['sender-name'] ?? 'unknown',
       text: query['text'] ?? '',
       isEdited: query['is-edited'] ?? false,
+      senderChatColor: query['sender-color'] ?? 4292576568,
       timestamp: query['time-stamp'] ?? Timestamp.now(),
     );
   }

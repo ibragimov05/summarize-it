@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
+import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/logic/blocs/books/books_bloc.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/show_summary_widget.dart';
 import 'package:summarize_it/ui/screens/home/home_screen/widgets/recent_summaries_shimmer_widget.dart';
+import 'package:summarize_it/ui/widgets/circle_container_widget.dart';
 
 import '../../../../../data/models/book.dart';
 import '../../../../../logic/cubits/tab_box_cubit/tab_box_cubit.dart';
@@ -30,9 +32,9 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {
-        // context.read<BooksBloc>().add(GetBookEvent(uid: uid));
-      },
+      color: AppColors.green900,
+      onRefresh: () async =>
+          context.read<BooksBloc>().add(GetBookEvent(uid: UserData.id)),
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -50,21 +52,11 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                     ),
                     child: Stack(
                       children: [
-                        Positioned(
-                          bottom: AppFunctions.randomNumber,
+                        CircleContainerWidget(
                           right: AppFunctions.randomNumber,
-                          left: AppFunctions.randomNumber,
                           top: AppFunctions.randomNumber,
-                          child: Container(
-                            height: 200,
-                            width: 200,
-                            decoration: BoxDecoration(
-                              color: AppFunctions.isLight(context)
-                                  ? AppColors.green400.withOpacity(0.5)
-                                  : AppColors.greyscale300.withOpacity(0.1),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
+                          bottom: AppFunctions.randomNumber,
+                          left: AppFunctions.randomNumber,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(15),
@@ -165,8 +157,9 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
                           ),
                         ),
                       )
-                    : SliverFillRemaining(
-                        child: Center(
+                    : SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: DeviceScreen.h(context) / 2.2,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

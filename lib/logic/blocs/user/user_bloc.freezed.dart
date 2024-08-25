@@ -22,8 +22,7 @@ mixin _$UserEvent {
     required TResult Function(
             String uid, String firstName, String lastName, String email)
         addNewUser,
-    required TResult Function(
-            String? email, String? name, String? firstName, String? photoPath)
+    required TResult Function(String? secondName, String? firstName)
         updateUserData,
   }) =>
       throw _privateConstructorUsedError;
@@ -33,9 +32,7 @@ mixin _$UserEvent {
     TResult? Function(
             String uid, String firstName, String lastName, String email)?
         addNewUser,
-    TResult? Function(
-            String? email, String? name, String? firstName, String? photoPath)?
-        updateUserData,
+    TResult? Function(String? secondName, String? firstName)? updateUserData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,9 +41,7 @@ mixin _$UserEvent {
     TResult Function(
             String uid, String firstName, String lastName, String email)?
         addNewUser,
-    TResult Function(
-            String? email, String? name, String? firstName, String? photoPath)?
-        updateUserData,
+    TResult Function(String? secondName, String? firstName)? updateUserData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -139,8 +134,7 @@ class _$GetUserEventImpl implements GetUserEvent {
     required TResult Function(
             String uid, String firstName, String lastName, String email)
         addNewUser,
-    required TResult Function(
-            String? email, String? name, String? firstName, String? photoPath)
+    required TResult Function(String? secondName, String? firstName)
         updateUserData,
   }) {
     return getUserEvent();
@@ -153,9 +147,7 @@ class _$GetUserEventImpl implements GetUserEvent {
     TResult? Function(
             String uid, String firstName, String lastName, String email)?
         addNewUser,
-    TResult? Function(
-            String? email, String? name, String? firstName, String? photoPath)?
-        updateUserData,
+    TResult? Function(String? secondName, String? firstName)? updateUserData,
   }) {
     return getUserEvent?.call();
   }
@@ -167,9 +159,7 @@ class _$GetUserEventImpl implements GetUserEvent {
     TResult Function(
             String uid, String firstName, String lastName, String email)?
         addNewUser,
-    TResult Function(
-            String? email, String? name, String? firstName, String? photoPath)?
-        updateUserData,
+    TResult Function(String? secondName, String? firstName)? updateUserData,
     required TResult orElse(),
   }) {
     if (getUserEvent != null) {
@@ -320,8 +310,7 @@ class _$AddNewUserEventImpl implements AddNewUserEvent {
     required TResult Function(
             String uid, String firstName, String lastName, String email)
         addNewUser,
-    required TResult Function(
-            String? email, String? name, String? firstName, String? photoPath)
+    required TResult Function(String? secondName, String? firstName)
         updateUserData,
   }) {
     return addNewUser(uid, firstName, lastName, email);
@@ -334,9 +323,7 @@ class _$AddNewUserEventImpl implements AddNewUserEvent {
     TResult? Function(
             String uid, String firstName, String lastName, String email)?
         addNewUser,
-    TResult? Function(
-            String? email, String? name, String? firstName, String? photoPath)?
-        updateUserData,
+    TResult? Function(String? secondName, String? firstName)? updateUserData,
   }) {
     return addNewUser?.call(uid, firstName, lastName, email);
   }
@@ -348,9 +335,7 @@ class _$AddNewUserEventImpl implements AddNewUserEvent {
     TResult Function(
             String uid, String firstName, String lastName, String email)?
         addNewUser,
-    TResult Function(
-            String? email, String? name, String? firstName, String? photoPath)?
-        updateUserData,
+    TResult Function(String? secondName, String? firstName)? updateUserData,
     required TResult orElse(),
   }) {
     if (addNewUser != null) {
@@ -419,8 +404,7 @@ abstract class _$$UpdateUserDataEventImplCopyWith<$Res> {
           $Res Function(_$UpdateUserDataEventImpl) then) =
       __$$UpdateUserDataEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {String? email, String? name, String? firstName, String? photoPath});
+  $Res call({String? secondName, String? firstName});
 }
 
 /// @nodoc
@@ -436,27 +420,17 @@ class __$$UpdateUserDataEventImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = freezed,
-    Object? name = freezed,
+    Object? secondName = freezed,
     Object? firstName = freezed,
-    Object? photoPath = freezed,
   }) {
     return _then(_$UpdateUserDataEventImpl(
-      email: freezed == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      secondName: freezed == secondName
+          ? _value.secondName
+          : secondName // ignore: cast_nullable_to_non_nullable
               as String?,
       firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      photoPath: freezed == photoPath
-          ? _value.photoPath
-          : photoPath // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -465,21 +439,16 @@ class __$$UpdateUserDataEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$UpdateUserDataEventImpl implements UpdateUserDataEvent {
-  const _$UpdateUserDataEventImpl(
-      {this.email, this.name, this.firstName, this.photoPath});
+  const _$UpdateUserDataEventImpl({this.secondName, this.firstName});
 
   @override
-  final String? email;
-  @override
-  final String? name;
+  final String? secondName;
   @override
   final String? firstName;
-  @override
-  final String? photoPath;
 
   @override
   String toString() {
-    return 'UserEvent.updateUserData(email: $email, name: $name, firstName: $firstName, photoPath: $photoPath)';
+    return 'UserEvent.updateUserData(secondName: $secondName, firstName: $firstName)';
   }
 
   @override
@@ -487,17 +456,14 @@ class _$UpdateUserDataEventImpl implements UpdateUserDataEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdateUserDataEventImpl &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.secondName, secondName) ||
+                other.secondName == secondName) &&
             (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.photoPath, photoPath) ||
-                other.photoPath == photoPath));
+                other.firstName == firstName));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, email, name, firstName, photoPath);
+  int get hashCode => Object.hash(runtimeType, secondName, firstName);
 
   /// Create a copy of UserEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -515,11 +481,10 @@ class _$UpdateUserDataEventImpl implements UpdateUserDataEvent {
     required TResult Function(
             String uid, String firstName, String lastName, String email)
         addNewUser,
-    required TResult Function(
-            String? email, String? name, String? firstName, String? photoPath)
+    required TResult Function(String? secondName, String? firstName)
         updateUserData,
   }) {
-    return updateUserData(email, name, firstName, photoPath);
+    return updateUserData(secondName, firstName);
   }
 
   @override
@@ -529,11 +494,9 @@ class _$UpdateUserDataEventImpl implements UpdateUserDataEvent {
     TResult? Function(
             String uid, String firstName, String lastName, String email)?
         addNewUser,
-    TResult? Function(
-            String? email, String? name, String? firstName, String? photoPath)?
-        updateUserData,
+    TResult? Function(String? secondName, String? firstName)? updateUserData,
   }) {
-    return updateUserData?.call(email, name, firstName, photoPath);
+    return updateUserData?.call(secondName, firstName);
   }
 
   @override
@@ -543,13 +506,11 @@ class _$UpdateUserDataEventImpl implements UpdateUserDataEvent {
     TResult Function(
             String uid, String firstName, String lastName, String email)?
         addNewUser,
-    TResult Function(
-            String? email, String? name, String? firstName, String? photoPath)?
-        updateUserData,
+    TResult Function(String? secondName, String? firstName)? updateUserData,
     required TResult orElse(),
   }) {
     if (updateUserData != null) {
-      return updateUserData(email, name, firstName, photoPath);
+      return updateUserData(secondName, firstName);
     }
     return orElse();
   }
@@ -591,15 +552,11 @@ class _$UpdateUserDataEventImpl implements UpdateUserDataEvent {
 
 abstract class UpdateUserDataEvent implements UserEvent {
   const factory UpdateUserDataEvent(
-      {final String? email,
-      final String? name,
-      final String? firstName,
-      final String? photoPath}) = _$UpdateUserDataEventImpl;
+      {final String? secondName,
+      final String? firstName}) = _$UpdateUserDataEventImpl;
 
-  String? get email;
-  String? get name;
+  String? get secondName;
   String? get firstName;
-  String? get photoPath;
 
   /// Create a copy of UserEvent
   /// with the given fields replaced by the non-null parameter values.

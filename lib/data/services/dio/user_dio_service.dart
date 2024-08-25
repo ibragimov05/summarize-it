@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
 import 'package:summarize_it/core/network/dio_client.dart';
+import 'package:summarize_it/core/utils/utils.dart';
 import 'package:summarize_it/data/models/app_response.dart';
 import 'package:summarize_it/data/models/user_model.dart';
 
@@ -70,6 +71,7 @@ class UserDioService {
         'first-name': firstName,
         'last-name': lastName,
         'email': email,
+        'user-chat-color': AppFunctions.getRandomColorForUserProfile,
       };
 
       final Response response = await _dio.post(
@@ -98,7 +100,6 @@ class UserDioService {
     required String userId,
     String? firstName,
     String? secondName,
-    String? photoPath,
   }) async {
     final AppResponse appResponse = AppResponse();
     // TODO edit nullables

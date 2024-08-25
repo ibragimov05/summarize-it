@@ -49,10 +49,10 @@
     "successfullySignedUp": "Siz muvaffaqiyatli ro'yxatdan o'tdingiz!",
     "resetPasswordEmailSent": "Parolingizni tiklash uchun havola elektron pochtangizga yuborildi",
     "onboardingTextTitle0": "Endi kitob o'qish osonroq bo'ladi.",
-    "onboardingTextTitle1": "AI tomonidan quvvatlangan o'qish sherigingiz.",
-    "onboardingTextTitle2": "Kitoblarni hech qachon ko'rmaganday tajriba qiling.",
+    "onboardingTextTitle1": "AI tomonidan quvvatlangan sherigingiz.",
+    "onboardingTextTitle2": "Yangi AI texnlogiyasidan bahramand bo'ling",
     "onboardingText0": "AI quvvatlangan xulosalarni tajriba qiling, kitob o'qishni tezroq va samaraliroq qiling. Har qanday kitobning mohiyatini bir necha daqiqada oling.",
-    "onboardingText1": "BookSage'ning AI texnologiyasi kitoblarni xulosa qiladi va o'qish tajribangizni yaxshilaydi. Bizga qo'shiling va o'qish odatlaringizni inqilob qiling.",
+    "onboardingText1": "SummarizeIT AI texnologiyasi kitoblarni xulosa qiladi va o'qish tajribangizni yaxshilaydi. Bizga qo'shiling va o'qish odatlaringizni inqilob qiling.",
     "onboardingText2": "Qisqa xulosalar bilan vaqtni tejang. Asosiy g'oyalarga e'tibor qarating va bilimlaringizni samarali tarzda oshiring.",
     "getStarted": "Boshlash",
     "register": "Ro'yxatdan o'tish",
@@ -66,7 +66,7 @@
     "noSummaryFound": "7 kun ichidagi kitob xulosamari topilmadi. Siz kitobni xulosa qilib yangisini qo'shishingiz mumkin.",
     "bookFacts": "Kitob haqida faktlar:",
     "awesome": "Zo'r!",
-    "noSavedBooks": "Saqlangan kitoblar yo'q",
+    "noSavedBooks": "Saqlangan xulosalar topilmadi",
     "bookmarks": "Xatcho'plar",
     "noBooksFoundMatchingQuery": "Sizning so'rovingizga mos keladigan kitoblar topilmadi.",
     "profileInfo": "Profil ma'lumotlari",
@@ -101,5 +101,7 @@
         "11": "Noyabr",
         "12": "Dekabr"
     },
-    "noMessagesHereYet": "Bu yerda hali xabarlar mavjud emas"
+    "noMessagesHereYet": "Bu yerda hali xabarlar mavjud emas. Birinchilardan bo'lib habar yozing!",
+    "chatWith": "SummarizeIT jamoasi bilan suhbatlashing",
+    "message": "Xabar"
 }

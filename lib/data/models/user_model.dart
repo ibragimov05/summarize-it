@@ -4,7 +4,7 @@ class UserModel {
   final String firstName;
   final String lastName;
   final String email;
-  final String photoUrl;
+  final int chatProfileColor;
 
   const UserModel({
     required this.id,
@@ -12,16 +12,16 @@ class UserModel {
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.photoUrl,
+    required this.chatProfileColor,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json['id'],
-        uid: json['uid'],
-        firstName: json['first-name'],
-        lastName: json['last-name'],
-        email: json['email'],
-        photoUrl: json['photo-url'] ?? 'null',
+        id: json['id'] ?? '',
+        uid: json['uid'] ?? '',
+        firstName: json['first-name'] ?? '',
+        lastName: json['last-name'] ?? '',
+        email: json['email'] ?? '',
+        chatProfileColor: json['user-chat-color'] ?? 4292576568,
       );
 
   Map<String, dynamic> toMap() => {
@@ -30,11 +30,11 @@ class UserModel {
         'first-name': firstName,
         'last-name': lastName,
         'email': email,
-        'photo-url': photoUrl,
+        'user-chat-color': chatProfileColor,
       };
 
   @override
   String toString() {
-    return 'UserModel(id: $id, uid: $uid, firstName: $firstName, lastName: $lastName, email: $email, photoUrl: $photoUrl)';
+    return 'UserModel(id: $id, uid: $uid, firstName: $firstName, lastName: $lastName, email: $email, user-chat-color: $chatProfileColor)';
   }
 }

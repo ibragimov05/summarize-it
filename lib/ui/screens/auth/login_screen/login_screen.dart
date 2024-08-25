@@ -24,6 +24,24 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+
+  // }
+  //
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!AppConstants.sawOnboarding) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushNamed(context, AppRouter.onboarding);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

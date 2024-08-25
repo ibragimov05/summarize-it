@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summarize_it/core/utils/app_colors.dart';
+import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/data/models/message.dart';
 import 'package:summarize_it/logic/blocs/group_chat/group_chat_bloc.dart';
 
@@ -13,12 +15,22 @@ class ManageMessageWidget extends StatelessWidget {
     return CupertinoActionSheet(
       cancelButton: CupertinoActionSheetAction(
         onPressed: () => Navigator.pop(context),
-        child: const Text('Cancel'),
+        child: Text(
+          'Cancel',
+          style: AppTextStyles.workSansW500.copyWith(
+            color: AppColors.green900,
+          ),
+        ),
       ),
       actions: <CupertinoActionSheetAction>[
         CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context, true),
-          child: const Text('Edit message'),
+          child: Text(
+            'Edit message',
+            style: AppTextStyles.workSansW500.copyWith(
+              color: AppColors.green900,
+            ),
+          ),
         ),
         CupertinoActionSheetAction(
           isDestructiveAction: true,
@@ -28,7 +40,12 @@ class ManageMessageWidget extends StatelessWidget {
                 .add(GroupChatEvent.deleteMessage(messageId: message.id));
             Navigator.pop(context);
           },
-          child: const Text('Delete message'),
+          child: Text(
+            'Delete message',
+            style: AppTextStyles.workSansW500.copyWith(
+              color: AppColors.error800,
+            ),
+          ),
         ),
       ],
     );

@@ -88,7 +88,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       final appResponse = await _userRepository.editUserInfo(
         userId: UserData.id,
-        photoPath: event.photoPath,
+        firstName: event.firstName,
+        secondName: event.secondName,
       );
 
       if (appResponse.isSuccess && appResponse.errorMessage.isEmpty) {

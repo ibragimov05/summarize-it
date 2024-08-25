@@ -12,9 +12,7 @@ class UserEvent with _$UserEvent {
   }) = AddNewUserEvent;
 
   const factory UserEvent.updateUserData({
-    String? email,
-    String? name,
+    String? secondName,
     String? firstName,
-    String? photoPath,
   }) = UpdateUserDataEvent;
 }

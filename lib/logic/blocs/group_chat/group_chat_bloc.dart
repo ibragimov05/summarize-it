@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/data/repositories/group_chat_repository.dart';
 
 import '../../../data/models/message.dart';
@@ -64,6 +65,7 @@ class GroupChatBloc extends Bloc<GroupChatEvent, GroupChatState> {
         "sender-id": event.senderId,
         "sender-name": event.senderName,
         'is-edited': false,
+        'sender-color': UserData.chatColor,
         "time-stamp": FieldValue.serverTimestamp(),
       });
     } catch (e) {

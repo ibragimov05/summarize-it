@@ -19,8 +19,3 @@ class GroupChatEvent with _$GroupChatEvent {
     required String messageId,
   }) = DeleteMessageEvent;
 }
-
-//"text": _messageController.text,
-//           "sender-id": UserData.uid,
-//           "sender-name": UserData.firstName,
-//           "time-stamp": FieldValue.serverTimestamp(),

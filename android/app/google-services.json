@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "957878911864",
+    "firebase_url": "https://summarize-it-8ae05-default-rtdb.firebaseio.com",
+    "project_id": "summarize-it-8ae05",
+    "storage_bucket": "summarize-it-8ae05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957878911864:android:7090301d378d1de3a5be8d",
+        "android_client_info": {
+          "package_name": "uz.summarize_it.books.summarize_it"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuCXbD4y769Dp-_NYrtln95DSiHA8djWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

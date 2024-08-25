@@ -7,6 +7,11 @@ import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/core/utils/utils.dart';
 import 'package:summarize_it/logic/blocs/group_chat/group_chat_bloc.dart';
 import 'package:summarize_it/ui/screens/chat/widgets/show_message_widget.dart';
+import 'package:summarize_it/ui/widgets/animation_widget_with_bloc.dart';
+import 'package:summarize_it/ui/widgets/circle_container_widget.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+
+import '../../../data/models/message.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -17,124 +22,185 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
-
   final ScrollController _scrollController = ScrollController();
+  Message? _messageToEdit;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<GroupChatBloc>().add(const GroupChatEvent.getAllMessages());
+  }
 
   void _sendMessage() {
-    if (_messageController.text.isNotEmpty) {
-      getIt.get<GroupChatBloc>().add(SendMessageEvent(
-            text: _messageController.text,
-            senderId: UserData.uid,
-            senderName: UserData.firstName,
-          ));
+    if (_messageController.text.trim().isNotEmpty) {
+      if (_messageToEdit != null) {
+        context.read<GroupChatBloc>().add(EditMessageEvent(
+              messageId: _messageToEdit!.id,
+              newMessage: _messageController.text,
+            ));
+        _messageToEdit = null;
+      } else {
+        getIt.get<GroupChatBloc>().add(SendMessageEvent(
+              text: _messageController.text,
+              senderId: UserData.uid,
+              senderName: UserData.firstName,
+            ));
+      }
       _messageController.clear();
     }
+  }
+
+  void _editMessage(Message message) {
+    _messageToEdit = message;
+    _messageController.text = message.text;
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              color: AppColors.summarizeItWhite,
-              padding: const EdgeInsets.all(10),
-              child: SafeArea(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Chat with summarize it users',
-                      style: AppTextStyles.workSansW600.copyWith(
-                        fontSize: 18,
-                        color: AppColors.green900,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: BlocBuilder<GroupChatBloc, GroupChatState>(
-                bloc: context.read<GroupChatBloc>()
-                  ..add(const GroupChatEvent.getAllMessages()),
-                buildWhen: (previous, current) =>
-                    current.chatStatus == GroupChatStatus.loaded,
-                builder: (context, state) {
-                  if (state.chatStatus == GroupChatStatus.loaded &&
-                      state.messages != null) {
-                    return FadingEdgeScrollView.fromScrollView(
-                      gradientFractionOnEnd: 0.3,
-                      gradientFractionOnStart: 0,
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        reverse: true,
-                        itemCount: state.messages!.length,
-                        padding:
-                            const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                        itemBuilder: (context, index) {
-                          final message = state.messages![index];
-                          return Row(
-                            mainAxisAlignment:
-                                UserData.uid == message.senderId
-                                    ? MainAxisAlignment.end
-                                    : MainAxisAlignment.start,
-                            children: [
-                              ShowMessage(
-                                message: message,
-                                isSender: UserData.uid == message.senderId,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    );
-                  }
-                  return Center(child: Text(context.tr('noMessagesHereYet')));
-                },
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              // height: 70,
-              decoration: const BoxDecoration(
+      child: Stack(
+        children: [
+          CircleContainerWidget(top: AppFunctions.randomNumber),
+          CircleContainerWidget(
+            isAlign: true,
+            top: AppFunctions.randomDouble,
+            right: AppFunctions.randomDouble,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Chat header
+              Container(
                 color: AppColors.summarizeItWhite,
-                border: Border(
-                  top: BorderSide(color: AppColors.greyscale300),
-                ),
-              ),
-              child: TextField(
-                // cursorColor: const Color(0xFFA5ADB0),
-                controller: _messageController,
-                maxLines: null,
-                textInputAction: TextInputAction.newline,
-                decoration: InputDecoration(
-                  hintText: 'Message',
-                  border:
-                      const OutlineInputBorder(borderSide: BorderSide.none),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        GestureDetector(
-                          onTap: _sendMessage,
-                          child: const Icon(
-                            Icons.send_rounded,
+                padding: const EdgeInsets.all(10),
+                child: SafeArea(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          context.tr('chatWith'),
+                          style: AppTextStyles.workSansW600.copyWith(
+                            fontSize: 16,
                             color: AppColors.green900,
                           ),
+                          textAlign: TextAlign.center,
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Message list
+              Expanded(
+                child: BlocBuilder<GroupChatBloc, GroupChatState>(
+                  buildWhen: (previous, current) =>
+                      current.chatStatus == GroupChatStatus.loaded,
+                  builder: (context, state) {
+                    if (state.chatStatus == GroupChatStatus.loaded &&
+                        state.messages != null &&
+                        state.messages!.isNotEmpty) {
+                      return FadingEdgeScrollView.fromScrollView(
+                        gradientFractionOnEnd: 0.3,
+                        gradientFractionOnStart: 0,
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          reverse: true,
+                          itemCount: state.messages!.length,
+                          padding: const EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                            bottom: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            final message = state.messages![index];
+                            return Row(
+                              mainAxisAlignment:
+                                  UserData.uid == message.senderId
+                                      ? MainAxisAlignment.end
+                                      : MainAxisAlignment.start,
+                              children: [
+                                ShowMessage(
+                                  message: message,
+                                  isSender: UserData.uid == message.senderId,
+                                  onEdit: _editMessage,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      );
+                    }
+
+                    /// no messages here yet
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const AnimationWidgetWithBloc(
+                            animationPath: AppAssets.lottieSleepDuck,
+                          ),
+                          Center(
+                            child: Text(
+                              context.tr('noMessagesHereYet'),
+                              style: AppTextStyles.workSansW600.copyWith(
+                                fontSize: 18,
+                                color: AppColors.green900,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: AppColors.summarizeItWhite,
+                  border: Border(
+                    top: BorderSide(color: AppColors.greyscale300),
+                  ),
+                ),
+                child: TextField(
+                  controller: _messageController,
+                  maxLines: null,
+                  textInputAction: TextInputAction.newline,
+                  decoration: InputDecoration(
+                    hintText: context.tr('message'),
+                    border:
+                        const OutlineInputBorder(borderSide: BorderSide.none),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ZoomTapAnimation(
+                            onTap: _sendMessage,
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.green900,
+                              ),
+                              child: const Icon(
+                                Icons.arrow_upward_rounded,
+                                color: AppColors.summarizeItWhite,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }

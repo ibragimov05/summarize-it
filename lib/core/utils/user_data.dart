@@ -6,7 +6,7 @@ class UserData {
   static String firstName = 'null';
   static String lastName = 'null';
   static String email = 'null';
-  static String photoUrl = 'null';
+  static int chatColor = 4545;
 
   static void set(UserModel user) {
     id = user.id;
@@ -14,7 +14,7 @@ class UserData {
     firstName = user.firstName;
     lastName = user.lastName;
     email = user.email;
-    photoUrl = user.photoUrl;
+    chatColor = user.chatProfileColor;
   }
 
   static void toInitial() {
@@ -23,6 +23,6 @@ class UserData {
     firstName = 'null';
     lastName = 'null';
     email = 'null';
-    photoUrl = 'null';
+    chatColor = 4545;
   }
 }
