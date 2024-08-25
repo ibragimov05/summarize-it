@@ -1,7 +1,7 @@
 {
     "summarizeIt": "SummarizeIt",
     "tabBox0": "Home",
-    "tabBox1": "Search",
+    "tabBox1": "Chat",
     "tabBox2": "Bookmarks",
     "tabBox3": "Profile",
     "openDocuments": "Open documents",
@@ -100,5 +100,6 @@
         "10": "October",
         "11": "November",
         "12": "December"
-    }
+    },
+    "noMessagesHereYet": "No messages here yet"
 }

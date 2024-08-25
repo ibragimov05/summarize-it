@@ -3,9 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summarize_it/core/utils/utils.dart';
+import 'package:summarize_it/data/repositories/group_chat_repository.dart';
+import 'package:summarize_it/data/services/firebase/group_chat_firebase_service.dart';
 import 'package:summarize_it/data/services/shared_prefs/animation_prefs_service.dart';
 import 'package:summarize_it/data/services/shared_prefs/theme_mode_prefs_service.dart';
 import 'package:summarize_it/firebase_options.dart';
+import 'package:summarize_it/logic/blocs/group_chat/group_chat_bloc.dart';
 
 import 'logic/blocs/all_blocs.dart';
 import 'logic/cubits/all_cubit.dart';
@@ -49,6 +52,8 @@ class Settings {
         () => BooksRepository(firebaseBookService: firebaseBookService));
     getIt.registerLazySingleton(
         () => AudioRepository(audioService: audioService));
+    getIt.registerLazySingleton(() => GroupChatRepository(
+        groupChatFirebaseService: GroupChatFirebaseService()));
 
     /// registering blocs && cubits
     getIt.registerLazySingleton(
@@ -66,6 +71,9 @@ class Settings {
     getIt.registerLazySingleton(
       () => AudioPlayerBloc(audioRepository: getIt.get<AudioRepository>()),
     );
+    getIt.registerLazySingleton(
+      () => GroupChatBloc(chatRepository: getIt.get<GroupChatRepository>()),
+    );
 
     getIt.registerLazySingleton(() => DarkThemeCubit());
     getIt.registerLazySingleton(() => AnimationCubit());
@@ -76,10 +84,3 @@ class Settings {
     getIt.registerLazySingleton(() => PdfPageCubit());
   }
 }
-
-// extension on String {
-//   bool get toThemeMode {
-//     if (this == 'true') return true;
-//     return false;
-//   }
-// }

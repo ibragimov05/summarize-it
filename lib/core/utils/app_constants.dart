@@ -1,7 +1,7 @@
 class AppConstants {
   static const List<String> tabBox = [
     'Home',
-    'Search',
+    'Chat',
     'Bookmarks',
     'Profile',
   ];

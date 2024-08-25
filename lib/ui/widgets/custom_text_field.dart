@@ -84,9 +84,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     style: AppTextStyles.workSansMain.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
-                    onChanged: (value) {
-                      field.didChange(value);
-                    },
+                    onChanged: (value) => field.didChange(value),
                   ),
                 ),
                 AnimatedSwitcher(

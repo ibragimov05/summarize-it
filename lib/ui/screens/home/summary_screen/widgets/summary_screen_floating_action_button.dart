@@ -112,7 +112,7 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                 ),
 
                 /// save summary
-                BlocConsumer<BooksBloc, BooksState>(
+                BlocListener<BooksBloc, BooksState>(
                   listener: (context, bookState) {
                     if (bookState is AddBookSuccessState) {
                       AppFunctions.showSnackBar(
@@ -122,21 +122,19 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                       _bookId = bookState.addedBookId;
                     }
                   },
-                  builder: (context, bookState) {
-                    return RegularButton(
-                      w: DeviceScreen.w(context) / 1.6,
-                      buttonLabel: context.tr('save'),
-                      onTap: () {
-                        state.book.audioUrl = _audioUrl ?? 'null';
-                        context.read<BooksBloc>().add(AddBookEvent(
-                              book: state.book,
-                              userID: FirebaseAuth.instance.currentUser!.uid,
-                            ));
-                        _isBookSaved = true;
-                        setState(() {});
-                      },
-                    );
-                  },
+                  child: RegularButton(
+                    w: DeviceScreen.w(context) / 1.6,
+                    buttonLabel: context.tr('save'),
+                    onTap: () {
+                      state.book.audioUrl = _audioUrl ?? 'null';
+                      context.read<BooksBloc>().add(AddBookEvent(
+                            book: state.book,
+                            userID: FirebaseAuth.instance.currentUser!.uid,
+                          ));
+                      _isBookSaved = true;
+                      setState(() {});
+                    },
+                  ),
                 ),
               ],
             );
