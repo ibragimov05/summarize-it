@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _collectData.then(
-      (value) => Future.delayed(const Duration(seconds: 3)).then(
+      (value) => Future.delayed(const Duration(seconds: 2)).then(
         (value) => _toTheNextScreen(),
       ),
     );

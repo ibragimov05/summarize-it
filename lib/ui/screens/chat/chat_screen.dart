@@ -69,9 +69,10 @@ class _ChatScreenState extends State<ChatScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Chat header
               Container(
-                color: AppColors.summarizeItWhite,
+                color: AppFunctions.isLight(context)
+                    ? AppColors.summarizeItWhite
+                    : AppColors.green900,
                 padding: const EdgeInsets.all(10),
                 child: SafeArea(
                   child: Row(
@@ -82,7 +83,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           context.tr('chatWith'),
                           style: AppTextStyles.workSansW600.copyWith(
                             fontSize: 16,
-                            color: AppColors.green900,
+                            color: AppFunctions.isLight(context)
+                                ? AppColors.green900
+                                : AppColors.summarizeItWhite,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -158,9 +161,11 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               Container(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: AppColors.summarizeItWhite,
-                  border: Border(
+                decoration: BoxDecoration(
+                  color: AppFunctions.isLight(context)
+                      ? AppColors.summarizeItWhite
+                      : AppColors.mainBlackColor,
+                  border: const Border(
                     top: BorderSide(color: AppColors.greyscale300),
                   ),
                 ),
