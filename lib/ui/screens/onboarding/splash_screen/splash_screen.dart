@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summarize_it/app_settings.dart';
+import 'package:summarize_it/core/utils/apis.dart';
 import 'package:summarize_it/core/utils/app_constants.dart';
 
 import 'package:summarize_it/core/utils/utils.dart'
@@ -27,19 +28,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    AppConstants.sawOnboarding =
-        getIt.get<SharedPreferences>().getBool('saw-onboarding') ?? false;
-    _collectUserData();
-    Future.delayed(const Duration(seconds: 3)).then(
-      (value) => _toTheNextScreen(),
+    _collectData.then(
+      (value) => Future.delayed(const Duration(seconds: 3)).then(
+        (value) => _toTheNextScreen(),
+      ),
     );
   }
 
-  void _collectUserData() {
+  Future<void> get _collectData async {
+    AppConstants.sawOnboarding =
+        getIt.get<SharedPreferences>().getBool('saw-onboarding') ?? false;
+
     final user = UserPrefsService.getUser();
 
     if (user == null) return;
 
+    await Apis.set();
     UserData.set(user);
   }
 
@@ -50,7 +54,6 @@ class _SplashScreenState extends State<SplashScreen> {
           return BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is AuthenticatedState) {
-                // context.read<UserBloc>().add(const UserEvent.getUserEvent());
                 context.read<BooksBloc>().add(GetBookEvent(
                       uid: FirebaseAuth.instance.currentUser?.uid ?? '',
                     ));

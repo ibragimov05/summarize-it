@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/app_settings.dart';
+import 'package:summarize_it/core/utils/apis.dart';
 import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/data/repositories/all_repositories.dart';
 import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart';
@@ -34,7 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(LoadingAuthState());
     try {
       await _authRepository.login(email: event.email, password: event.password);
-      await _getUSER();
+      await _getDATA();
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));
     }
@@ -55,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         lastName: event.secondName,
       );
 
-      await _getUSER();
+      await _getDATA();
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));
     }
@@ -85,6 +86,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  Future<void> _getUSER() async =>
-      getIt.get<UserBloc>().add(const UserEvent.getUserEvent());
+  Future<void> _getDATA() async {
+    getIt.get<UserBloc>().add(const UserEvent.getUserEvent());
+    await Apis.set();
+  }
 }

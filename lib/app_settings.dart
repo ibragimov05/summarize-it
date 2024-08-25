@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summarize_it/core/utils/utils.dart';
 import 'package:summarize_it/data/repositories/group_chat_repository.dart';
@@ -22,7 +21,6 @@ class Settings {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    await dotenv.load(fileName: '.env');
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
 

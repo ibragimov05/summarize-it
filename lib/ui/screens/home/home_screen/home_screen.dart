@@ -30,11 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
       RoundedLoadingButtonController();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [

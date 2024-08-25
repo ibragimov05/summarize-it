@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:summarize_it/core/network/dio_client.dart';
+import 'package:summarize_it/core/utils/apis.dart';
 
 class AudioService {
   final DioClient _dioClient = DioClient();
@@ -26,7 +26,7 @@ class AudioService {
           },
           options: Options(
             headers: {
-              'Authorization': dotenv.get('UZBEK_VOICE_AI'),
+              'Authorization': Apis.uzbekVoiceAiKEY,
             },
           ),
         );
@@ -44,7 +44,7 @@ class AudioService {
           },
           options: Options(
             headers: {
-              'Authorization': 'Bearer ${dotenv.get('UNREAL_SPEECH_KEY')}',
+              'Authorization': 'Bearer ${Apis.unrealSpeechKEY}',
               'x-rapid-api-host': 'open-ai-text-to-speech1.p.rapidapi.com',
               'Content-Type': 'application/json',
             },

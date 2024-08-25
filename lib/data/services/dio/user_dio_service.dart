@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/dio.dart';
 import 'package:summarize_it/core/network/dio_client.dart';
 import 'package:summarize_it/core/utils/utils.dart';
@@ -7,7 +6,6 @@ import 'package:summarize_it/data/models/app_response.dart';
 import 'package:summarize_it/data/models/user_model.dart';
 
 class UserDioService {
-  final String _firebaseCustomKey = dotenv.get('FIREBASE_CUSTOM_KEY');
   final String _baseUrl =
       'https://summarize-it-8ae05-default-rtdb.firebaseio.com';
 
@@ -20,7 +18,7 @@ class UserDioService {
       final String idToken = await _getIdToken() ?? '';
 
       final Response response = await _dio.get(
-        url: '$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken',
+        url: '$_baseUrl/users.json?auth=$idToken',
       );
 
       final Map<String, dynamic> usersMap = response.data;
@@ -63,8 +61,7 @@ class UserDioService {
     try {
       final String idToken = await _getIdToken() ?? '';
 
-      final String url =
-          '$_baseUrl/$_firebaseCustomKey/users.json?auth=$idToken';
+      final String url = '$_baseUrl/users.json?auth=$idToken';
 
       Map<String, dynamic> userData = {
         'uid': uid,
@@ -102,16 +99,15 @@ class UserDioService {
     String? secondName,
   }) async {
     final AppResponse appResponse = AppResponse();
-    // TODO edit nullables
     try {
       final String idToken = await _getIdToken() ?? '';
-      final String url =
-          '$_baseUrl/$_firebaseCustomKey/users/$userId.json?auth=$idToken';
+      final String url = '$_baseUrl/users/$userId.json?auth=$idToken';
 
       appResponse.data = await _dio.updateData(url: url, data: {
-        'first-name': firstName,
-        'last-name': secondName,
+        if (firstName != null) 'first-name': firstName,
+        if (secondName != null) 'last-name': secondName,
       });
+
       appResponse.isSuccess = true;
     } catch (e) {
       if (e is DioException) {

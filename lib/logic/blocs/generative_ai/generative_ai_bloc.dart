@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:summarize_it/core/utils/apis.dart';
 import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/data/models/book.dart';
 import '../../../core/utils/ai_constants.dart';
@@ -25,7 +25,7 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
     try {
       final GenerativeModel model = GenerativeModel(
         model: 'gemini-1.5-flash-latest',
-        apiKey: dotenv.get("GEMINI_API_KEY"),
+        apiKey: Apis.geminiApiKEY,
       );
 
       List<DataPart> dataParts = [];

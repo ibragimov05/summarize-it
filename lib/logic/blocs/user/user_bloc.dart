@@ -93,6 +93,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
 
       if (appResponse.isSuccess && appResponse.errorMessage.isEmpty) {
+        add(const UserEvent.getUserEvent());
       } else {
         throw 'error: {status_code: ${appResponse.errorStatusCode}, message: ${appResponse.errorMessage}';
       }
