@@ -18,7 +18,6 @@ class Api {
   }
 
   @override
-  String toString() {
-    return 'Api{ GEMINI_API_KEY: $geminiKEY, UNREAL_SPEECH_KEY: $unrealSpeechKEY, UZBEK_VOICE_AI_KEY: $uzbekVoiceAiKEY}';
-  }
+  String toString() =>
+      'Api{ GEMINI_API_KEY: $geminiKEY, UNREAL_SPEECH_KEY: $unrealSpeechKEY, UZBEK_VOICE_AI_KEY: $uzbekVoiceAiKEY}';
 }

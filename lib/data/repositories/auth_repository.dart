@@ -25,6 +25,4 @@ class AuthRepository {
       _firebaseAuthService.resetPassword(email: email);
 
   Stream<User?> watchAuth() => _firebaseAuthService.watchAuth();
-
-  User? get currentUser => _firebaseAuthService.currentUser;
 }

@@ -1,5 +1,6 @@
-import 'dart:typed_data';
 import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -8,7 +9,6 @@ import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 
 part 'pdf_to_image_bloc.freezed.dart';
 part 'pdf_to_image_events.dart';
-
 part 'pdf_to_image_states.dart';
 
 class PdfToImageBloc extends Bloc<PdfToImageEvents, PdfToImageStates> {
@@ -17,7 +17,10 @@ class PdfToImageBloc extends Bloc<PdfToImageEvents, PdfToImageStates> {
     on<ToInitialStatePdfToImageEvent>(_toInitialState);
   }
 
-  Future<void> _convert(ConvertPdfToImageEvent event, emit) async {
+  Future<void> _convert(
+    ConvertPdfToImageEvent event,
+    Emitter<PdfToImageStates> emit,
+  ) async {
     event.buttonController.start();
     try {
       final pdf = PdfImageRendererPdf(path: event.file.path);

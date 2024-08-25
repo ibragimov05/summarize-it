@@ -5,7 +5,7 @@ class TabBoxState {
   final int popCount;
   final bool canPop;
 
-  TabBoxState({
+  const TabBoxState({
     required this.tabBoxCurrentIndex,
     required this.popCount,
     required this.canPop,

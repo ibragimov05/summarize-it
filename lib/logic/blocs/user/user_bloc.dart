@@ -1,15 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:summarize_it/core/utils/user_data.dart';
-import 'package:summarize_it/data/repositories/user_repository.dart';
-import 'package:summarize_it/data/models/models.dart' show UserModel;
-import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart';
+
+import '../../../data/models/models.dart';
+import '../../../core/utils/user_data.dart';
+import '../../../data/repositories/user_repository.dart';
+import '../../../data/services/shared_prefs/user_prefs_service.dart';
 
 part 'user_event.dart';
-
 part 'user_bloc.freezed.dart';
-
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {

@@ -1,12 +1,13 @@
 import 'dart:typed_data';
-import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/logic/blocs/file_picker/file_picker_bloc.dart';
-import 'package:summarize_it/ui/screens/home/pdf_view_screen/pdf_view_screen.dart';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
+
+import '../../pdf_view_screen/pdf_view_screen.dart';
 import '../../../../../core/utils/device_screen.dart';
+import '../../../../../logic/blocs/file_picker/file_picker_bloc.dart';
 
 class BookPages extends StatefulWidget {
   final List<Uint8List> files;

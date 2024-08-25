@@ -1,13 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/found_books_widget.dart';
-import 'package:summarize_it/ui/widgets/custom_circular_progress_indicator.dart';
 
+import '../../../widgets/widgets.dart';
+import 'widget/found_books_widget.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../../logic/blocs/books/books_bloc.dart';
-import '../../../widgets/animation_widget_with_bloc.dart';
-import '../../../../core/utils/utils.dart'
-    show AppTextStyles, AppColors, AppAssets;
 
 class BookmarksScreen extends StatelessWidget {
   const BookmarksScreen({super.key});

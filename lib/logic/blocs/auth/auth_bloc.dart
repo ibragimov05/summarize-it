@@ -1,18 +1,16 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:summarize_it/data/repositories/all_repositories.dart';
 import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart';
-import 'package:summarize_it/logic/blocs/all_blocs.dart';
 
 import '../../../app_settings.dart';
-import '../../../core/utils/apis.dart';
-import '../../../core/utils/user_data.dart';
+import '../../../core/utils/utils.dart';
+import '../user/user_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
-
 part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -93,15 +91,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onWatchAuth(
     WatchAuthEvent event,
-    Emitter<AuthState> emit,
-  ) async {
-    await emit.forEach(
+    Emitter<AuthState> emit,) async =>
+      await emit.forEach(
       _authRepository.watchAuth(),
       onData: (user) => user == null
           ? const AuthState.unauthenticated()
           : const AuthState.authenticated(),
     );
-  }
 
   Future<void> _getDATA() async {
     getIt.get<UserBloc>().add(const UserEvent.getUserEvent());

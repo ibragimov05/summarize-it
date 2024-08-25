@@ -15,7 +15,5 @@ class BooksRepository {
   void addAudioUrl({required String bookId, required String audioUrl}) =>
       _firebaseBookService.addAudioUrl(bookId: bookId, audioUrl: audioUrl);
 
-  void deleteBook(String id) {
-    _firebaseBookService.deleteBook(id);
-  }
+  void deleteBook(String id) => _firebaseBookService.deleteBook(id);
 }

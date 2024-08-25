@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:summarize_it/core/utils/utils.dart'
-    show AppColors, AppTextStyles;
+import '../../core/utils/utils.dart';
 
 class RegularButton extends StatelessWidget {
   final double w;
@@ -17,26 +16,24 @@ class RegularButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: w,
-        height: 50,
-        decoration: BoxDecoration(
-          color: onTap == null ? AppColors.greyscale600 : AppColors.green900,
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Center(
-          child: Text(
-            buttonLabel,
-            style: AppTextStyles.workSansMain.copyWith(
-              color: AppColors.summarizeItWhite,
-              fontSize: 16,
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: w,
+          height: 50,
+          decoration: BoxDecoration(
+            color: onTap == null ? AppColors.greyscale600 : AppColors.green900,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Center(
+            child: Text(
+              buttonLabel,
+              style: AppTextStyles.workSansMain.copyWith(
+                color: AppColors.summarizeItWhite,
+                fontSize: 16,
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

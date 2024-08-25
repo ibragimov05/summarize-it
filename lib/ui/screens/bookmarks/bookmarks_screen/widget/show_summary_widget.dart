@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:summarize_it/data/models/book.dart';
 import 'package:intl/intl.dart';
-import 'package:summarize_it/core/utils/utils.dart'
-    show AppColors, AppRouter, SizedBoxExtension, AppFunctions, AppTextStyles;
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/utils/utils.dart';
+import '../../../../../data/models/book.dart';
 import '../../../../../logic/blocs/books/books_bloc.dart';
 
 class ShowSummaryWidget extends StatelessWidget {

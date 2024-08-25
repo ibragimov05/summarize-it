@@ -3,12 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/logic/blocs/all_blocs.dart';
-import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
-import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
-import 'package:summarize_it/ui/widgets/custom_text_field.dart';
-import 'package:summarize_it/core/utils/utils.dart'
-    show AppColors, AppFunctions, AppTextStyles;
+
+import '../../../widgets/widgets.dart';
+import '../../../../core/utils/utils.dart';
+import '../../../../logic/blocs/auth/auth_bloc.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -50,9 +48,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const ArrowBackButton(),
-      ),
+      appBar: AppBar(leading: const ArrowBackButton()),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -80,7 +76,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             ),
 
-            //! email text fieald
+            //! email text field
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 10),
               child: Text(

@@ -6,7 +6,7 @@ import '../../../core/utils/app_settings.dart';
 class DarkThemeCubit extends Cubit<bool> {
   DarkThemeCubit() : super(AppSettings.themeValue);
 
-  void toggleTheme() async {
+  void toggleTheme() {
     ThemeModePrefsService.set(!state);
     emit(!state);
   }

@@ -7,18 +7,16 @@ import '../../../../../logic/cubits/dark_theme/dark_theme_cubit.dart';
 
 class IconWithBlocBuilder extends StatelessWidget {
   final String icoPath;
-  const IconWithBlocBuilder({super.key,required this.icoPath});
+  const IconWithBlocBuilder({super.key, required this.icoPath});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<DarkThemeCubit, bool>(
-      builder: (context, state) => SvgPicture.asset(
-        icoPath,
-        colorFilter: ColorFilter.mode(
-          state ? AppColors.greyscale100 : AppColors.greyscale900,
-          BlendMode.srcIn,
+  Widget build(BuildContext context) => BlocBuilder<DarkThemeCubit, bool>(
+        builder: (context, state) => SvgPicture.asset(
+          icoPath,
+          colorFilter: ColorFilter.mode(
+            state ? AppColors.greyscale100 : AppColors.greyscale900,
+            BlendMode.srcIn,
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

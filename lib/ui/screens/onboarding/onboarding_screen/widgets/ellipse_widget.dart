@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
+
+import '../../../../../core/utils/app_colors.dart';
 
 class EllipseWidget extends StatelessWidget {
   final int indexPage;
   const EllipseWidget({super.key, required this.indexPage});
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(3, (index) => _buildEllipse(index)),
-    );
-  }
+  Widget build(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(3, (index) => _buildEllipse(index)),
+      );
 
   Widget _buildEllipse(int pageIndex) => Row(
         children: [

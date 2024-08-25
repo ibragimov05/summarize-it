@@ -5,4 +5,5 @@ export 'books/books_bloc.dart';
 export 'auth/auth_bloc.dart';
 export 'user/user_bloc.dart';
 export 'audio_player/audio_player_bloc.dart';
-export 'observer/summarize_it_observer.dart';
+export 'summarize_it_observer.dart';
+export 'group_chat/group_chat_bloc.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:summarize_it/core/utils/utils.dart'
-    show AppTextStyles, AppAssets, AppColors;
+
+import '../../../../../core/utils/utils.dart';
 
 class SearchBooksTextField extends StatefulWidget {
   final void Function(String) onChanged;

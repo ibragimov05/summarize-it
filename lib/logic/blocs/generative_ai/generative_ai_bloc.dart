@@ -1,14 +1,14 @@
 import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/core/utils/apis.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
-import 'package:summarize_it/data/models/book.dart';
-import '../../../core/utils/ai_constants.dart';
+
+import '../../../core/utils/utils.dart';
+import '../../../data/models/book.dart';
 
 part 'generative_ai_bloc.freezed.dart';
 part 'generative_ai_events.dart';
@@ -16,11 +16,14 @@ part 'generative_ai_states.dart';
 
 class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
   GenerativeAiBloc() : super(const InitialGenerativeAiState()) {
-    on<SummarizeAiEvent>(_summarize);
+    on<SummarizeAiEvent>(_onSummarizeBook);
     on<ToInitialGenerativeAiEvent>(_toInitialEvent);
   }
 
-  Future<void> _summarize(SummarizeAiEvent event, emit) async {
+  Future<void> _onSummarizeBook(
+    SummarizeAiEvent event,
+    Emitter<GenerativeAiStates> emit,
+  ) async {
     emit(const GenerativeAiStates.loading());
     event.buttonController.start();
     try {

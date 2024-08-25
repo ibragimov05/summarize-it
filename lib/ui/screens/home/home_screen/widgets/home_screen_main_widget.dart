@@ -2,24 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
-import 'package:summarize_it/core/utils/user_data.dart';
-import 'package:summarize_it/logic/blocs/books/books_bloc.dart';
-import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/widget/show_summary_widget.dart';
-import 'package:summarize_it/ui/screens/home/home_screen/widgets/recent_summaries_shimmer_widget.dart';
-import 'package:summarize_it/ui/widgets/circle_container_widget.dart';
 
+import '../../../../widgets/widgets.dart';
+import '../../../../../core/utils/utils.dart';
 import '../../../../../data/models/book.dart';
+import 'recent_summaries_shimmer_widget.dart';
+import '../../../../../logic/blocs/books/books_bloc.dart';
 import '../../../../../logic/cubits/tab_box_cubit/tab_box_cubit.dart';
-import '../../../../widgets/animation_widget_with_bloc.dart';
-
-import 'package:summarize_it/core/utils/utils.dart'
-    show
-        AppConstants,
-        AppFunctions,
-        AppColors,
-        AppTextStyles,
-        DeviceScreen,
-        AppAssets;
+import '../../../bookmarks/bookmarks_screen/widget/show_summary_widget.dart';
 
 class HomeScreenMainWidget extends StatefulWidget {
   const HomeScreenMainWidget({super.key});

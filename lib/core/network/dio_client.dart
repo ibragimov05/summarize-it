@@ -55,8 +55,6 @@ class DioClient {
     try {
       final response = await _dio.patch (url, data: data);
       return response;
-    } on DioException {
-      rethrow;
     } catch (e) {
       rethrow;
     }

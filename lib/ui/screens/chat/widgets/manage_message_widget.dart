@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
-import 'package:summarize_it/data/models/message.dart';
-import 'package:summarize_it/logic/blocs/group_chat/group_chat_bloc.dart';
+
+import '../../../../core/utils/utils.dart';
+import '../../../../data/models/message.dart';
+import '../../../../logic/blocs/group_chat/group_chat_bloc.dart';
 
 class ManageMessageWidget extends StatelessWidget {
   final Message message;

@@ -25,5 +25,4 @@ class UserData {
     email = 'null';
     chatColor = 4292576568;
   }
-
 }

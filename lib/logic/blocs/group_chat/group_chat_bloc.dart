@@ -1,15 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:summarize_it/core/utils/user_data.dart';
-import 'package:summarize_it/data/repositories/group_chat_repository.dart';
 
+import '../../../core/utils/user_data.dart';
 import '../../../data/models/message.dart';
+import '../../../data/repositories/group_chat_repository.dart';
 
 part 'group_chat_event.dart';
-
 part 'group_chat_state.dart';
-
 part 'group_chat_bloc.freezed.dart';
 
 class GroupChatBloc extends Bloc<GroupChatEvent, GroupChatState> {

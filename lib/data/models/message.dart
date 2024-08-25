@@ -19,15 +19,13 @@ class Message {
     required this.timestamp,
   });
 
-  factory Message.fromQuerySnapshot(QueryDocumentSnapshot query) {
-    return Message(
-      id: query.id,
-      senderId: query['sender-id'] ?? 'unknown',
-      senderName: query['sender-name'] ?? 'unknown',
-      text: query['text'] ?? '',
-      isEdited: query['is-edited'] ?? false,
-      senderChatColor: query['sender-color'] ?? 4292576568,
-      timestamp: query['time-stamp'] ?? Timestamp.now(),
-    );
-  }
+  factory Message.fromQuerySnapshot(QueryDocumentSnapshot query) => Message(
+        id: query.id,
+        senderId: query['sender-id'] ?? 'unknown',
+        senderName: query['sender-name'] ?? 'unknown',
+        text: query['text'] ?? '',
+        isEdited: query['is-edited'] ?? false,
+        senderChatColor: query['sender-color'] ?? 4292576568,
+        timestamp: query['time-stamp'] ?? Timestamp.now(),
+      );
 }

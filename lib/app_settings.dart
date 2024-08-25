@@ -1,13 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:summarize_it/data/services/firebase/group_chat_firebase_service.dart';
-import 'package:summarize_it/data/services/shared_prefs/animation_prefs_service.dart';
-import 'package:summarize_it/data/services/shared_prefs/theme_mode_prefs_service.dart';
-import 'package:summarize_it/firebase_options.dart';
-import 'package:summarize_it/logic/blocs/group_chat/group_chat_bloc.dart';
 
 import 'core/utils/app_settings.dart';
+import 'firebase_options.dart';
 import 'logic/blocs/all_blocs.dart';
 import 'logic/cubits/all_cubit.dart';
 import 'data/services/all_services.dart';
@@ -31,9 +27,7 @@ class Settings {
     // Bloc.observer = const AppBlocObserver();
   }
 
-  static void dependencySetUp()  {
-
-
+  static void dependencySetUp() {
     /// getting instances of services
     final FirebaseAuthService firebaseAuthService = FirebaseAuthService();
     final UserDioService userHttpService = UserDioService();

@@ -1,16 +1,15 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/app_settings.dart';
-import 'package:summarize_it/core/utils/utils.dart';
-import 'package:summarize_it/logic/blocs/group_chat/group_chat_bloc.dart';
-import 'package:summarize_it/ui/screens/chat/widgets/show_message_widget.dart';
-import 'package:summarize_it/ui/widgets/animation_widget_with_bloc.dart';
-import 'package:summarize_it/ui/widgets/circle_container_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 
+import '../../../app_settings.dart';
+import '../../widgets/widgets.dart';
+import '../../../core/utils/utils.dart';
+import 'widgets/show_message_widget.dart';
 import '../../../data/models/message.dart';
+import '../../../logic/blocs/group_chat/group_chat_bloc.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});

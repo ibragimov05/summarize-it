@@ -1,20 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../../data/repositories/audio_repository.dart';
 
 part 'audio_player_event.dart';
 part 'audio_player_state.dart';
-
 part 'audio_player_bloc.freezed.dart';
 
 class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   final AudioRepository audioRepository;
   final AudioPlayer _audioPlayer = AudioPlayer();
 
-  AudioPlayerBloc({required this.audioRepository})
-      : super(const AudioPlayerState.initial()) {
-    on<DownloadAudioEvent>(_download);
+  AudioPlayerBloc({
+    required this.audioRepository,
+  }) : super(const AudioPlayerState.initial()) {
+    on<DownloadAudioEvent>(_onDownloadAudio);
     on<PlayAudioEvent>(_onPlayAudio);
     on<PauseAudioEvent>(_onPauseAudio);
     on<DisposeAudioEvent>(_onDisposeAudio);
@@ -28,7 +29,10 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
     );
   }
 
-  void _download(DownloadAudioEvent event, emit) async {
+  void _onDownloadAudio(
+    DownloadAudioEvent event,
+    Emitter<AudioPlayerState> emit,
+  ) async {
     if (_audioPlayer.playing) {
       _audioPlayer.pause();
     } else if (_audioPlayer.processingState == ProcessingState.idle) {

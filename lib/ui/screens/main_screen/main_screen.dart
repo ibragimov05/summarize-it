@@ -1,17 +1,15 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:summarize_it/ui/screens/chat/chat_screen.dart';
-import 'package:summarize_it/ui/screens/home/home_screen/home_screen.dart';
-import 'package:summarize_it/ui/screens/profile/profile_screen/profile_screen.dart';
-import 'package:summarize_it/ui/screens/bookmarks/bookmarks_screen/bookmarks_screen.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
+import '../chat/chat_screen.dart';
+import '../../../core/utils/utils.dart';
+import '../home/home_screen/home_screen.dart';
+import '../profile/profile_screen/profile_screen.dart';
+import '../bookmarks/bookmarks_screen/bookmarks_screen.dart';
 import '../../../logic/cubits/tab_box_cubit/tab_box_cubit.dart';
-
-import '../../../core/utils/utils.dart'
-    show AppColors, AppConstants, AppFunctions, AppRouter, AppTextStyles;
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -24,10 +22,10 @@ class _MainScreenState extends State<MainScreen> {
   DateTime? _lastPressedAt;
 
   final List<Widget> _screens = const [
-     HomeScreen(),
-     ChatScreen(),
-     BookmarksScreen(),
-     ProfileScreen(),
+    HomeScreen(),
+    ChatScreen(),
+    BookmarksScreen(),
+    ProfileScreen(),
   ];
 
   @override
@@ -64,10 +62,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<TabBoxCubit, TabBoxState>(
-      builder: (BuildContext context, state) {
-        return PopScope(
+  Widget build(BuildContext context) => BlocBuilder<TabBoxCubit, TabBoxState>(
+        builder: (BuildContext context, state) => PopScope(
           canPop: state.canPop,
           onPopInvokedWithResult: _onPopInvoked,
           child: Scaffold(
@@ -113,8 +109,6 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
 }

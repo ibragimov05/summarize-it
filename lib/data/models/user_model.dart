@@ -34,7 +34,6 @@ class UserModel {
       };
 
   @override
-  String toString() {
-    return 'UserModel(id: $id, uid: $uid, firstName: $firstName, lastName: $lastName, email: $email, user-chat-color: $chatProfileColor)';
-  }
+  String toString() =>
+      'UserModel(id: $id, uid: $uid, firstName: $firstName, lastName: $lastName, email: $email, user-chat-color: $chatProfileColor)';
 }

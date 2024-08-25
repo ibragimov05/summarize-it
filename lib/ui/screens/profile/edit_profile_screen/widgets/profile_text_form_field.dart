@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:summarize_it/core/utils/utils.dart'
-    show AppTextStyles, AppColors, AppFunctions, SizedBoxExtension;
+import '../../../../../core/utils/utils.dart';
 
 class ProfileTextFormField extends StatefulWidget {
   final String labelText;
@@ -23,67 +22,65 @@ class ProfileTextFormField extends StatefulWidget {
 
 class _ProfileTextFormFieldState extends State<ProfileTextFormField> {
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.labelText,
-          style: AppTextStyles.workSansW500.copyWith(
-            color: AppColors.greyscale400,
-            fontSize: 15,
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.labelText,
+            style: AppTextStyles.workSansW500.copyWith(
+              color: AppColors.greyscale400,
+              fontSize: 15,
+            ),
           ),
-        ),
-        8.h(),
-        TextFormField(
-          enabled: widget.isEnabled,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide:
-                  const BorderSide(color: AppColors.green900, width: 1.5),
+          8.h(),
+          TextFormField(
+            enabled: widget.isEnabled,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide:
+                    const BorderSide(color: AppColors.green900, width: 1.5),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide:
+                    const BorderSide(color: AppColors.green900, width: 1.5),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide:
+                    const BorderSide(color: AppColors.green900, width: 1.5),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide:
+                    const BorderSide(color: AppColors.green900, width: 1.5),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide:
+                    const BorderSide(color: AppColors.error900, width: 1.5),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+                borderSide:
+                    const BorderSide(color: AppColors.error900, width: 1.5),
+              ),
+              errorStyle: AppTextStyles.workSansW500.copyWith(
+                color: AppColors.error900,
+              ),
+              hoverColor: Colors.red,
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide:
-                  const BorderSide(color: AppColors.green900, width: 1.5),
+            controller: widget.textEditingController,
+            validator: widget.validator,
+            cursorColor: AppColors.green900,
+            style: AppTextStyles.workSansW500.copyWith(
+              color: AppFunctions.isLight(context)
+                  ? AppColors.greyscale900
+                  : AppColors.greyscale100,
             ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide:
-                  const BorderSide(color: AppColors.green900, width: 1.5),
-            ),
-            disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide:
-                  const BorderSide(color: AppColors.green900, width: 1.5),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide:
-                  const BorderSide(color: AppColors.error900, width: 1.5),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide:
-                  const BorderSide(color: AppColors.error900, width: 1.5),
-            ),
-            errorStyle: AppTextStyles.workSansW500.copyWith(
-              color: AppColors.error900,
-            ),
-            hoverColor: Colors.red,
           ),
-          controller: widget.textEditingController,
-          validator: widget.validator,
-          cursorColor: AppColors.green900,
-          style: AppTextStyles.workSansW500.copyWith(
-            color: AppFunctions.isLight(context)
-                ? AppColors.greyscale900
-                : AppColors.greyscale100,
-          ),
-        ),
-        20.h(),
-      ],
-    );
-  }
+          20.h(),
+        ],
+      );
 }

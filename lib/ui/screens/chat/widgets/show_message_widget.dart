@@ -1,11 +1,12 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:summarize_it/core/utils/utils.dart';
-import 'package:summarize_it/data/models/message.dart';
-import 'package:summarize_it/ui/screens/chat/widgets/manage_message_widget.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+
+import 'manage_message_widget.dart';
+import '../../../../core/utils/utils.dart';
+import '../../../../data/models/message.dart';
 
 class ShowMessage extends StatelessWidget {
   final Message message;

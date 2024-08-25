@@ -78,6 +78,7 @@ class AudioService {
     final uploadTask = path.putData(audioBytes);
 
     await uploadTask;
+
     return await path.getDownloadURL();
   }
 }

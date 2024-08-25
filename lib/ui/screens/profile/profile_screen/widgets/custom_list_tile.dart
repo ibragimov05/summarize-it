@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:summarize_it/ui/screens/profile/profile_screen/widgets/icon_with_bloc_builder.dart';
 
-import 'package:summarize_it/core/utils/utils.dart'
-    show SizedBoxExtension, AppTextStyles;
+import 'icon_with_bloc_builder.dart';
+import '../../../../../core/utils/utils.dart';
 
 class CustomListTile extends StatelessWidget {
   final String icoPath;
@@ -19,35 +18,33 @@ class CustomListTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 50,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                IconWithBlocBuilder(icoPath: icoPath),
-                10.w(),
-                Text(
-                  text,
-                  style: AppTextStyles.workSansMain.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+  Widget build(BuildContext context) => InkWell(
+        onTap: onTap,
+        child: Container(
+          height: 50,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  IconWithBlocBuilder(icoPath: icoPath),
+                  10.w(),
+                  Text(
+                    text,
+                    style: AppTextStyles.workSansMain.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            if (shouldAddArrow)
-              const Icon(Icons.arrow_forward_ios_rounded)
-            else
-              const SizedBox(),
-          ],
+                ],
+              ),
+              if (shouldAddArrow)
+                const Icon(Icons.arrow_forward_ios_rounded)
+              else
+                const SizedBox(),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

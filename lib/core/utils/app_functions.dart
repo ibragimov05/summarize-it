@@ -1,15 +1,14 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:summarize_it/core/utils/ai_constants.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
 import 'package:summarize_it/data/models/book.dart';
 import 'package:toastification/toastification.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import 'utils.dart';
 
 class AppFunctions {
   static bool isAndroid() {

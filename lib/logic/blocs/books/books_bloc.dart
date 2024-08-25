@@ -1,14 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:summarize_it/data/repositories/book_repository.dart';
+
 import '../../../data/models/book.dart';
+import '../../../data/repositories/book_repository.dart';
 
 part 'books_event.dart';
-
 part 'books_state.dart';
-
 part 'books_bloc.freezed.dart';
 
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
@@ -53,19 +51,21 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   }
 
   Future<void> _addAudioUrl(
-      AddAudioUrlEvent event, Emitter<BooksState> emit) async {
+    AddAudioUrlEvent event,
+    Emitter<BooksState> emit,
+  ) async {
     try {
       _bookRepository.addAudioUrl(
         bookId: event.bookId,
         audioUrl: event.audioUrl,
       );
-    } catch (e) {
-      debugPrint('$e');
-    }
+    } catch (_) {}
   }
 
   Future<void> _deleteBook(
-      DeleteBookEvent event, Emitter<BooksState> emit) async {
+    DeleteBookEvent event,
+    Emitter<BooksState> emit,
+  ) async {
     try {
       _bookRepository.deleteBook(event.id);
     } catch (e) {

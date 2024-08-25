@@ -7,9 +7,8 @@ class AudioPlayerEvent with _$AudioPlayerEvent {
     required String summaryLanguage,
   }) = DownloadAudioEvent;
 
-  const factory AudioPlayerEvent.play({
-    required String audioUrl,
-  }) = PlayAudioEvent;
+  const factory AudioPlayerEvent.play({required String audioUrl}) =
+      PlayAudioEvent;
 
   const factory AudioPlayerEvent.pause() = PauseAudioEvent;
 

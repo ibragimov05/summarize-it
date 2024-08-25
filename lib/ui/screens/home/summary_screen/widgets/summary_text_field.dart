@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:summarize_it/core/utils/utils.dart'
-    show AppColors, AppTextStyles;
+import '../../../../../core/utils/utils.dart';
 
 class SummaryTextFormField extends StatelessWidget {
   final TextEditingController _textEditingController;
@@ -15,40 +14,38 @@ class SummaryTextFormField extends StatelessWidget {
         _validator = validator;
 
   @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _textEditingController,
-      maxLines: 4,
-      validator: _validator,
-      decoration: InputDecoration(
-        errorStyle: AppTextStyles.workSansMain.copyWith(
-          color: AppColors.error900,
+  Widget build(BuildContext context) => TextFormField(
+        controller: _textEditingController,
+        maxLines: 4,
+        validator: _validator,
+        decoration: InputDecoration(
+          errorStyle: AppTextStyles.workSansMain.copyWith(
+            color: AppColors.error900,
+          ),
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.green900, width: 2),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.green900, width: 2),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.green900, width: 2),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.green900, width: 2),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.error900, width: 2),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: AppColors.error900, width: 2),
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.green900, width: 2),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.green900, width: 2),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.green900, width: 2),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        disabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.green900, width: 2),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.error900, width: 2),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.error900, width: 2),
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-    );
-  }
+      );
 }

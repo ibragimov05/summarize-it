@@ -6,7 +6,7 @@ import '../../../core/utils/app_settings.dart';
 class AnimationCubit extends Cubit<bool> {
   AnimationCubit() : super(AppSettings.animationValue);
 
-  void toggleAnimationSettings() async {
+  void toggleAnimationSettings() {
     AnimationPrefsService.set(!state);
     emit(!state);
   }

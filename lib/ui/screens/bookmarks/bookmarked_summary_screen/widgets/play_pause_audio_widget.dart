@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:summarize_it/core/utils/utils.dart';
+
+import '../../../../../core/utils/app_colors.dart';
 
 class PlayPauseAudioWidget extends StatefulWidget {
   final String summaryAudioUrl;
 
-  const PlayPauseAudioWidget({
-    super.key,
-    required this.summaryAudioUrl,
-  });
+  const PlayPauseAudioWidget({super.key, required this.summaryAudioUrl});
 
   @override
   State<PlayPauseAudioWidget> createState() => _PlayPauseAudioWidgetState();
@@ -30,7 +28,7 @@ class _PlayPauseAudioWidgetState extends State<PlayPauseAudioWidget>
           (event) {
         if (event.processingState == ProcessingState.completed) {
           _isPlaying = false;
-          _controller.reverse(); // Stop animation when audio finishes
+          _controller.reverse();
           setState(() {});
         }
       },

@@ -1,16 +1,12 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
-import 'package:summarize_it/core/utils/extensions.dart';
-import 'package:summarize_it/logic/blocs/all_blocs.dart';
-import 'package:summarize_it/ui/screens/auth/sign_up_screen/widgets/sign_up_text_style.dart';
-import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
-import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
-import 'package:summarize_it/ui/widgets/custom_text_field.dart';
-import 'package:summarize_it/core/utils/app_colors.dart';
-import 'package:summarize_it/core/utils/app_functions.dart';
-import 'package:summarize_it/core/utils/app_text_styles.dart';
+
+import '../../../widgets/widgets.dart';
+import 'widgets/sign_up_text_style.dart';
+import '../../../../core/utils/utils.dart';
+import '../../../../logic/blocs/auth/auth_bloc.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

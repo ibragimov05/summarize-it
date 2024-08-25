@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:summarize_it/core/utils/utils.dart'
-    show AppColors, AppRouter, AppTextStyles;
 
-import '../logic/cubits/all_cubit.dart';
+import 'utils/utils.dart';
+import '../logic/cubits/dark_theme/dark_theme_cubit.dart';
 
 class SummarizeIt extends StatelessWidget {
   const SummarizeIt({super.key});

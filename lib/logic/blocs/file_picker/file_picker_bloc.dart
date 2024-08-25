@@ -5,9 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'file_picker_events.dart';
-
 part 'file_picker_states.dart';
-
 part 'file_picker_bloc.freezed.dart';
 
 class FilePickerBloc extends Bloc<FilePickerEvents, FilePickerStates> {

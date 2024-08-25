@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:summarize_it/data/models/book.dart';
+
 import 'package:summarize_it/ui/screens/bookmarks/bookmarked_summary_screen/bookmarked_summary_screen.dart';
 import 'package:summarize_it/ui/screens/no_connection/no_connection_screen.dart';
 import 'package:summarize_it/ui/screens/onboarding/splash_screen/splash_screen.dart';
@@ -11,6 +11,8 @@ import 'package:summarize_it/ui/screens/main_screen/main_screen.dart';
 import 'package:summarize_it/ui/screens/onboarding/onboarding_screen/onboarding_screen.dart';
 import 'package:summarize_it/ui/screens/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:summarize_it/ui/screens/home/summary_screen/summary_screen.dart';
+
+import '../../data/models/book.dart';
 
 class AppRouter {
   static const String main = '/mainScreen';

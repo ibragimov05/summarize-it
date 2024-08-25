@@ -13,6 +13,4 @@ extension StringExtensions on String {
     }
     return this;
   }
-
-  String capitalize() => this[0].toUpperCase() + substring(1);
 }
