@@ -34,7 +34,7 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
     return RefreshIndicator(
       color: AppColors.green900,
       onRefresh: () async =>
-          context.read<BooksBloc>().add(GetBookEvent(uid: UserData.id)),
+          context.read<BooksBloc>().add(GetBookEvent(uid: UserData.uid)),
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(

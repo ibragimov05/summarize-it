@@ -3,6 +3,7 @@ import 'package:summarize_it/data/models/book.dart';
 import 'package:summarize_it/ui/screens/bookmarks/bookmarked_summary_screen/bookmarked_summary_screen.dart';
 import 'package:summarize_it/ui/screens/no_connection/no_connection_screen.dart';
 import 'package:summarize_it/ui/screens/onboarding/splash_screen/splash_screen.dart';
+import 'package:summarize_it/ui/screens/profile/change_password/update_password.dart';
 import 'package:summarize_it/ui/screens/profile/edit_profile_screen/edit_profile_screen.dart';
 import 'package:summarize_it/ui/screens/auth/forgot_password_screen/forgot_password_screen.dart';
 import 'package:summarize_it/ui/screens/auth/login_screen/login_screen.dart';
@@ -21,6 +22,7 @@ class AppRouter {
   static const String bookmarkedSummaryScreen = '/bookmarkedSummaryScreen';
   static const String editProfileScreen = '/editProfileScreen';
   static const String noConnectionScreen = '/noConnectionScreen';
+  static const String updatePasswordScreen = '/updatePasswordScreen';
 
   static PageRoute _buildPageRoute(Widget widget) {
     return CupertinoPageRoute(builder: (BuildContext context) => widget);
@@ -47,6 +49,8 @@ class AppRouter {
         return _buildPageRoute(const EditProfileScreen());
       case AppRouter.noConnectionScreen:
         return _buildPageRoute(const NoConnectionScreen());
+      case AppRouter.updatePasswordScreen:
+        return _buildPageRoute(const UpdatePasswordScreen());
       default:
         return _buildPageRoute(const SplashScreen());
     }

@@ -31,7 +31,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<WatchAuthEvent>(_onWatchAuth);
   }
 
-  void _loginUser(LoginUserEvent event, Emitter<AuthState> emit) async {
+  void _loginUser(
+    LoginUserEvent event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(LoadingAuthState());
     try {
       await _authRepository.login(email: event.email, password: event.password);
@@ -41,7 +44,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onRegisterUser(RegisterUserEvent event, Emitter<AuthState> emit) async {
+  void _onRegisterUser(
+    RegisterUserEvent event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(LoadingAuthState());
     try {
       await _authRepository.register(
@@ -62,14 +68,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onResetPassword(ResetPasswordEvent event, Emitter<AuthState> emit) =>
+  void _onResetPassword(
+    ResetPasswordEvent event,
+    Emitter<AuthState> emit,
+  ) =>
       _authRepository.resetPassword(email: event.email);
 
-  void _onLogoutUser(LogoutEvent event, Emitter<AuthState> emit) async {
+  void _onLogoutUser(
+    LogoutEvent event,
+    Emitter<AuthState> emit,
+  ) async {
     emit(LoadingAuthState());
     try {
       await UserPrefsService.clearUser();
+
       UserData.toInitial();
+
       await _authRepository.logout();
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));

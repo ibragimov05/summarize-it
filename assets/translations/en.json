@@ -103,7 +103,7 @@
     },
     "noMessagesHereYet": "No messages here yet. Be one of the first to write a message!",
     "chatWith": "Chat with SummarizeIT community",
-    "message": "Message",
+    "message": "Type message",
     "book_name": "Book name: {}",
     "author": "Author: {}",
     "listen_summary": "You can listen to the summary of the book here: {}",
@@ -112,5 +112,8 @@
     "summary_language": "Summary language: {}",
     "edited": "edited",
     "noInternet": "You're currently offline. Please check your connection.",
-    "pressTwice": "Press twice to exit the app."
+    "pressTwice": "Press twice to exit the app.",
+    "updatePassword": "Update password",
+    "loginAgain": "In order to change your password you should be logged in within 10 minutes. Log in again.",
+    "passwordChanged": "Your password has been changed successfully"
 }

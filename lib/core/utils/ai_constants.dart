@@ -22,69 +22,49 @@ class AiConstants {
   static String _responseLanguage(SummaryLanguage lang) {
     switch (lang) {
       case SummaryLanguage.uzbek:
-        return '\nAnd please make sure to give me all the response in Uzbek language and latin uzbek alphabet. It is very crucial!!!';
+        return '\nPlease ensure the entire response is in Uzbek, using the Latin alphabet. This is essential!';
       case SummaryLanguage.english:
-        return '\nAnd please make sure to give me all the response in English language. It is very crucial!!!';
+        return '\nPlease ensure the entire response is in English. This is essential!';
       case SummaryLanguage.russian:
-        return '\nAnd please make sure to give me all the response in Russian language. It is very crucial!!!';
+        return '\nPlease ensure the entire response is in Russian. This is essential!';
       default:
         return '';
     }
   }
 
   static const String _shortSummary = '''
-      Please read the entire book and provide a brief summary. 
-      Focus on the main points and key themes, and keep the summary 
-      concise—around 3-5 sentences. Ensure the summary captures 
-      the essence of the book's message. $_responseType
+      Read the entire book carefully and provide a concise summary focusing on the main points and key themes.
+      The summary should be around 3-5 sentences and must accurately capture the essence of the book's message.
+      $_responseType
       Here is the text of the book: ''';
 
   static const String _mediumSummary = '''
-      Please read the entire book and provide a comprehensive summary. 
-      Cover the main points, key themes, and important details. 
-      If possible, break down the summary by major sections or chapters. 
-      Aim for a length of 1-2 paragraphs, and ensure the summary 
-      accurately reflects the book's message and content. $_responseType
+      Read the entire book thoroughly and provide a comprehensive summary that covers the main points, key themes, and important details.
+      Summarize the content in 1-2 paragraphs, breaking it down by major sections or chapters for clarity.
+      Ensure the summary reflects the book's message and content accurately.
+      $_responseType
       Here is the text of the book: ''';
 
   static const String _longSummary = '''
-      Please read the entire book and provide an in-depth summary.
-      Include the main points, key themes, and important details.
-      Break down the summary by chapters or sections if applicable,
-      and ensure it captures the essence of the book's message and content.
-      It would be very helpful if you could break down the summary by chapters
-      or sections to ensure clarity and thoroughness. Additionally,
-      please highlight any significant quotes or passages that stand
-      out, as these often provide valuable insights into the author's
-      message and intent. Aim for 1000 plus, up to maximum 2800 words
-      if you can, focusing on delivering a
-      balanced overview that reflects the book's depth and richness.
-      $_responseType.
-      It is crucial not to make errors, please!
+      Read the entire book in detail and provide an in-depth summary that covers all major points, key themes, and important details.
+      Break down the content by chapters or sections, and include significant quotes or passages that provide insights into the author's intent.
+      The summary should be between 1000 to 2800 words, offering a thorough and balanced overview that reflects the book's depth.
+      $_responseType
       Here is the text of the book: ''';
 
   static const String _responseType = '''
-      Along with the summary, please include the following details:
-      - "title": The book's title as a string.
-      - "summary": The book's summary as generated.
-      - "author": The author's name as a string.
-      - "category-of-book": The book's category or genre as a string.
-      - "rate-of-the-book": A numerical rating for the book (e.g., 4.5).
-      - "published-date": The exact publication date in the format (YYYY-MM-DD).
-      - "facts": A list of three interesting facts about the book in List<String> format.
-      
-      Please ensure the response is formatted as follows:
+      The response must be in the following structured format:
       {
-        "title": "...",
-        "summary": "...",
-        "author": "...",
-        "category-of-book": "...",
-        "rate-of-the-book": ...,
-        "published-date": "...",
-        "facts": ["...", "...", "..."],
+        "title": "The book's title as a string",
+        "summary": "The generated summary as a string",
+        "author": "The author's name as a string",
+        "category-of-book": "The book's category or genre as a string",
+        "rate-of-the-book": A numerical rating for the book (e.g., 4.5),
+        "published-date": "The exact publication date in the format YYYY-MM-DD",
+        "facts": ["A list of three interesting facts about the book in List<String> format"]
       }
       
-      It is crucial to follow this structure precisely. 
+      Ensure there are no syntax errors in the response.
       Do not include any additional text outside of the curly brackets!
       ''';
 }

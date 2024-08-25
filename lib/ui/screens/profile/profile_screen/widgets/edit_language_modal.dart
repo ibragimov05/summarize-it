@@ -36,7 +36,7 @@ class _EditLanguageModalState extends State<EditLanguageModal> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: DeviceScreen.h(context) / 2.5,
+      height: DeviceScreen.h(context) / 3,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppFunctions.isLight(context)

@@ -21,118 +21,113 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  TitleText(text: context.tr("profileInfo")),
-                  CustomListTile(
-                    icoPath: AppAssets.icoUser,
-                    text: context.tr("profile"),
-                    shouldAddArrow: true,
-                    onTap: () {
-                      Navigator.pushNamed(context, AppRouter.editProfileScreen);
-                    },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: ListView(
+              children: [
+                TitleText(text: context.tr("profileInfo")),
+                CustomListTile(
+                  icoPath: AppAssets.icoUser,
+                  text: context.tr("profile"),
+                  shouldAddArrow: true,
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRouter.editProfileScreen),
+                ),
+                TitleText(text: context.tr("security")),
+                CustomListTile(
+                  icoPath: AppAssets.icoKey,
+                  text: context.tr("changePassword"),
+                  shouldAddArrow: true,
+                  onTap: () => Navigator.pushNamed(
+                      context, AppRouter.updatePasswordScreen),
+                ),
+                CustomListTile(
+                  icoPath: AppAssets.icoLock,
+                  text: context.tr("forgotPassword"),
+                  onTap: () {
+                    context.read<AuthBloc>().add(ResetPasswordEvent(
+                        email: FirebaseAuth.instance.currentUser?.email ??
+                            'null'));
+                    AppFunctions.showSnackBar(
+                      context,
+                      'Link to reset your password has been sent to your email!',
+                    );
+                  },
+                ),
+                TitleText(text: context.tr("general")),
+                CustomListTile(
+                  icoPath: AppAssets.icoLanguageCircle,
+                  text: context.tr("language"),
+                  shouldAddArrow: true,
+                  onTap: () => showModalBottomSheet(
+                    context: context,
+                    builder: (context) =>
+                        EditLanguageModal(currentLocale: context.locale),
                   ),
-                  TitleText(text: context.tr("security")),
-                  CustomListTile(
-                    icoPath: AppAssets.icoKey,
-                    text: context.tr("changePassword"),
-                    shouldAddArrow: true,
-                    onTap: () {},
-                  ),
-                  CustomListTile(
-                    icoPath: AppAssets.icoLock,
-                    text: context.tr("forgotPassword"),
-                    onTap: () {
-                      context.read<AuthBloc>().add(ResetPasswordEvent(
-                          email: FirebaseAuth.instance.currentUser?.email ??
-                              'null'));
-                      AppFunctions.showSnackBar(
-                        context,
-                        'Link to reset your password has been sent to your email!',
-                      );
-                    },
-                  ),
-                  TitleText(text: context.tr("general")),
-                  CustomListTile(
-                    icoPath: AppAssets.icoLanguageCircle,
-                    text: context.tr("language"),
-                    shouldAddArrow: true,
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) =>
-                            EditLanguageModal(currentLocale: context.locale),
-                      );
-                    },
-                  ),
-                  BlocBuilder<DarkThemeCubit, bool>(
-                    builder: (context, state) {
-                      return SettingsToggleRow(
-                        icoPath: AppAssets.icoMoon,
-                        text: context.tr("darkMode"),
-                        value: state,
-                        onChanged: (value) =>
-                            context.read<DarkThemeCubit>().toggleTheme(),
-                      );
-                    },
-                  ),
-                  BlocBuilder<AnimationCubit, bool>(
-                    builder: (context, state) {
-                      return SettingsToggleRow(
-                        icoPath: AppAssets.tickCircle,
-                        text: context.tr("animations"),
-                        value: state,
-                        onChanged: (value) => context
-                            .read<AnimationCubit>()
-                            .toggleAnimationSettings(),
-                      );
-                    },
-                  ),
-                  TitleText(text: context.tr("about")),
-                  CustomListTile(
-                    icoPath: AppAssets.icoInfo,
-                    text: context.tr("helpAndSupport"),
-                    onTap: () async => await launchUrl(
-                        Uri.parse('https://t.me/Fazliddin3303')),
-                  ),
-                ],
-              ),
+                ),
+                BlocBuilder<DarkThemeCubit, bool>(
+                  builder: (context, state) {
+                    return SettingsToggleRow(
+                      icoPath: AppAssets.icoMoon,
+                      text: context.tr("darkMode"),
+                      value: state,
+                      onChanged: () =>
+                          context.read<DarkThemeCubit>().toggleTheme(),
+                    );
+                  },
+                ),
+                BlocBuilder<AnimationCubit, bool>(
+                  builder: (context, state) {
+                    return SettingsToggleRow(
+                      icoPath: AppAssets.tickCircle,
+                      text: context.tr("animations"),
+                      value: state,
+                      onChanged: () => context
+                          .read<AnimationCubit>()
+                          .toggleAnimationSettings(),
+                    );
+                  },
+                ),
+                TitleText(text: context.tr("about")),
+                CustomListTile(
+                  icoPath: AppAssets.icoInfo,
+                  text: context.tr("helpAndSupport"),
+                  onTap: () async =>
+                      await launchUrl(Uri.parse('https://t.me/Fazliddin3303')),
+                ),
+              ],
             ),
-            GestureDetector(
-              onTap: () => context.read<AuthBloc>().add(LogoutEvent()),
-              child: Container(
-                width: double.infinity,
-                height: 55,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: AppFunctions.isLight(context)
-                      ? AppColors.green900.withOpacity(0.1)
-                      : AppColors.greyscale100,
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
+          ),
+          GestureDetector(
+            onTap: () => context.read<AuthBloc>().add(LogoutEvent()),
+            child: Container(
+              width: double.infinity,
+              height: 55,
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: BoxDecoration(
+                color: AppFunctions.isLight(context)
+                    ? AppColors.green900.withOpacity(0.1)
+                    : AppColors.greyscale100,
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                  color: AppColors.green900,
+                  width: 1.5,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  context.tr('logout'),
+                  style: AppTextStyles.workSansW500.copyWith(
+                    fontSize: 18,
                     color: AppColors.green900,
-                    width: 1.5,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    context.tr('logout'),
-                    style: AppTextStyles.workSansW500.copyWith(
-                      fontSize: 18,
-                      color: AppColors.green900,
-                    ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

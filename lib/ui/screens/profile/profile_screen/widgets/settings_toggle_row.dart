@@ -8,7 +8,7 @@ class SettingsToggleRow extends StatelessWidget {
   final String icoPath;
   final String text;
   final bool value;
-  final Function(bool) onChanged;
+  final Function() onChanged;
 
   const SettingsToggleRow({
     super.key,
@@ -20,31 +20,37 @@ class SettingsToggleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
+    return InkWell(
+      onTap: onChanged,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconWithBlocBuilder(icoPath: icoPath),
-            10.w(),
-            Text(
-              text,
-              style: AppTextStyles.workSansMain.copyWith(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
+            Row(
+              children: [
+                IconWithBlocBuilder(icoPath: icoPath),
+                10.w(),
+                Text(
+                  text,
+                  style: AppTextStyles.workSansMain.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            Switch.adaptive(
+              hoverColor: AppColors.greyscale100,
+              inactiveTrackColor: AppColors.greyscale100,
+              activeColor: AppColors.greyscale600,
+              activeTrackColor: AppColors.greyscale300,
+              value: value,
+              onChanged: (value) => onChanged(),
             ),
           ],
         ),
-        Switch.adaptive(
-          hoverColor: AppColors.greyscale100,
-          inactiveTrackColor: AppColors.greyscale100,
-          activeColor: AppColors.greyscale600,
-          activeTrackColor: AppColors.greyscale300,
-          value: value,
-          onChanged: onChanged,
-        ),
-      ],
+      ),
     );
   }
 }

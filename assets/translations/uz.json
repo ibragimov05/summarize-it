@@ -103,7 +103,7 @@
     },
     "noMessagesHereYet": "Bu yerda hali xabarlar mavjud emas. Birinchilardan bo'lib habar yozing!",
     "chatWith": "SummarizeIT jamoasi bilan suhbatlashing",
-    "message": "Xabar",
+    "message": "Xabar yozing...",
     "book_name": "Kitob nomi: {}",
     "author": "Muallif: {}",
     "listen_summary": "Kitobning qisqacha mazmunini bu yerdan tinglashingiz mumkin: {}",
@@ -112,5 +112,8 @@
     "summary_language": "Xulosa tili: {}",
     "edited": "tahrirlangan",
     "noInternet": "Siz hozir oflyansiz. Iltimos, internetingizni tekshiring.",
-    "pressTwice": "Dasturdan chiqish uchun ikki martta bosing."
+    "pressTwice": "Dasturdan chiqish uchun ikki martta bosing.",
+    "updatePassword": "Parolni yangilash",
+    "loginAgain": "Parolingizni o'zgartirish uchun 10 daqiqa ichida tizimga kirgan bo'lishingiz kerak. Iltimos, tizimga qaytadan kiring",
+    "passwordChanged": "Parolingiz muvaffaqiyatli o'zgartirildi"
 }
