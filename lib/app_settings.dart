@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:summarize_it/core/utils/utils.dart';
 import 'package:summarize_it/data/repositories/group_chat_repository.dart';
 import 'package:summarize_it/data/services/firebase/group_chat_firebase_service.dart';
 import 'package:summarize_it/data/services/shared_prefs/animation_prefs_service.dart';
@@ -9,6 +8,7 @@ import 'package:summarize_it/data/services/shared_prefs/theme_mode_prefs_service
 import 'package:summarize_it/firebase_options.dart';
 import 'package:summarize_it/logic/blocs/group_chat/group_chat_bloc.dart';
 
+import 'core/utils/app_settings.dart';
 import 'logic/blocs/all_blocs.dart';
 import 'logic/cubits/all_cubit.dart';
 import 'data/services/all_services.dart';
@@ -26,8 +26,8 @@ class Settings {
 
     getIt.registerSingleton(preferences);
 
-    AppConstants.themeValue = ThemeModePrefsService.get ?? false;
-    AppConstants.animationValue = AnimationPrefsService.get ?? true;
+    AppSettings.themeValue = ThemeModePrefsService.get ?? false;
+    AppSettings.animationValue = AnimationPrefsService.get ?? true;
 
     // Bloc.observer = const AppBlocObserver();
   }

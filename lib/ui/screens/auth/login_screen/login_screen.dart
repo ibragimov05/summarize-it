@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
+import 'package:summarize_it/core/utils/app_settings.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/screens/auth/login_screen/widgets/login_screen_text.dart';
 import 'package:summarize_it/ui/widgets/custom_main_green_button.dart';
@@ -24,18 +25,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //
 
-  // }
-  //
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if (!AppConstants.sawOnboarding) {
+    if (!AppSettings.sawOnboarding) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushNamed(context, AppRouter.onboarding);
       });

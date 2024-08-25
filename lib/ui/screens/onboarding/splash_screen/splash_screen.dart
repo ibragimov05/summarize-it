@@ -6,13 +6,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summarize_it/app_settings.dart';
 import 'package:summarize_it/core/utils/apis.dart';
-import 'package:summarize_it/core/utils/app_constants.dart';
 
 import 'package:summarize_it/core/utils/utils.dart'
     show AppColors, AppTextStyles, DeviceScreen;
+import 'package:summarize_it/data/services/shared_prefs/pin_code_prefs_service.dart';
 import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart';
+import 'package:summarize_it/ui/screens/pin_code/pin_code_screen.dart';
 
+import '../../../../core/utils/app_settings.dart';
 import '../../../../core/utils/user_data.dart';
+import '../../../../data/services/local/local_auth_service.dart';
 import '../../../../logic/blocs/all_blocs.dart';
 import '../../auth/login_screen/login_screen.dart';
 import '../../main_screen/main_screen.dart';
@@ -36,7 +39,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> get _collectData async {
-    AppConstants.sawOnboarding =
+    AppSettings.isBiometricsAvailable =
+        await LocalAuthService.checkBiometrics();
+
+    AppSettings.userPassword = PinCodePrefsService.get ?? -1;
+
+    AppSettings.sawOnboarding =
         getIt.get<SharedPreferences>().getBool('saw-onboarding') ?? false;
 
     final user = UserPrefsService.getUser();
@@ -57,7 +65,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 context.read<BooksBloc>().add(GetBookEvent(
                       uid: FirebaseAuth.instance.currentUser?.uid ?? '',
                     ));
-                return const MainScreen();
+                if (AppSettings.userPassword == -1) {
+                  return const MainScreen();
+                } else {
+                  return const PinCodeScreen();
+                }
               } else {
                 return const LoginScreen();
               }

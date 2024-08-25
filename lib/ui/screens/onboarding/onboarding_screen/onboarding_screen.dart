@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:summarize_it/app_settings.dart';
 import 'package:summarize_it/ui/screens/onboarding/onboarding_screen/widgets/ellipse_widget.dart';
 
+import '../../../../core/utils/app_settings.dart';
 import '../../../../core/utils/utils.dart'
     show AppColors, AppConstants, AppTextStyles, DeviceScreen;
 
@@ -101,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       curve: Curves.linear,
                     );
                   } else if (_currentIndex == 2) {
-                    AppConstants.sawOnboarding = true;
+                    AppSettings.sawOnboarding = true;
                     getIt
                         .get<SharedPreferences>()
                         .setBool('saw-onboarding', true);
