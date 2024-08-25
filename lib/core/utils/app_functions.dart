@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:summarize_it/core/utils/ai_constants.dart';
 import 'package:summarize_it/core/utils/app_colors.dart';
 import 'package:summarize_it/core/utils/app_text_styles.dart';
@@ -151,5 +153,18 @@ class AppFunctions {
       const Color(0xFFd7458c),
     ];
     return colors[Random().nextInt(6)].value;
+  }
+
+  static void shareSummary(Book book) {
+    Share.share('''
+${'book_name'.tr(args: [book.title])}
+${'summary_language'.tr(args: [
+          book.summaryLanguage.toUpperCase()
+        ])}                  
+${'author'.tr(args: [book.author])}
+${book.audioUrl != 'null' ? 'listen_summary'.tr(args: [book.audioUrl]) : ''}
+${'book_summary'.tr(args: [book.summary])}
+
+${'made_by'.tr()}''');
   }
 }

@@ -103,5 +103,12 @@
     },
     "noMessagesHereYet": "No messages here yet. Be one of the first to write a message!",
     "chatWith": "Chat with SummarizeIT community",
-    "message": "Message"
+    "message": "Message",
+    "book_name": "Book name: {}",
+    "author": "Author: {}",
+    "listen_summary": "You can listen to the summary of the book here: {}",
+    "book_summary": "Summary of the book: {}",
+    "made_by": "Made by SummarizeIT. You can download it on Play Store: https://play.google.com/store/apps/details?id=uz.summarize_it.books.summarize_it",
+    "summary_language": "Summary language: {}",
+    "edited": "edited"
 }

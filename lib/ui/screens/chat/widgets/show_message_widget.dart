@@ -106,7 +106,7 @@ class _MessageEdited extends StatelessWidget {
     return Row(
       children: [
         Text(
-          'edited',
+          context.tr('edited'),
           style: AppTextStyles.workSansW500.copyWith(
             color: isSender
                 ? const Color(0xFF66ADA3)

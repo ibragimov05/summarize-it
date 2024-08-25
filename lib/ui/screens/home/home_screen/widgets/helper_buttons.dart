@@ -49,9 +49,9 @@ class HelperButtons extends StatelessWidget {
           controller: submitButtonController,
           onPressed: onSubmitTap,
           successColor: AppColors.green900,
-          child: Text(
-            tr('submitBook'),
-            style: const TextStyle(color: Colors.white),
+          child: const Text(
+            'SummarizeIT',
+            style: TextStyle(color: Colors.white),
           ),
         )
       ],

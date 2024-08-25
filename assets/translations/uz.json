@@ -103,5 +103,12 @@
     },
     "noMessagesHereYet": "Bu yerda hali xabarlar mavjud emas. Birinchilardan bo'lib habar yozing!",
     "chatWith": "SummarizeIT jamoasi bilan suhbatlashing",
-    "message": "Xabar"
+    "message": "Xabar",
+    "book_name": "Kitob nomi: {}",
+    "author": "Muallif: {}",
+    "listen_summary": "Kitobning qisqacha mazmunini bu yerdan tinglashingiz mumkin: {}",
+    "book_summary": "Kitobning qisqacha mazmuni: {}",
+    "made_by": "SummarizeIT tomonidan tayyorlandi. Siz uni Play Store-dan yuklab olishingiz mumkin: https://play.google.com/store/apps/details?id=uz.summarize_it.books.summarize_it",
+    "summary_language": "Xulosa tili: {}",
+    "edited": "tahrirlangan"
 }

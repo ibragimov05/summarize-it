@@ -7,6 +7,7 @@ import 'package:summarize_it/logic/blocs/all_blocs.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/screens/home/summary_screen/widgets/summary_screen_floating_action_button.dart';
+import 'package:summarize_it/ui/screens/home/summary_screen/widgets/share_summary_widget.dart';
 
 import '../../../../app_settings.dart';
 import '../../../../core/utils/utils.dart' show AppColors;
@@ -35,6 +36,14 @@ class _SummaryScreenState extends State<SummaryScreen> {
             BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
               builder: (context, state) {
                 if (state is LoadedGenerativeAiState) {
+                  return ShareSummaryWidget(book: state.book);
+                }
+                return const SizedBox();
+              },
+            ),
+            BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
+              builder: (context, state) {
+                if (state is LoadedGenerativeAiState) {
                   return IconButton(
                     onPressed: () {
                       showDialog(
@@ -54,18 +63,23 @@ class _SummaryScreenState extends State<SummaryScreen> {
         body: BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
           builder: (context, state) {
             if (state is LoadedGenerativeAiState) {
-              return Markdown(
-                styleSheet: MarkdownStyleSheet(
-                  a: AppTextStyles.workSansW500,
-                  blockquote: AppTextStyles.workSansW800,
-                ),
-                data: state.book.summary,
+              return ListView(
                 padding: const EdgeInsets.only(
                   bottom: kToolbarHeight + 20,
                   left: 16,
                   right: 16,
                   top: 16,
                 ),
+                children: [
+                  MarkdownBody(
+                    styleSheet: MarkdownStyleSheet(
+                      a: AppTextStyles.workSansW500,
+                      blockquote: AppTextStyles.workSansW800,
+                    ),
+                    data: state.book.summary,
+                    selectable: true,
+                  ),
+                ],
               );
             }
             return Center(

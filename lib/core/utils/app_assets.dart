@@ -10,6 +10,7 @@ class AppAssets {
 
   static const String passwordEye = 'assets/icons/eye.svg';
   static const String passwordEyeSlash = 'assets/icons/eye-slash.svg';
+  static const String share = 'assets/icons/share.svg';
 
   static const String icoLanguageCircle =
       'assets/icons/profile/language-circle.svg';
@@ -25,6 +26,4 @@ class AppAssets {
   static const String lottieSearch = 'assets/lottie/search.json';
   static const String lottieLoadingAi = 'assets/lottie/loading_ai.json';
   static const String lottieSleepDuck = 'assets/lottie/sleep.json';
-
-
 }

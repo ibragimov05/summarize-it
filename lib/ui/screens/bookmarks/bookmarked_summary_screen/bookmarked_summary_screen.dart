@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:summarize_it/core/utils/utils.dart';
 import 'package:summarize_it/data/models/book.dart';
-import 'package:summarize_it/ui/screens/bookmarks/bookmarked_summary_screen/play_pause_audio_widget.dart';
+import 'package:summarize_it/ui/screens/bookmarks/bookmarked_summary_screen/widgets/play_pause_audio_widget.dart';
 import 'package:summarize_it/ui/widgets/arrow_back_button.dart';
 import 'package:summarize_it/ui/widgets/book_info_dialog.dart';
-
-import '../../../../core/utils/app_colors.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class BookmarkedSummaryScreen extends StatefulWidget {
   final Book book;
@@ -38,26 +38,43 @@ class _BookmarkedSummaryScreenState extends State<BookmarkedSummaryScreen> {
           ),
         ],
       ),
-      body: Column(
+      body: ListView(
+        padding: const EdgeInsets.only(
+          bottom: kToolbarHeight * 2 + 15,
+          left: 16,
+          right: 16,
+          top: 16,
+        ),
         children: [
-          Expanded(
-            child: Markdown(
-              data: widget.book.summary,
-              padding: const EdgeInsets.only(
-                bottom: kToolbarHeight + 15,
-                left: 16,
-                right: 16,
-                top: 16,
-              ),
+          MarkdownBody(
+            data: widget.book.summary,
+            selectable: true,
+            styleSheet: MarkdownStyleSheet(
+              p: const TextStyle(fontSize: 16),
             ),
           ),
         ],
       ),
-      floatingActionButton: widget.book.audioUrl != 'null'
-          ? PlayPauseAudioWidget(
-              summaryAudioUrl: widget.book.audioUrl,
-            )
-          : null,
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            shape: const CircleBorder(),
+            backgroundColor: AppColors.green900,
+            onPressed: () => AppFunctions.shareSummary(widget.book),
+            child: SvgPicture.asset(
+              AppAssets.share,
+              colorFilter: const ColorFilter.mode(
+                AppColors.summarizeItWhite,
+                BlendMode.srcIn,
+              ),
+            ),
+          ),
+          if (widget.book.audioUrl != 'null') 5.h(),
+          if (widget.book.audioUrl != 'null')
+            PlayPauseAudioWidget(summaryAudioUrl: widget.book.audioUrl),
+        ],
+      ),
     );
   }
 }

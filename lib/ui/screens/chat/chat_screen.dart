@@ -168,6 +168,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: TextField(
                   controller: _messageController,
                   maxLines: null,
+                  maxLength: 500,
                   textInputAction: TextInputAction.newline,
                   decoration: InputDecoration(
                     hintText: context.tr('message'),
