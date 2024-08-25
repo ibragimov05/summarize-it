@@ -48,18 +48,6 @@ class DioClient {
     }
   }
 
-  Future<Response> download({
-    required String url,
-    required String saveDirectory,
-  }) async {
-    final response = await _dio.download(
-      url,
-      saveDirectory,
-    );
-
-    return response;
-  }
-
   Future<Response> updateData({
     required String url,
     required Map<String, dynamic> data,

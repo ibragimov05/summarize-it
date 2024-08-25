@@ -1,3 +1,4 @@
+/// Prompts for Gemini
 enum SummaryLength { short, medium, long }
 
 enum SummaryLanguage { uzbek, english, russian }

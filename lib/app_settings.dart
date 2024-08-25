@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:summarize_it/data/repositories/group_chat_repository.dart';
 import 'package:summarize_it/data/services/firebase/group_chat_firebase_service.dart';
 import 'package:summarize_it/data/services/shared_prefs/animation_prefs_service.dart';
 import 'package:summarize_it/data/services/shared_prefs/theme_mode_prefs_service.dart';

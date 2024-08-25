@@ -3,7 +3,6 @@ import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summarize_it/app_settings.dart';
-import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/core/utils/utils.dart';
 import 'package:summarize_it/logic/blocs/group_chat/group_chat_bloc.dart';
 import 'package:summarize_it/ui/screens/chat/widgets/show_message_widget.dart';
