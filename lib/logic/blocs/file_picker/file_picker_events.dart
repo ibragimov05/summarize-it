@@ -1,7 +1,7 @@
 part of 'file_picker_bloc.dart';
 
-sealed class FilePickerEvents {}
-
-final class SelectFileEvent extends FilePickerEvents {}
-
-final class ToInitialStateFilePickerEvent extends FilePickerEvents {}
+@freezed
+class FilePickerEvents with _$FilePickerEvents {
+  const factory FilePickerEvents.selectFile() = SelectFileEvent;
+  const factory FilePickerEvents.toInitialStateFilePicker() = ToInitialStateFilePickerEvent;
+}

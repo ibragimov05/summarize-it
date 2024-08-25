@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:summarize_it/data/repositories/book_repository.dart';
 import '../../../data/models/book.dart';
 
@@ -8,50 +9,51 @@ part 'books_event.dart';
 
 part 'books_state.dart';
 
+part 'books_bloc.freezed.dart';
+
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
   final BooksRepository _bookRepository;
 
-  BooksBloc({required BooksRepository bookRepository})
-      : _bookRepository = bookRepository,
-        super(InitialBookState()) {
+  BooksBloc({
+    required BooksRepository bookRepository,
+  })  : _bookRepository = bookRepository,
+        super(const BooksState.initial()) {
     on<GetBookEvent>(_getBooks);
     on<AddBookEvent>(_addBook);
     on<AddAudioUrlEvent>(_addAudioUrl);
     on<DeleteBookEvent>(_deleteBook);
   }
 
-  void _getBooks(GetBookEvent event, Emitter<BooksState> emit) async {
-    emit(LoadingBookState());
+  Future<void> _getBooks(GetBookEvent event, Emitter<BooksState> emit) async {
+    emit(const BooksState.loading());
     try {
       await emit.forEach(
         _bookRepository.getBooks(uid: event.uid),
-        onData: (List<Book> books) => LoadedBookState(books: books),
-        onError: (error, stackTrace) {
-          return ErrorBookState(message: error.toString());
-        },
+        onData: (List<Book> books) => BooksState.loaded(books),
+        onError: (error, stackTrace) => BooksState.error(error.toString()),
       );
     } catch (e) {
-      emit(ErrorBookState(message: e.toString()));
+      emit(BooksState.error(e.toString()));
     }
   }
 
-  void _addBook(AddBookEvent event, Emitter<BooksState> emit) async {
-    emit(LoadingBookState());
+  Future<void> _addBook(AddBookEvent event, Emitter<BooksState> emit) async {
+    emit(const BooksState.loading());
 
     try {
       event.book.userId = event.userID;
-
       final bookId = await _bookRepository.addBook(event.book);
 
-      emit(AddBookSuccessState(addedBookId: bookId));
+      emit(BooksState.addBookSuccess(bookId));
 
       add(GetBookEvent(uid: FirebaseAuth.instance.currentUser!.uid));
     } catch (e) {
-      emit(ErrorBookState(message: e.toString()));
+      emit(BooksState.error(e.toString()));
     }
   }
 
-  void _addAudioUrl(AddAudioUrlEvent event, Emitter<BooksState> emit) {
+  Future<void> _addAudioUrl(
+      AddAudioUrlEvent event, Emitter<BooksState> emit) async {
     try {
       _bookRepository.addAudioUrl(
         bookId: event.bookId,
@@ -62,11 +64,12 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     }
   }
 
-  void _deleteBook(DeleteBookEvent event, Emitter<BooksState> emit) {
+  Future<void> _deleteBook(
+      DeleteBookEvent event, Emitter<BooksState> emit) async {
     try {
       _bookRepository.deleteBook(event.id);
     } catch (e) {
-      emit(ErrorBookState(message: e.toString()));
+      emit(BooksState.error(e.toString()));
     }
   }
 }

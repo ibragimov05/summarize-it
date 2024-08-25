@@ -1,19 +1,13 @@
 part of 'generative_ai_bloc.dart';
 
-sealed class GenerativeAiEvents {}
+@freezed
+class GenerativeAiEvents with _$GenerativeAiEvents {
+  const factory GenerativeAiEvents.summarize({
+    required List<Uint8List> files,
+    required SummaryLength summaryLength,
+    required SummaryLanguage summaryLanguage,
+    required RoundedLoadingButtonController buttonController,
+  }) = SummarizeAiEvent;
 
-final class SummarizeAiEvent extends GenerativeAiEvents {
-  final List<Uint8List> files;
-  final SummaryLength summaryLength;
-  final SummaryLanguage summaryLanguage;
-  final RoundedLoadingButtonController buttonController;
-
-  SummarizeAiEvent({
-    required this.files,
-    required this.summaryLength,
-    required this.summaryLanguage,
-    required this.buttonController,
-  });
+  const factory GenerativeAiEvents.toInitial() = ToInitialGenerativeAiEvent;
 }
-
-final class ToInitialGenerativeAiEvent extends GenerativeAiEvents {}

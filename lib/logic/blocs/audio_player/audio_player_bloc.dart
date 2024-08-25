@@ -1,17 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:just_audio/just_audio.dart';
-
 import '../../../data/repositories/audio_repository.dart';
 
 part 'audio_player_event.dart';
 part 'audio_player_state.dart';
 
-class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerStates> {
+part 'audio_player_bloc.freezed.dart';
+
+class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   final AudioRepository audioRepository;
   final AudioPlayer _audioPlayer = AudioPlayer();
-  AudioPlayerBloc({
-    required this.audioRepository,
-  }) : super(InitialAudioPlayerState()) {
+
+  AudioPlayerBloc({required this.audioRepository})
+      : super(const AudioPlayerState.initial()) {
     on<DownloadAudioEvent>(_download);
     on<PlayAudioEvent>(_onPlayAudio);
     on<PauseAudioEvent>(_onPauseAudio);
@@ -20,7 +22,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerStates> {
     _audioPlayer.processingStateStream.listen(
       (processingState) {
         if (processingState == ProcessingState.completed) {
-          add(PauseAudioEvent());
+          add(const AudioPlayerEvent.pause());
         }
       },
     );
@@ -30,7 +32,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerStates> {
     if (_audioPlayer.playing) {
       _audioPlayer.pause();
     } else if (_audioPlayer.processingState == ProcessingState.idle) {
-      emit(LoadingAudioPlayerState());
+      emit(const AudioPlayerState.loading());
 
       try {
         final audioUrl = await audioRepository.downloadAudio(
@@ -38,42 +40,42 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerStates> {
           summaryLang: event.summaryLanguage,
         );
 
-        emit(LoadedAudioPlayerState(audioUrl: audioUrl));
+        emit(AudioPlayerState.loaded(audioUrl));
       } catch (e) {
-        emit(ErrorAudioPlayerState(message: e.toString()));
+        emit(AudioPlayerState.error(e.toString()));
       }
     }
   }
 
   void _onPlayAudio(
     PlayAudioEvent event,
-    Emitter<AudioPlayerStates> emit,
+    Emitter<AudioPlayerState> emit,
   ) async {
     if (_audioPlayer.processingState == ProcessingState.idle ||
         _audioPlayer.processingState == ProcessingState.completed) {
       await _audioPlayer.setUrl(event.audioUrl);
     }
     _audioPlayer.play();
-    emit(PlayingAudioState(audioUrl: event.audioUrl));
+    emit(AudioPlayerState.playing(event.audioUrl));
   }
 
   void _onPauseAudio(
     PauseAudioEvent event,
-    Emitter<AudioPlayerStates> emit,
+    Emitter<AudioPlayerState> emit,
   ) async {
     await _audioPlayer.pause();
-    if (state is PlayingAudioState) {
-      emit(PausedAudioState(audioUrl: (state as PlayingAudioState).audioUrl));
-    }
+    state.whenOrNull(
+      playing: (audioUrl) => emit(AudioPlayerState.paused(audioUrl)),
+    );
   }
 
   void _onDisposeAudio(
     DisposeAudioEvent event,
-    Emitter<AudioPlayerStates> emit,
+    Emitter<AudioPlayerState> emit,
   ) async {
     _audioPlayer.pause();
     await _audioPlayer.dispose();
-    emit(InitialAudioPlayerState());
+    emit(const AudioPlayerState.initial());
   }
 
   @override

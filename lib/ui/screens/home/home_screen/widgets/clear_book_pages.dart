@@ -13,9 +13,9 @@ class ClearBookPages extends StatelessWidget {
         return IconButton(
           tooltip: context.tr('clearScreen'),
           onPressed: () {
-            context.read<GenerativeAiBloc>().add(ToInitialGenerativeAiEvent());
-            context.read<PdfToImageBloc>().add(ToInitialStatePdfToImageEvent());
-            context.read<FilePickerBloc>().add(ToInitialStateFilePickerEvent());
+            context.read<GenerativeAiBloc>().add(const GenerativeAiEvents.toInitial());
+            context.read<PdfToImageBloc>().add(const PdfToImageEvents.toInitialState());
+            context.read<FilePickerBloc>().add(const FilePickerEvents.toInitialStateFilePicker());
           },
           icon: const Icon(Icons.highlight_remove_outlined),
         );

@@ -29,7 +29,7 @@ class _NoConnectionScreenState extends State<NoConnectionScreen> {
           if (!mounted) return;
 
           context.read<UserBloc>().add(const UserEvent.getUserEvent());
-          context.read<BooksBloc>().add(GetBookEvent(uid: UserData.uid));
+          context.read<BooksBloc>().add(BooksEvent.getBooks(uid: UserData.uid));
 
           Navigator.of(context).pop();
         }

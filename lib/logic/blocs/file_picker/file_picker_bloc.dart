@@ -2,23 +2,26 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'file_picker_events.dart';
 
 part 'file_picker_states.dart';
 
+part 'file_picker_bloc.freezed.dart';
+
 class FilePickerBloc extends Bloc<FilePickerEvents, FilePickerStates> {
-  FilePickerBloc() : super(InitialFilePickerState()) {
+  FilePickerBloc() : super(const FilePickerStates.initial()) {
     on<SelectFileEvent>(_selectFile);
     on<ToInitialStateFilePickerEvent>(_toInitialStateFilePicker);
   }
 
-  void _selectFile(
+  Future<void> _selectFile(
     SelectFileEvent event,
     Emitter<FilePickerStates> emit,
   ) async {
     try {
-      emit(LoadingFilePickerState());
+      emit(const FilePickerStates.loading());
 
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -28,12 +31,12 @@ class FilePickerBloc extends Bloc<FilePickerEvents, FilePickerStates> {
       final selectedFile =
           result != null ? File(result.files.single.path!) : null;
 
-      emit(LoadedFilePickerState(
+      emit(FilePickerStates.loaded(
         file: selectedFile,
         filePath: result?.paths.first,
       ));
     } catch (e) {
-      emit(ErrorFilePickerState(error: e.toString()));
+      emit(FilePickerStates.error(error: e.toString()));
     }
   }
 
@@ -41,5 +44,5 @@ class FilePickerBloc extends Bloc<FilePickerEvents, FilePickerStates> {
     ToInitialStateFilePickerEvent event,
     Emitter<FilePickerStates> emit,
   ) =>
-      emit(InitialFilePickerState());
+      emit(const FilePickerStates.initial());
 }

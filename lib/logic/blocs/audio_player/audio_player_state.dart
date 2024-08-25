@@ -1,31 +1,11 @@
-part of 'audio_player_bloc.dart';
+part of'audio_player_bloc.dart';
 
-sealed class AudioPlayerStates {}
-
-final class InitialAudioPlayerState extends AudioPlayerStates {}
-
-final class LoadingAudioPlayerState extends AudioPlayerStates {}
-
-final class LoadedAudioPlayerState extends AudioPlayerStates {
-  final String audioUrl;
-
-  LoadedAudioPlayerState({required this.audioUrl});
-}
-
-final class PlayingAudioState extends AudioPlayerStates {
-  final String audioUrl;
-
-  PlayingAudioState({required this.audioUrl});
-}
-
-final class PausedAudioState extends AudioPlayerStates {
-  final String audioUrl;
-
-  PausedAudioState({required this.audioUrl});
-}
-
-final class ErrorAudioPlayerState extends AudioPlayerStates {
-  final String message;
-
-  ErrorAudioPlayerState({required this.message});
+@freezed
+class AudioPlayerState with _$AudioPlayerState {
+  const factory AudioPlayerState.initial() = InitialAudioPlayerState;
+  const factory AudioPlayerState.loading() = LoadingAudioPlayerState;
+  const factory AudioPlayerState.loaded(String audioUrl) = LoadedAudioPlayerState;
+  const factory AudioPlayerState.playing(String audioUrl) = PlayingAudioState;
+  const factory AudioPlayerState.paused(String audioUrl) = PausedAudioState;
+  const factory AudioPlayerState.error(String message) = ErrorAudioPlayerState;
 }

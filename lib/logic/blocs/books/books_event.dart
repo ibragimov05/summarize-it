@@ -1,30 +1,16 @@
 part of 'books_bloc.dart';
 
-@immutable
-sealed class BooksEvent {}
+@freezed
+class BooksEvent with _$BooksEvent {
+  const factory BooksEvent.getBooks({required String uid}) = GetBookEvent;
 
-final class GetBookEvent extends BooksEvent {
-  final String uid;
+  const factory BooksEvent.addBook({
+    required String userID,
+    required Book book,
+  }) = AddBookEvent;
 
-  GetBookEvent({required this.uid});
-}
+  const factory BooksEvent.addAudioUrl({required String bookId,required String audioUrl}) =
+      AddAudioUrlEvent;
 
-final class AddBookEvent extends BooksEvent {
-  final String userID;
-  final Book book;
-
-  AddBookEvent({required this.book, required this.userID});
-}
-
-final class AddAudioUrlEvent extends BooksEvent {
-  final String bookId;
-  final String audioUrl;
-
-  AddAudioUrlEvent({required this.bookId, required this.audioUrl});
-}
-
-final class DeleteBookEvent extends BooksEvent {
-  final String id;
-
-  DeleteBookEvent({required this.id});
+  const factory BooksEvent.deleteBook({required String id}) = DeleteBookEvent;
 }

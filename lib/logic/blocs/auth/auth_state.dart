@@ -1,18 +1,10 @@
 part of 'auth_bloc.dart';
 
-@immutable
-sealed class AuthState {}
-
-final class InitialAuthState extends AuthState {}
-
-final class LoadingAuthState extends AuthState {}
-
-final class UnauthenticatedState extends AuthState {}
-
-final class AuthenticatedState extends AuthState {}
-
-final class ErrorAuthState extends AuthState {
-  final String errorMessage;
-
-  ErrorAuthState({required this.errorMessage});
+@freezed
+class AuthState with _$AuthState {
+  const factory AuthState.initial() = InitialAuthState;
+  const factory AuthState.loading() = LoadingAuthState;
+  const factory AuthState.unauthenticated() = UnauthenticatedState;
+  const factory AuthState.authenticated() = AuthenticatedState;
+  const factory AuthState.error(String errorMessage) = ErrorAuthState;
 }

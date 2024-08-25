@@ -38,7 +38,7 @@ class ShowSummaryWidget extends StatelessWidget {
                 child: SvgPicture.asset('assets/icons/trash.svg'),
               ),
               onDismissed: (direction) {
-                context.read<BooksBloc>().add(DeleteBookEvent(id: book.id));
+                context.read<BooksBloc>().add(BooksEvent.deleteBook(id: book.id));
                 onDismissed!();
               },
               child: _summaryWidget(context),

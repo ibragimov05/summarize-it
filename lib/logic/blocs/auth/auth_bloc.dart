@@ -1,18 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summarize_it/app_settings.dart';
-import 'package:summarize_it/core/utils/apis.dart';
-import 'package:summarize_it/core/utils/user_data.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:summarize_it/data/repositories/all_repositories.dart';
 import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart';
 import 'package:summarize_it/logic/blocs/all_blocs.dart';
 
+import '../../../app_settings.dart';
+import '../../../core/utils/apis.dart';
+import '../../../core/utils/user_data.dart';
+
 part 'auth_event.dart';
 part 'auth_state.dart';
+
+part 'auth_bloc.freezed.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
@@ -23,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required UserRepository userRepository,
   })  : _authRepository = authRepository,
         _userRepository = userRepository,
-        super(InitialAuthState()) {
+        super(const AuthState.initial()) {
     on<LoginUserEvent>(_loginUser);
     on<RegisterUserEvent>(_onRegisterUser);
     on<ResetPasswordEvent>(_onResetPassword);
@@ -35,12 +36,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     LoginUserEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(LoadingAuthState());
+    emit(const AuthState.loading());
     try {
       await _authRepository.login(email: event.email, password: event.password);
       await _getDATA();
     } catch (e) {
-      emit(ErrorAuthState(errorMessage: e.toString()));
+      emit(AuthState.error(e.toString()));
     }
   }
 
@@ -48,7 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     RegisterUserEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(LoadingAuthState());
+    emit(const AuthState.loading());
     try {
       await _authRepository.register(
         email: event.email,
@@ -64,7 +65,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await _getDATA();
     } catch (e) {
-      emit(ErrorAuthState(errorMessage: e.toString()));
+      emit(AuthState.error(e.toString()));
     }
   }
 
@@ -78,7 +79,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     LogoutEvent event,
     Emitter<AuthState> emit,
   ) async {
-    emit(LoadingAuthState());
+    emit(const AuthState.loading());
     try {
       await UserPrefsService.clearUser();
 
@@ -86,7 +87,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       await _authRepository.logout();
     } catch (e) {
-      emit(ErrorAuthState(errorMessage: e.toString()));
+      emit(AuthState.error(e.toString()));
     }
   }
 
@@ -96,7 +97,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     await emit.forEach(
       _authRepository.watchAuth(),
-      onData: (user) => user == null ? UnauthenticatedState() : AuthenticatedState(),
+      onData: (user) => user == null
+          ? const AuthState.unauthenticated()
+          : const AuthState.authenticated(),
     );
   }
 

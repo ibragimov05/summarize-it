@@ -1,23 +1,17 @@
 part of 'audio_player_bloc.dart';
 
-sealed class AudioPlayerEvent {}
+@freezed
+class AudioPlayerEvent with _$AudioPlayerEvent {
+  const factory AudioPlayerEvent.download({
+    required String summary,
+    required String summaryLanguage,
+  }) = DownloadAudioEvent;
 
-final class DownloadAudioEvent extends AudioPlayerEvent {
-  final String summary;
-  final String summaryLanguage;
+  const factory AudioPlayerEvent.play({
+    required String audioUrl,
+  }) = PlayAudioEvent;
 
-  DownloadAudioEvent({
-    required this.summary,
-    required this.summaryLanguage,
-  });
+  const factory AudioPlayerEvent.pause() = PauseAudioEvent;
+
+  const factory AudioPlayerEvent.dispose() = DisposeAudioEvent;
 }
-
-final class PlayAudioEvent extends AudioPlayerEvent {
-  final String audioUrl;
-
-  PlayAudioEvent({required this.audioUrl});
-}
-
-final class PauseAudioEvent extends AudioPlayerEvent {}
-
-final class DisposeAudioEvent extends AudioPlayerEvent {}

@@ -52,6 +52,7 @@ class _PlayPauseAudioWidgetState extends State<PlayPauseAudioWidget>
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: 'audio',
       shape: const CircleBorder(),
       backgroundColor: AppColors.green900,
       onPressed: () {

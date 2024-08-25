@@ -26,14 +26,13 @@ void main() async {
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(
-            value: getIt.get<AuthBloc>()..add(WatchAuthEvent()),
+            value: getIt.get<AuthBloc>()..add(const AuthEvent.watch()),
           ),
           BlocProvider.value(value: getIt.get<UserBloc>()),
           BlocProvider.value(value: getIt.get<BooksBloc>()),
           BlocProvider.value(value: getIt.get<DarkThemeCubit>()),
           BlocProvider.value(value: getIt.get<AnimationCubit>()),
           BlocProvider.value(value: getIt.get<TabBoxCubit>()),
-          BlocProvider.value(value: getIt.get<GenerativeAiBloc>()),
           BlocProvider.value(value: getIt.get<GroupChatBloc>()),
         ],
         child: const SummarizeIt(),

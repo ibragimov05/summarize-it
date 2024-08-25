@@ -24,12 +24,6 @@ class _ChatScreenState extends State<ChatScreen> {
   final ScrollController _scrollController = ScrollController();
   Message? _messageToEdit;
 
-  @override
-  void initState() {
-    super.initState();
-    context.read<GroupChatBloc>().add(const GroupChatEvent.getAllMessages());
-  }
-
   void _sendMessage() {
     if (_messageController.text.trim().isNotEmpty) {
       if (_messageToEdit != null) {

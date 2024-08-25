@@ -164,25 +164,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   BlocListener<AuthBloc, AuthState>(
                     listener: (context, state) {
-                      if (state is ErrorAuthState) {
-                        _roundedLoadingButtonController.error();
-                        Future.delayed(
+                      state.whenOrNull(
+                        error: (errorMessage) {
+                          _roundedLoadingButtonController.error();
+                          Future.delayed(
                           const Duration(seconds: 3),
-                          () => _roundedLoadingButtonController.reset(),
+                            () => _roundedLoadingButtonController.reset(),
+                          );
+                          AppFunctions.showToast(
+                            message: errorMessage,
+                            isSuccess: false,
+                            context: context,
                         );
-                        AppFunctions.showToast(
-                          message: state.errorMessage,
-                          isSuccess: false,
-                          context: context,
-                        );
-                      }
+                        },
+                      );
                     },
                     child: CustomMainGreenButton(
                       buttonText: context.tr('signIn'),
                       buttonController: _roundedLoadingButtonController,
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
-                          context.read<AuthBloc>().add(LoginUserEvent(
+                          context.read<AuthBloc>().add(AuthEvent.login(
                                 email: _emailController.text,
                                 password: _passwordController.text,
                               ));

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 import 'package:summarize_it/core/utils/apis.dart';
@@ -9,18 +10,18 @@ import 'package:summarize_it/core/utils/extensions.dart';
 import 'package:summarize_it/data/models/book.dart';
 import '../../../core/utils/ai_constants.dart';
 
+part 'generative_ai_bloc.freezed.dart';
 part 'generative_ai_events.dart';
-
 part 'generative_ai_states.dart';
 
 class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
-  GenerativeAiBloc() : super(InitialGenerativeAiState()) {
+  GenerativeAiBloc() : super(const InitialGenerativeAiState()) {
     on<SummarizeAiEvent>(_summarize);
     on<ToInitialGenerativeAiEvent>(_toInitialEvent);
   }
 
-  void _summarize(SummarizeAiEvent event, emit) async {
-    emit(LoadingGenerativeAiState());
+  Future<void> _summarize(SummarizeAiEvent event, emit) async {
+    emit(const GenerativeAiStates.loading());
     event.buttonController.start();
     try {
       final GenerativeModel model = GenerativeModel(
@@ -57,11 +58,11 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
             event.summaryLanguage == SummaryLanguage.english ? 'en' : 'uz';
         final book = Book.fromMap(data);
         emit(
-          LoadedGenerativeAiState(book: book),
+          GenerativeAiStates.loaded(book: book),
         );
       }
     } catch (e) {
-      emit(ErrorGenerativeAiState(message: e.toString()));
+      emit(GenerativeAiStates.error(message: e.toString()));
     } finally {
       event.buttonController.reset();
     }
@@ -71,5 +72,5 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
     ToInitialGenerativeAiEvent event,
     Emitter<GenerativeAiStates> emit,
   ) =>
-      emit(InitialGenerativeAiState());
+      emit(const GenerativeAiStates.initial());
 }

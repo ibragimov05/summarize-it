@@ -47,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
                   icoPath: AppAssets.icoLock,
                   text: context.tr("forgotPassword"),
                   onTap: () {
-                    context.read<AuthBloc>().add(ResetPasswordEvent(
+                    context.read<AuthBloc>().add(AuthEvent.resetPassword(
                         email: FirebaseAuth.instance.currentUser?.email ??
                             'null'));
                     AppFunctions.showSnackBar(
@@ -101,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => context.read<AuthBloc>().add(LogoutEvent()),
+            onTap: () => context.read<AuthBloc>().add(const AuthEvent.logout()),
             child: Container(
               width: double.infinity,
               height: 55,

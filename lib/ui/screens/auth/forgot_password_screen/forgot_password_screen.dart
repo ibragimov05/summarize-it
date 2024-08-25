@@ -28,7 +28,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   void _onContinueTap() async {
     if (_formKey.currentState!.validate()) {
       try {
-        context.read<AuthBloc>().add(ResetPasswordEvent(email: _email));
+        context.read<AuthBloc>().add(AuthEvent.resetPassword(email: _email));
         if (mounted) {
           AppFunctions.showSnackBar(
               context, context.tr('resetPasswordEmailSent'));

@@ -24,14 +24,15 @@ class _HomeScreenState extends State<HomeScreen> {
   int _summaryLength = 1;
 
   final RoundedLoadingButtonController _submitButtonController =
-      RoundedLoadingButtonController();
+  RoundedLoadingButtonController();
   final RoundedLoadingButtonController _openDocButtonController =
-      RoundedLoadingButtonController();
+  RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider.value(value: getIt.get<GenerativeAiBloc>()),
         BlocProvider.value(value: getIt.get<FilePickerBloc>()),
         BlocProvider.value(value: getIt.get<PdfToImageBloc>()),
       ],
@@ -46,30 +47,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     BlocBuilder<UserBloc, UserState>(
                       buildWhen: (previous, current) =>
-                          current.userStatus == UserStatus.loaded ||
+                      current.userStatus == UserStatus.loaded ||
                           current.userStatus == UserStatus.loading,
                       builder: (context, state) {
                         return state.userStatus == UserStatus.loading
                             ? Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                                child: Container(
-                                  width: DeviceScreen.w(context) / 3,
-                                  height: 20.0,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            width: DeviceScreen.w(context) / 3,
+                            height: 20.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
                             : Text(
-                                context.tr('hi',
-                                    namedArgs: {'name': UserData.firstName}),
-                                style: AppTextStyles.workSansMain.copyWith(
-                                  fontSize: 17,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              );
+                          context.tr('hi',
+                              namedArgs: {'name': UserData.firstName}),
+                          style: AppTextStyles.workSansMain.copyWith(
+                            fontSize: 17,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        );
                       },
                     ),
                     Text(
@@ -93,47 +94,32 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 /// book images
                 BlocConsumer<FilePickerBloc, FilePickerStates>(
-                  listener: (context, state) {
-                    if (state is LoadedFilePickerState) {
-                      if (state.file != null) {
-                        context.read<PdfToImageBloc>().add(
-                              ConvertPdfToImageEvent(
-                                file: state.file!,
-                                buttonController:
-                                    RoundedLoadingButtonController(),
-                              ),
-                            );
+                  listener: (context, state) => state.whenOrNull(
+                    loaded: (filePath, file) {
+                      if (file != null) {
+                        return context.read<PdfToImageBloc>().add(
+                          PdfToImageEvents.convert(
+                            file: file,
+                            buttonController:
+                            RoundedLoadingButtonController(),
+                          ),
+                        );
                       }
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is LoadedFilePickerState) {
-                      return Expanded(
-                        child: BlocBuilder<PdfToImageBloc, PdfToImageStates>(
-                          builder: (context, state) {
-                            if (state is ErrorPdfToImageState) {
-                              return Center(
-                                child: Text(state.error),
-                              );
-                            }
-
-                            if (state is LoadingPdfToImageState ||
-                                state is LoadedPdfToImageState) {
-                              final files = state is LoadedPdfToImageState
-                                  ? state.files
-                                  : (state as LoadingPdfToImageState).files;
-
-                              return BookPages(files: files);
-                            }
-
-                            return const SizedBox();
-                          },
-                        ),
-                      );
-                    }
-
-                    return const SizedBox();
-                  },
+                      return;
+                    },
+                  ),
+                  builder: (context, state) => state.maybeWhen(
+                    loaded: (filePath, file) => Expanded(
+                      child: BlocBuilder<PdfToImageBloc, PdfToImageStates>(
+                        builder: (context, state) => state.maybeWhen(
+                            error: (error) => Center(child: Text(error)),
+                            loading: (files) => BookPages(files: files),
+                            loaded: (files) => BookPages(files: files),
+                            orElse: () => const SizedBox()),
+                      ),
+                    ),
+                    orElse: () => const SizedBox(),
+                  ),
                 ),
               ],
             ),
@@ -141,42 +127,52 @@ class _HomeScreenState extends State<HomeScreen> {
             /// welcome and summarize screen
             BlocConsumer<GenerativeAiBloc, GenerativeAiStates>(
               listener: (context, state) {
-                if (state is LoadedGenerativeAiState) {
-                  // Vibrate.vibrate();
-                  Navigator.pushNamed(context, AppRouter.summaryScreen);
-                } else if (state is ErrorGenerativeAiState) {
-                  debugPrint(
-                      '<-----> error GenerativeAiBloc: ${state.message} <----->');
-                  AppFunctions.showErrorSnackBar(
+                state.whenOrNull(
+                  loaded: (book) =>
+                      Navigator.pushNamed(context, AppRouter.summaryScreen),
+                  error: (message) => AppFunctions.showErrorSnackBar(
                     context,
                     context.tr('somethingWentWrong'),
-                  );
-                }
+                  ),
+                );
               },
               builder: (context, state) {
                 return BlocBuilder<PdfToImageBloc, PdfToImageStates>(
-                  builder: (context, pdfState) {
-                    if (pdfState is LoadingPdfToImageState ||
-                        pdfState is LoadedPdfToImageState) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const ClearBookPages(),
-                          if (state is LoadedGenerativeAiState)
-                            IconButton(
-                              onPressed: () => Navigator.pushNamed(
-                                  context, AppRouter.summaryScreen),
-                              icon: Icon(
-                                AppFunctions.isAndroid()
-                                    ? Icons.arrow_forward_rounded
-                                    : Icons.arrow_forward_ios_rounded,
-                              ),
+                  builder: (context, pdfState) => state.maybeWhen(
+                    loading: () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const ClearBookPages(),
+                        if (state is LoadedGenerativeAiState)
+                          IconButton(
+                            onPressed: () => Navigator.pushNamed(
+                                context, AppRouter.summaryScreen),
+                            icon: Icon(
+                              AppFunctions.isAndroid()
+                                  ? Icons.arrow_forward_rounded
+                                  : Icons.arrow_forward_ios_rounded,
                             ),
-                        ],
-                      );
-                    }
-                    return const HomeScreenMainWidget();
-                  },
+                          ),
+                      ],
+                    ),
+                    loaded: (book) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const ClearBookPages(),
+                        if (state is LoadedGenerativeAiState)
+                          IconButton(
+                            onPressed: () => Navigator.pushNamed(
+                                context, AppRouter.summaryScreen),
+                            icon: Icon(
+                              AppFunctions.isAndroid()
+                                  ? Icons.arrow_forward_rounded
+                                  : Icons.arrow_forward_ios_rounded,
+                            ),
+                          ),
+                      ],
+                    ),
+                    orElse: () => const HomeScreenMainWidget(),
+                  ),
                 );
               },
             ),
@@ -205,9 +201,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, state) {
                           return CustomSlider(
                             onSliderValChanged:
-                                state is LoadingGenerativeAiState
-                                    ? null
-                                    : (p0) => _summaryLength = p0,
+                            state is LoadingGenerativeAiState
+                                ? null
+                                : (p0) => _summaryLength = p0,
                           );
                         },
                       ),
@@ -216,19 +212,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 HelperButtons(
                   openDocButtonController: _openDocButtonController,
                   submitButtonController: _submitButtonController,
-                  onOpenDocTap: () => context.read<FilePickerBloc>().add(SelectFileEvent()),
+                  onOpenDocTap: () => context
+                      .read<FilePickerBloc>()
+                      .add(const FilePickerEvents.selectFile()),
                   onSubmitTap: state is LoadedPdfToImageState
                       ? () => context.read<GenerativeAiBloc>().add(
-                            SummarizeAiEvent(
-                              files: state.files,
-                              summaryLength:
-                                  SummaryLength.values[_summaryLength - 1],
-                              buttonController: _submitButtonController,
-                              summaryLanguage: AppFunctions.getLanguageEnum(
-                                context.locale.languageCode,
-                              ),
-                            ),
-                          )
+                    SummarizeAiEvent(
+                      files: state.files,
+                      summaryLength:
+                      SummaryLength.values[_summaryLength - 1],
+                      buttonController: _submitButtonController,
+                      summaryLanguage: AppFunctions.getLanguageEnum(
+                        context.locale.languageCode,
+                      ),
+                    ),
+                  )
                       : null,
                 ),
               ],

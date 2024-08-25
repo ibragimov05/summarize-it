@@ -1,26 +1,10 @@
 part of 'books_bloc.dart';
 
-@immutable
-sealed class BooksState {}
-
-final class InitialBookState extends BooksState {}
-
-final class LoadingBookState extends BooksState {}
-
-final class LoadedBookState extends BooksState {
-  final List<Book> books;
-
-  LoadedBookState({required this.books});
-}
-
-final class AddBookSuccessState extends BooksState {
-  final String addedBookId;
-
-  AddBookSuccessState({required this.addedBookId});
-}
-
-final class ErrorBookState extends BooksState {
-  final String message;
-
-  ErrorBookState({required this.message});
+@freezed
+class BooksState with _$BooksState {
+  const factory BooksState.initial() = InitialBookState;
+  const factory BooksState.loading() = LoadingBookState;
+  const factory BooksState.loaded(List<Book> books) = LoadedBookState;
+  const factory BooksState.addBookSuccess(String addedBookId) = AddBookSuccessState;
+  const factory BooksState.error(String message) = ErrorBookState;
 }

@@ -45,11 +45,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthenticatedState) {
-          if (Navigator.canPop(context)) {
-            Navigator.of(context).pop();
-          }
-        }
+        state.whenOrNull(
+          authenticated: () {
+            if (Navigator.canPop(context)) {
+              Navigator.of(context).pop();
+            }
+          },
+        );
       },
       child: Scaffold(
         appBar: AppBar(
@@ -128,13 +130,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       current is AuthenticatedState ||
                       current is ErrorAuthState,
                   listener: (context, state) {
-                    if (state is ErrorAuthState) {
-                      _buttonController.error();
-                      Future.delayed(
+                    state.whenOrNull(
+                      error: (errorMessage) {
+                        _buttonController.error();
+                        Future.delayed(
                         const Duration(seconds: 3),
-                        () => _buttonController.reset(),
-                      );
-                    }
+                          () => _buttonController.reset(),
+                        );
+                      },
+                    );
                   },
                   child: CustomMainGreenButton(
                     buttonController: _buttonController,
@@ -143,7 +147,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (_formKey.currentState!.validate()) {
                         _buttonController.start();
                         context.read<AuthBloc>().add(
-                              RegisterUserEvent(
+                              AuthEvent.register(
                                 firstName: _firstNameTextController.text,
                                 secondName: _lastNameTextController.text,
                                 email: _emailTextController.text,

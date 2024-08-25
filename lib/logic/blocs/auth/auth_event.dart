@@ -1,35 +1,24 @@
 part of 'auth_bloc.dart';
 
-@immutable
-sealed class AuthEvent {}
+@freezed
+class AuthEvent with _$AuthEvent {
+  const factory AuthEvent.login({
+    required String email,
+    required String password,
+  }) = LoginUserEvent;
 
-final class LoginUserEvent extends AuthEvent {
-  final String email;
-  final String password;
+  const factory AuthEvent.register({
+    required String firstName,
+    required String secondName,
+    required String email,
+    required String password,
+  }) = RegisterUserEvent;
 
-  LoginUserEvent({required this.email, required this.password});
+  const factory AuthEvent.resetPassword({
+    required String email,
+  }) = ResetPasswordEvent;
+
+  const factory AuthEvent.watch() = WatchAuthEvent;
+
+  const factory AuthEvent.logout() = LogoutEvent;
 }
-
-final class RegisterUserEvent extends AuthEvent {
-  final String firstName;
-  final String secondName;
-  final String email;
-  final String password;
-
-  RegisterUserEvent({
-    required this.firstName,
-    required this.secondName,
-    required this.email,
-    required this.password,
-  });
-}
-
-final class ResetPasswordEvent extends AuthEvent {
-  final String email;
-
-  ResetPasswordEvent({required this.email});
-}
-
-final class WatchAuthEvent extends AuthEvent {}
-
-final class LogoutEvent extends AuthEvent {}

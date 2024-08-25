@@ -34,7 +34,7 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
     return RefreshIndicator(
       color: AppColors.green900,
       onRefresh: () async =>
-          context.read<BooksBloc>().add(GetBookEvent(uid: UserData.uid)),
+          context.read<BooksBloc>().add(BooksEvent.getBooks(uid: UserData.uid)),
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -132,59 +132,63 @@ class _HomeScreenMainWidgetState extends State<HomeScreenMainWidget> {
           ),
           BlocConsumer<BooksBloc, BooksState>(
             listener: (context, state) {
-              if (state is ErrorBookState) {
-                AppFunctions.showErrorSnackBar(
-                    context, context.tr('somethingWentWrong'));
-              }
+              state.whenOrNull(
+                error: (message) => AppFunctions.showErrorSnackBar(
+                  context,
+                  context.tr('somethingWentWrong'),
+                ),
+              );
             },
             builder: (context, state) {
-              if (state is LoadedBookState) {
-                List<Book> pastSevenDaySummaries =
-                    AppFunctions.getPast7DaysSummaries(books: state.books);
-                return pastSevenDaySummaries.isNotEmpty
-                    ? SliverPadding(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                          bottom: kToolbarHeight + 10,
-                        ),
-                        sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) => ShowSummaryWidget(
-                              book: pastSevenDaySummaries[index],
-                              isDismissible: false,
+              return state.maybeWhen(
+                loaded: (books) {
+                  List<Book> pastSevenDaySummaries =
+                      AppFunctions.getPast7DaysSummaries(books: books);
+                  return pastSevenDaySummaries.isNotEmpty
+                      ? SliverPadding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            bottom: kToolbarHeight + 10,
+                          ),
+                          sliver: SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) => ShowSummaryWidget(
+                                book: pastSevenDaySummaries[index],
+                                isDismissible: false,
+                              ),
+                              childCount: pastSevenDaySummaries.length,
                             ),
-                            childCount: pastSevenDaySummaries.length,
                           ),
-                        ),
-                      )
-                    : SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: DeviceScreen.h(context) / 2.2,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const AnimationWidgetWithBloc(
-                                animationPath: AppAssets.lottieSearch,
-                              ),
-                              SizedBox(
-                                width: DeviceScreen.w(context) / 1.3,
-                                child: Text(
-                                  context.tr('noSummaryFound'),
-                                  style: AppTextStyles.workSansW600.copyWith(
-                                    fontSize: 16,
-                                    color: AppColors.green800,
-                                  ),
-                                  textAlign: TextAlign.center,
+                        )
+                      : SliverToBoxAdapter(
+                          child: SizedBox(
+                            height: DeviceScreen.h(context) / 2.2,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const AnimationWidgetWithBloc(
+                                  animationPath: AppAssets.lottieSearch,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: DeviceScreen.w(context) / 1.3,
+                                  child: Text(
+                                    context.tr('noSummaryFound'),
+                                    style: AppTextStyles.workSansW600.copyWith(
+                                      fontSize: 16,
+                                      color: AppColors.green800,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-              }
-              return const SliverFillRemaining(
-                child: RecentSummariesShimmerWidget(),
+                        );
+                },
+                orElse: () => const SliverFillRemaining(
+                  child: RecentSummariesShimmerWidget(),
+                ),
               );
             },
           ),

@@ -36,38 +36,42 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BlocConsumer<AudioPlayerBloc, AudioPlayerStates>(
+                BlocConsumer<AudioPlayerBloc, AudioPlayerState>(
                   listener: (context, audioState) async {
-                    if (audioState is LoadingAudioPlayerState) {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => Lottie.asset(
-                          'assets/lottie/ai.json',
-                        ),
-                      );
-                    } else if (audioState is LoadedAudioPlayerState) {
-                      _audioUrl = audioState.audioUrl;
-                      context
-                          .read<AudioPlayerBloc>()
-                          .add(PlayAudioEvent(audioUrl: _audioUrl!));
-                      Navigator.of(context).pop();
-                      if (_isBookSaved) {
-                        context.read<BooksBloc>().add(
-                              AddAudioUrlEvent(
-                                bookId: _bookId!,
-                                audioUrl: _audioUrl ?? 'null',
-                              ),
-                            );
-                      }
-                    } else if (audioState is ErrorAudioPlayerState) {
-                      debugPrint(audioState.message);
-                      Navigator.of(context).pop();
-                      AppFunctions.showErrorSnackBar(
-                        context,
-                        context.tr('somethingWentWrong'),
-                      );
-                    }
+                    audioState.whenOrNull(
+                      loading: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => Lottie.asset(
+                            'assets/lottie/ai.json',
+                          ),
+                        );
+                      },
+                      loaded: (audioUrl) {
+                        _audioUrl = audioUrl;
+                        context
+                            .read<AudioPlayerBloc>()
+                            .add(AudioPlayerEvent.play(audioUrl: _audioUrl!));
+                        Navigator.of(context).pop();
+                        if (_isBookSaved) {
+                          context.read<BooksBloc>().add(
+                                BooksEvent.addAudioUrl(
+                                  bookId: _bookId!,
+                                  audioUrl: _audioUrl ?? 'null',
+                                ),
+                              );
+                        }
+                      },
+                      error: (message) {
+                        debugPrint(message);
+                        Navigator.of(context).pop();
+                        AppFunctions.showErrorSnackBar(
+                          context,
+                          context.tr('somethingWentWrong'),
+                        );
+                      },
+                    );
                   },
                   builder: (context, audioState) {
                     return GestureDetector(
@@ -75,23 +79,29 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                         if (!_isDownloaded) {
                           context
                               .read<AudioPlayerBloc>()
-                              .add(DownloadAudioEvent(
+                              .add(AudioPlayerEvent.download(
                                 summary: state.book.summary,
                                 summaryLanguage: context.locale.languageCode,
                               ));
                           _isDownloaded = true;
                         }
-                        if (audioState is LoadedAudioPlayerState) {
-                          context.read<AudioPlayerBloc>().add(
-                              PlayAudioEvent(audioUrl: audioState.audioUrl));
-                        } else if (audioState is PlayingAudioState) {
-                          context
-                              .read<AudioPlayerBloc>()
-                              .add(PauseAudioEvent());
-                        } else if (audioState is PausedAudioState) {
-                          context.read<AudioPlayerBloc>().add(
-                              PlayAudioEvent(audioUrl: audioState.audioUrl));
-                        }
+                        audioState.whenOrNull(
+                          loaded: (audioUrl) {
+                            context
+                                .read<AudioPlayerBloc>()
+                                .add(AudioPlayerEvent.play(audioUrl: audioUrl));
+                          },
+                          playing: (audioUrl) {
+                            context
+                                .read<AudioPlayerBloc>()
+                                .add(const AudioPlayerEvent.pause());
+                          },
+                          paused: (audioUrl) {
+                            context
+                                .read<AudioPlayerBloc>()
+                                .add(AudioPlayerEvent.play(audioUrl: audioUrl));
+                          },
+                        );
                       },
                       child: Container(
                         height: 55,
@@ -114,26 +124,26 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                 /// save summary
                 BlocListener<BooksBloc, BooksState>(
                   listener: (context, bookState) {
-                    if (bookState is AddBookSuccessState) {
-                      AppFunctions.showSnackBar(
+                    bookState.whenOrNull(
+                      addBookSuccess: (addedBookId) {
+                        AppFunctions.showSnackBar(
                         context,
                         'New summary has been saved successfully!',
                       );
-                      _bookId = bookState.addedBookId;
-                    }
+                        _bookId = addedBookId;
+                      },
+                    );
                   },
                   child: RegularButton(
                     w: DeviceScreen.w(context) / 1.6,
                     buttonLabel: context.tr('save'),
                     onTap: () {
                       state.book.audioUrl = _audioUrl ?? 'null';
-                      context.read<BooksBloc>().add(AddBookEvent(
+                      context.read<BooksBloc>().add(BooksEvent.addBook(
                             book: state.book,
                             userID: FirebaseAuth.instance.currentUser!.uid,
                           ));
                       _isBookSaved = true;
-                      // TODO check whether set state needed
-                      // setState(() {});
                     },
                   ),
                 ),
@@ -148,7 +158,7 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
 
   @override
   void dispose() {
-    getIt.get<AudioPlayerBloc>().add(DisposeAudioEvent());
+    getIt.get<AudioPlayerBloc>().add(const AudioPlayerEvent.dispose());
     super.dispose();
   }
 }

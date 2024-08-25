@@ -14,6 +14,7 @@ import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart'
 import '../../../../core/utils/app_settings.dart';
 import '../../../../core/utils/user_data.dart';
 import '../../../../logic/blocs/all_blocs.dart';
+import '../../../../logic/blocs/group_chat/group_chat_bloc.dart';
 import '../../auth/login_screen/login_screen.dart';
 import '../../main_screen/main_screen.dart';
 
@@ -54,10 +55,13 @@ class _SplashScreenState extends State<SplashScreen> {
           return BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is AuthenticatedState) {
-                context.read<BooksBloc>().add(GetBookEvent(
+                context.read<BooksBloc>().add(BooksEvent.getBooks(
                       uid: FirebaseAuth.instance.currentUser?.uid ?? '',
                     ));
-                  return const MainScreen();
+                context.read<GroupChatBloc>().add(
+                      const GroupChatEvent.getAllMessages(),
+                    );
+                return const MainScreen();
               } else {
                 return const LoginScreen();
               }
