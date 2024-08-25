@@ -20,7 +20,9 @@ class FirebaseBookService {
 
   Future<String> addBok(Book book) async {
     try {
-      final response = await _bookCollection.add(book.toMap());
+      final response = await _bookCollection.add(
+        book.toMap(),
+      );
       return response.id;
     } catch (e) {
       rethrow;

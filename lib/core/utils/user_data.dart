@@ -6,7 +6,7 @@ class UserData {
   static String firstName = 'null';
   static String lastName = 'null';
   static String email = 'null';
-  static int chatColor = 4545;
+  static int chatColor = 4292576568;
 
   static void set(UserModel user) {
     id = user.id;
@@ -23,6 +23,6 @@ class UserData {
     firstName = 'null';
     lastName = 'null';
     email = 'null';
-    chatColor = 4545;
+    chatColor = 4292576568;
   }
 }

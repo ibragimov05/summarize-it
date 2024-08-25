@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summarize_it/app_settings.dart';
 import 'package:summarize_it/core/utils/user_data.dart';
 import 'package:summarize_it/data/repositories/all_repositories.dart';
 import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart';
+import 'package:summarize_it/logic/blocs/all_blocs.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -32,6 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(LoadingAuthState());
     try {
       await _authRepository.login(email: event.email, password: event.password);
+      await _getUSER();
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));
     }
@@ -51,6 +54,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         firstName: event.firstName,
         lastName: event.secondName,
       );
+
+      await _getUSER();
     } catch (e) {
       emit(ErrorAuthState(errorMessage: e.toString()));
     }
@@ -79,4 +84,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       onData: (user) => user == null ? UnauthenticatedState() : AuthenticatedState(),
     );
   }
+
+  Future<void> _getUSER() async =>
+      getIt.get<UserBloc>().add(const UserEvent.getUserEvent());
 }

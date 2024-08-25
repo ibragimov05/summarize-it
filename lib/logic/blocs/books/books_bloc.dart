@@ -26,6 +26,9 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
       await emit.forEach(
         _bookRepository.getBooks(uid: event.uid),
         onData: (List<Book> books) => LoadedBookState(books: books),
+        onError: (error, stackTrace) {
+          return ErrorBookState(message: error.toString());
+        },
       );
     } catch (e) {
       emit(ErrorBookState(message: e.toString()));

@@ -30,6 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
       RoundedLoadingButtonController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
@@ -217,9 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 HelperButtons(
                   openDocButtonController: _openDocButtonController,
                   submitButtonController: _submitButtonController,
-                  onOpenDocTap: () {
-                    context.read<FilePickerBloc>().add(SelectFileEvent());
-                  },
+                  onOpenDocTap: () => context.read<FilePickerBloc>().add(SelectFileEvent()),
                   onSubmitTap: state is LoadedPdfToImageState
                       ? () => context.read<GenerativeAiBloc>().add(
                             SummarizeAiEvent(

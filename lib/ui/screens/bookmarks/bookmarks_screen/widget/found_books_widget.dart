@@ -60,11 +60,8 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
                     itemCount: _booksList.length,
                     itemBuilder: (context, index) => ShowSummaryWidget(
                       book: _booksList[index],
-                      onDismissed: () {
-                        setState(() {
-                          _booksList.removeAt(index);
-                        });
-                      },
+                      onDismissed: () =>
+                          setState(() => _booksList.removeAt(index)),
                     ),
                   ),
                 )

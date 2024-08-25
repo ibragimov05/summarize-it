@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -8,6 +9,7 @@ import 'package:summarize_it/core/utils/app_constants.dart';
 
 import 'package:summarize_it/core/utils/utils.dart'
     show AppColors, AppTextStyles, DeviceScreen;
+import 'package:summarize_it/data/services/shared_prefs/user_prefs_service.dart';
 
 import '../../../../core/utils/user_data.dart';
 import '../../../../logic/blocs/all_blocs.dart';
@@ -27,9 +29,18 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     AppConstants.sawOnboarding =
         getIt.get<SharedPreferences>().getBool('saw-onboarding') ?? false;
+    _collectUserData();
     Future.delayed(const Duration(seconds: 3)).then(
       (value) => _toTheNextScreen(),
     );
+  }
+
+  void _collectUserData() {
+    final user = UserPrefsService.getUser();
+
+    if (user == null) return;
+
+    UserData.set(user);
   }
 
   Future<void> _toTheNextScreen() async {
@@ -39,8 +50,10 @@ class _SplashScreenState extends State<SplashScreen> {
           return BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               if (state is AuthenticatedState) {
-                getIt.get<UserBloc>().add(const UserEvent.getUserEvent());
-                getIt.get<BooksBloc>().add(GetBookEvent(uid: UserData.uid));
+                // context.read<UserBloc>().add(const UserEvent.getUserEvent());
+                context.read<BooksBloc>().add(GetBookEvent(
+                      uid: FirebaseAuth.instance.currentUser?.uid ?? '',
+                    ));
                 return const MainScreen();
               } else {
                 return const LoginScreen();

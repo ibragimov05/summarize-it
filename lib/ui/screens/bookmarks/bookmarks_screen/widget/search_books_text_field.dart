@@ -23,7 +23,7 @@ class _SearchBooksTextFieldState extends State<SearchBooksTextField> {
         decoration: InputDecoration(
           prefixIcon: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: SvgPicture.asset(AppAssets.icoSearchUn),
+            child: SvgPicture.asset(AppAssets.icoSearch),
           ),
           border: const OutlineInputBorder(
             borderSide: BorderSide(

@@ -48,10 +48,12 @@ class AppFunctions {
   }
 
   static void showErrorSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: isLight(context) ? null : AppColors.greyscale100,
-        content: Text(
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          backgroundColor: isLight(context) ? null : AppColors.greyscale100,
+          content: Text(
           message,
           style: AppTextStyles.workSansMain.copyWith(
             fontWeight: FontWeight.w500,
@@ -97,7 +99,9 @@ class AppFunctions {
     final DateTime sevenDaysBackDate = DateTime.now().subtract(
       const Duration(days: 7),
     );
+
     final List<Book> result = [];
+
     for (var book in books) {
       if (book.summaryAddedDate.toDate().isAfter(sevenDaysBackDate)) {
         result.add(book);
@@ -110,25 +114,23 @@ class AppFunctions {
     required String message,
     required bool isSuccess,
     required BuildContext context,
-  }) {
-    toastification.show(
-      context: context,
-      type: isSuccess ? ToastificationType.success : ToastificationType.error,
+  }) =>
+      toastification.show(
+        context: context,
+        type: isSuccess ? ToastificationType.success : ToastificationType.error,
       autoCloseDuration: const Duration(seconds: 5),
       description: Text(message, style: AppTextStyles.workSansW500),
       icon: const Icon(Icons.error),
       closeButtonShowType: CloseButtonShowType.onHover,
     );
-  }
 
   static double get randomNumber =>
       -50 + Random().nextInt(50 - -50 + 1).toDouble();
 
   static double get randomDouble => (Random().nextDouble() * 2) - 1;
 
-  static bool isLight(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.light;
-  }
+  static bool isLight(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light;
 
   static SummaryLanguage getLanguageEnum(String languageCode) {
     if (languageCode == 'uz') {

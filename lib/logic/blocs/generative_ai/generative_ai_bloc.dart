@@ -53,7 +53,8 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
         data['summary-added-date'] = Timestamp.now();
         data['published-date'] =
             Timestamp.fromDate(DateTime.parse(data['published-date']));
-        data['summary-language'] = event.summaryLanguage.toString();
+        data['summary-language'] =
+            event.summaryLanguage == SummaryLanguage.english ? 'en' : 'uz';
         final book = Book.fromMap(data);
         emit(
           LoadedGenerativeAiState(book: book),

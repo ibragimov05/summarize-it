@@ -132,7 +132,8 @@ class _SummaryFloatButtonState extends State<SummaryFloatButton> {
                             userID: FirebaseAuth.instance.currentUser!.uid,
                           ));
                       _isBookSaved = true;
-                      setState(() {});
+                      // TODO check whether set state needed
+                      // setState(() {});
                     },
                   ),
                 ),
