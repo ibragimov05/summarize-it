@@ -15,10 +15,16 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   AudioPlayerBloc({
     required this.audioRepository,
   }) : super(const AudioPlayerState.initial()) {
-    on<DownloadAudioEvent>(_onDownloadAudio);
-    on<PlayAudioEvent>(_onPlayAudio);
-    on<PauseAudioEvent>(_onPauseAudio);
-    on<DisposeAudioEvent>(_onDisposeAudio);
+    on<AudioPlayerEvent>(
+      (AudioPlayerEvent event, Emitter<AudioPlayerState> emit) async {
+        await event.map(
+          download: (DownloadAudioEvent event) async => await _onDownloadAudio(event, emit),
+          play: (PlayAudioEvent event) async => await _onPlayAudio(event, emit),
+          pause: (PauseAudioEvent event) async => await _onPauseAudio(event, emit),
+          dispose: (DisposeAudioEvent event) async => await _onDisposeAudio(event, emit),
+        );
+      },
+    );
 
     _audioPlayer.processingStateStream.listen(
       (processingState) {
@@ -29,7 +35,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
     );
   }
 
-  void _onDownloadAudio(
+  Future<void> _onDownloadAudio(
     DownloadAudioEvent event,
     Emitter<AudioPlayerState> emit,
   ) async {
@@ -51,7 +57,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
     }
   }
 
-  void _onPlayAudio(
+  Future<void> _onPlayAudio(
     PlayAudioEvent event,
     Emitter<AudioPlayerState> emit,
   ) async {
@@ -63,7 +69,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
     emit(AudioPlayerState.playing(event.audioUrl));
   }
 
-  void _onPauseAudio(
+  Future<void> _onPauseAudio(
     PauseAudioEvent event,
     Emitter<AudioPlayerState> emit,
   ) async {
@@ -73,7 +79,7 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
     );
   }
 
-  void _onDisposeAudio(
+  Future<void> _onDisposeAudio(
     DisposeAudioEvent event,
     Emitter<AudioPlayerState> emit,
   ) async {

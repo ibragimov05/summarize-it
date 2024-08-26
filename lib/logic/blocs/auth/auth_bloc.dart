@@ -23,14 +23,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   })  : _authRepository = authRepository,
         _userRepository = userRepository,
         super(const AuthState.initial()) {
-    on<LoginUserEvent>(_loginUser);
-    on<RegisterUserEvent>(_onRegisterUser);
-    on<ResetPasswordEvent>(_onResetPassword);
-    on<LogoutEvent>(_onLogoutUser);
-    on<WatchAuthEvent>(_onWatchAuth);
+    on<AuthEvent>(
+      (
+        AuthEvent events,
+        Emitter<AuthState> emit,
+      ) async {
+        await events.map(
+          login: (LoginUserEvent event) async => await _onLoginUser(event, emit),
+          register: (RegisterUserEvent event) async => await _onRegisterUser(event, emit),
+          resetPassword: (ResetPasswordEvent event) async => await _onResetPassword(event, emit),
+          watch: (WatchAuthEvent event) async => await _onWatchAuth(event, emit),
+          logout: (LogoutEvent event) async => await _onLogoutUser(event, emit),
+        );
+      },
+    );
   }
 
-  void _loginUser(
+  Future<void> _onLoginUser(
     LoginUserEvent event,
     Emitter<AuthState> emit,
   ) async {
@@ -43,7 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onRegisterUser(
+  Future<void> _onRegisterUser(
     RegisterUserEvent event,
     Emitter<AuthState> emit,
   ) async {
@@ -67,13 +76,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onResetPassword(
+  Future<void> _onResetPassword(
     ResetPasswordEvent event,
     Emitter<AuthState> emit,
   ) =>
       _authRepository.resetPassword(email: event.email);
 
-  void _onLogoutUser(
+  Future<void> _onLogoutUser(
     LogoutEvent event,
     Emitter<AuthState> emit,
   ) async {
@@ -89,7 +98,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onWatchAuth(
+  Future<void> _onWatchAuth(
     WatchAuthEvent event,
     Emitter<AuthState> emit,) async =>
       await emit.forEach(

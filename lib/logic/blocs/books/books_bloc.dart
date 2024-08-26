@@ -13,16 +13,22 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
   final BooksRepository _bookRepository;
 
   BooksBloc({
-    required BooksRepository bookRepository,
+    required BooksRepository bookRepository
   })  : _bookRepository = bookRepository,
         super(const BooksState.initial()) {
-    on<GetBookEvent>(_getBooks);
-    on<AddBookEvent>(_addBook);
-    on<AddAudioUrlEvent>(_addAudioUrl);
-    on<DeleteBookEvent>(_deleteBook);
+    on<BooksEvent>(
+      (BooksEvent events, Emitter<BooksState> emit)async {
+       await events.map(
+          getBooks: (GetBookEvent event) async => _onGetBooks(event, emit),
+          addBook: (AddBookEvent event) async => _onAddBook(event, emit),
+          addAudioUrl: (AddAudioUrlEvent event) async => _onAddAudioUrl(event, emit),
+          deleteBook: (DeleteBookEvent event) async => _onDeleteBook(event, emit),
+        );
+      },
+    );
   }
 
-  Future<void> _getBooks(GetBookEvent event, Emitter<BooksState> emit) async {
+  Future<void> _onGetBooks(GetBookEvent event, Emitter<BooksState> emit) async {
     emit(const BooksState.loading());
     try {
       await emit.forEach(
@@ -35,7 +41,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     }
   }
 
-  Future<void> _addBook(AddBookEvent event, Emitter<BooksState> emit) async {
+  Future<void> _onAddBook(AddBookEvent event, Emitter<BooksState> emit) async {
     emit(const BooksState.loading());
 
     try {
@@ -50,7 +56,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     }
   }
 
-  Future<void> _addAudioUrl(
+  Future<void> _onAddAudioUrl(
     AddAudioUrlEvent event,
     Emitter<BooksState> emit,
   ) async {
@@ -62,7 +68,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
     } catch (_) {}
   }
 
-  Future<void> _deleteBook(
+  Future<void> _onDeleteBook(
     DeleteBookEvent event,
     Emitter<BooksState> emit,
   ) async {
