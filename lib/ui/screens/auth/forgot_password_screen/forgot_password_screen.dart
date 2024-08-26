@@ -46,74 +46,72 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(leading: const ArrowBackButton()),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //! forgot password
-            SizedBox(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    context.tr('forgotPassword'),
-                    style: AppTextStyles.workSansMain.copyWith(fontSize: 24),
-                  ),
-                  Text(
-                    context.tr('recoverYourAccountPassword'),
-                    style: AppTextStyles.workSansMain.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.greyscale500,
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(leading: const ArrowBackButton()),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //! forgot password
+              SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      context.tr('forgotPassword'),
+                      style: AppTextStyles.workSansMain.copyWith(fontSize: 24),
                     ),
-                  ),
-                ],
-              ),
-            ),
-
-            //! email text field
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, bottom: 10),
-              child: Text(
-                context.tr('email'),
-                style: AppTextStyles.workSansMain.copyWith(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.greyscale400,
+                    Text(
+                      context.tr('recoverYourAccountPassword'),
+                      style: AppTextStyles.workSansMain.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.greyscale500,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Form(
-              key: _formKey,
-              child: CustomTextFormField(
-                hintText: context.tr('hintTextEmail'),
-                isObscure: false,
-                validator: AppFunctions.emailValidator,
-                isKeyboardDone: true,
-                textInputType: TextInputType.emailAddress,
-                textEditingController: _emailTextController,
+
+              //! email text field
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, bottom: 10),
+                child: Text(
+                  context.tr('email'),
+                  style: AppTextStyles.workSansMain.copyWith(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.greyscale400,
+                  ),
+                ),
               ),
-            ),
-          ],
+              Form(
+                key: _formKey,
+                child: CustomTextFormField(
+                  hintText: context.tr('hintTextEmail'),
+                  isObscure: false,
+                  validator: AppFunctions.emailValidator,
+                  isKeyboardDone: true,
+                  textInputType: TextInputType.emailAddress,
+                  textEditingController: _emailTextController,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-      //! continue button
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: CustomMainGreenButton(
-          buttonController: _buttonController,
-          buttonText: context.tr('continueText'),
-          onTap: _onContinueTap,
+        //! continue button
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: CustomMainGreenButton(
+            buttonController: _buttonController,
+            buttonText: context.tr('continueText'),
+            onTap: _onContinueTap,
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   @override
   void dispose() {

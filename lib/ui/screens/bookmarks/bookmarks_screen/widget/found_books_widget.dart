@@ -27,53 +27,51 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SearchBooksTextField(
-          onChanged: (String value) {
-            if (value.trim().isEmpty) {
-              _booksList = widget.books;
-            } else {
-              _booksList = widget.books
-                  .where(
-                    (element) => element.title
-                        .toLowerCase()
-                        .contains(value.toLowerCase()),
+  Widget build(BuildContext context) => Column(
+        children: [
+          SearchBooksTextField(
+            onChanged: (String value) {
+              if (value.trim().isEmpty) {
+                _booksList = widget.books;
+              } else {
+                _booksList = widget.books
+                    .where(
+                      (element) => element.title
+                          .toLowerCase()
+                          .contains(value.toLowerCase()),
+                    )
+                    .toList();
+              }
+              setState(() {});
+            },
+          ),
+          Expanded(
+            child: _booksList.isNotEmpty
+                ? FadingEdgeScrollView.fromScrollView(
+                    gradientFractionOnStart: 0.3,
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 10,
+                      ),
+                      itemCount: _booksList.length,
+                      itemBuilder: (context, index) => ShowSummaryWidget(
+                        book: _booksList[index],
+                        onDismissed: () =>
+                            setState(() => _booksList.removeAt(index)),
+                      ),
+                    ),
                   )
-                  .toList();
-            }
-            setState(() {});
-          },
-        ),
-        Expanded(
-          child: _booksList.isNotEmpty
-              ? FadingEdgeScrollView.fromScrollView(
-                  gradientFractionOnStart: 0.3,
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 10,
-                    ),
-                    itemCount: _booksList.length,
-                    itemBuilder: (context, index) => ShowSummaryWidget(
-                      book: _booksList[index],
-                      onDismissed: () =>
-                          setState(() => _booksList.removeAt(index)),
+                : Center(
+                    child: Text(
+                      context.tr('noBooksFoundMatchingQuery'),
+                      style: AppTextStyles.workSansW600.copyWith(fontSize: 15),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                )
-              : Center(
-                  child: Text(
-                    context.tr('noBooksFoundMatchingQuery'),
-                    style: AppTextStyles.workSansW600.copyWith(fontSize: 15),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-        ),
-      ],
-    );
-  }
+          ),
+        ],
+      );
 }

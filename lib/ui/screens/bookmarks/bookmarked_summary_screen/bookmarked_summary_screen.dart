@@ -19,64 +19,63 @@ class BookmarkedSummaryScreen extends StatefulWidget {
 
 class _BookmarkedSummaryScreenState extends State<BookmarkedSummaryScreen> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: AppColors.summarizeItTransparent,
-        shadowColor: AppFunctions.isLight(context)  ?AppColors.summarizeItWhite: null,
-        title: Text(widget.book.title),
-        leading: const ArrowBackButton(),
-        actions: [
-          Text(widget.book.summaryLanguage == 'en' ? '🇺🇸' : '🇺🇿'),
-          IconButton(
-            onPressed: () => showDialog(
-              context: context,
-              builder: (BuildContext context) => BookInfoDialog(
-                book: widget.book,
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          surfaceTintColor: AppColors.summarizeItTransparent,
+          shadowColor:
+              AppFunctions.isLight(context) ? AppColors.summarizeItWhite : null,
+          title: Text(widget.book.title),
+          leading: const ArrowBackButton(),
+          actions: [
+            Text(widget.book.summaryLanguage == 'en' ? '🇺🇸' : '🇺🇿'),
+            IconButton(
+              onPressed: () => showDialog(
+                context: context,
+                builder: (BuildContext context) => BookInfoDialog(
+                  book: widget.book,
+                ),
               ),
+              icon: const Icon(Icons.info_outline),
             ),
-            icon: const Icon(Icons.info_outline),
-          ),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.only(
-          bottom: kToolbarHeight * 2 + 15,
-          left: 16,
-          right: 16,
-          top: 16,
+          ],
         ),
-        children: [
-          MarkdownBody(
-            data: widget.book.summary,
-            selectable: true,
-            styleSheet: MarkdownStyleSheet(
-              p: const TextStyle(fontSize: 16),
-            ),
+        body: ListView(
+          padding: const EdgeInsets.only(
+            bottom: kToolbarHeight * 2 + 15,
+            left: 16,
+            right: 16,
+            top: 16,
           ),
-        ],
-      ),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FloatingActionButton(
-            heroTag: 'share',
-            shape: const CircleBorder(),
-            backgroundColor: AppColors.green900,
-            onPressed: () => AppFunctions.shareSummary(widget.book),
-            child: SvgPicture.asset(
-              AppAssets.share,
-              colorFilter: const ColorFilter.mode(
-                AppColors.summarizeItWhite,
-                BlendMode.srcIn,
+          children: [
+            MarkdownBody(
+              data: widget.book.summary,
+              selectable: true,
+              styleSheet: MarkdownStyleSheet(
+                p: const TextStyle(fontSize: 16),
               ),
             ),
-          ),
-          if (widget.book.audioUrl != 'null') 5.h(),
-          if (widget.book.audioUrl != 'null')
-            PlayPauseAudioWidget(summaryAudioUrl: widget.book.audioUrl),
-        ],
-      ),
-    );
-  }
+          ],
+        ),
+        floatingActionButton: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
+              heroTag: 'share',
+              shape: const CircleBorder(),
+              backgroundColor: AppColors.green900,
+              onPressed: () => AppFunctions.shareSummary(widget.book),
+              child: SvgPicture.asset(
+                AppAssets.share,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.summarizeItWhite,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+            if (widget.book.audioUrl != 'null') 5.h(),
+            if (widget.book.audioUrl != 'null')
+              PlayPauseAudioWidget(summaryAudioUrl: widget.book.audioUrl),
+          ],
+        ),
+      );
 }

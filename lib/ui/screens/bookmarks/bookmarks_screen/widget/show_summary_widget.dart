@@ -20,35 +20,35 @@ class ShowSummaryWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (isDismissible)
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Dismissible(
-              behavior: HitTestBehavior.translucent,
-              direction: DismissDirection.endToStart,
-              key: Key(book.id),
-              background: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                color: AppColors.error400,
-                alignment: Alignment.centerRight,
-                child: SvgPicture.asset('assets/icons/trash.svg'),
+  Widget build(BuildContext context) => Column(
+        children: [
+          if (isDismissible)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Dismissible(
+                behavior: HitTestBehavior.translucent,
+                direction: DismissDirection.endToStart,
+                key: Key(book.id),
+                background: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  color: AppColors.error400,
+                  alignment: Alignment.centerRight,
+                  child: SvgPicture.asset('assets/icons/trash.svg'),
+                ),
+                onDismissed: (direction) {
+                  context
+                      .read<BooksBloc>()
+                      .add(BooksEvent.deleteBook(id: book.id));
+                  onDismissed!();
+                },
+                child: _summaryWidget(context),
               ),
-              onDismissed: (direction) {
-                context.read<BooksBloc>().add(BooksEvent.deleteBook(id: book.id));
-                onDismissed!();
-              },
-              child: _summaryWidget(context),
-            ),
-          )
-        else
-          _summaryWidget(context),
-        15.h(),
-      ],
-    );
-  }
+            )
+          else
+            _summaryWidget(context),
+          15.h(),
+        ],
+      );
 
   Widget _summaryWidget(BuildContext context) => GestureDetector(
         onTap: () => Navigator.pushNamed(

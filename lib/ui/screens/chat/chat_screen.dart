@@ -48,158 +48,156 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Stack(
-        children: [
-          CircleContainerWidget(top: AppFunctions.randomNumber),
-          CircleContainerWidget(
-            isAlign: true,
-            top: AppFunctions.randomDouble,
-            right: AppFunctions.randomDouble,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: AppFunctions.isLight(context)
-                    ? AppColors.summarizeItWhite
-                    : AppColors.green900,
-                padding: const EdgeInsets.all(10),
-                child: SafeArea(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          context.tr('chatWith'),
-                          style: AppTextStyles.workSansW600.copyWith(
-                            fontSize: 16,
-                            color: AppFunctions.isLight(context)
-                                ? AppColors.green900
-                                : AppColors.summarizeItWhite,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // Message list
-              Expanded(
-                child: BlocBuilder<GroupChatBloc, GroupChatState>(
-                  buildWhen: (previous, current) =>
-                      current.chatStatus == GroupChatStatus.loaded,
-                  builder: (context, state) {
-                    if (state.chatStatus == GroupChatStatus.loaded &&
-                        state.messages != null &&
-                        state.messages!.isNotEmpty) {
-                      return FadingEdgeScrollView.fromScrollView(
-                        gradientFractionOnEnd: 0.3,
-                        gradientFractionOnStart: 0,
-                        child: ListView.builder(
-                          controller: _scrollController,
-                          reverse: true,
-                          itemCount: state.messages!.length,
-                          padding: const EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                            bottom: 10,
-                          ),
-                          itemBuilder: (context, index) {
-                            final message = state.messages![index];
-                            return Row(
-                              mainAxisAlignment:
-                                  UserData.uid == message.senderId
-                                      ? MainAxisAlignment.end
-                                      : MainAxisAlignment.start,
-                              children: [
-                                ShowMessage(
-                                  message: message,
-                                  isSender: UserData.uid == message.senderId,
-                                  onEdit: _editMessage,
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      );
-                    }
-
-                    /// no messages here yet
-                    return Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const AnimationWidgetWithBloc(
-                            animationPath: AppAssets.lottieSleepDuck,
-                          ),
-                          Center(
-                            child: Text(
-                              context.tr('noMessagesHereYet'),
-                              style: AppTextStyles.workSansW600.copyWith(
-                                fontSize: 18,
-                                color: AppColors.green900,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
+          children: [
+            CircleContainerWidget(top: AppFunctions.randomNumber),
+            CircleContainerWidget(
+              isAlign: true,
+              top: AppFunctions.randomDouble,
+              right: AppFunctions.randomDouble,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
                   color: AppFunctions.isLight(context)
                       ? AppColors.summarizeItWhite
-                      : AppColors.mainBlackColor,
-                  border: const Border(
-                    top: BorderSide(color: AppColors.greyscale300),
+                      : AppColors.green900,
+                  padding: const EdgeInsets.all(10),
+                  child: SafeArea(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            context.tr('chatWith'),
+                            style: AppTextStyles.workSansW600.copyWith(
+                              fontSize: 16,
+                              color: AppFunctions.isLight(context)
+                                  ? AppColors.green900
+                                  : AppColors.summarizeItWhite,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                child: TextField(
-                  controller: _messageController,
-                  maxLines: null,
-                  maxLength: 500,
-                  textInputAction: TextInputAction.newline,
-                  decoration: InputDecoration(
-                    hintText: context.tr('message'),
-                    border:
-                        const OutlineInputBorder(borderSide: BorderSide.none),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ZoomTapAnimation(
-                            onTap: _sendMessage,
-                            child: Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.green900,
-                              ),
-                              child: const Icon(
-                                Icons.arrow_upward_rounded,
-                                color: AppColors.summarizeItWhite,
+                // Message list
+                Expanded(
+                  child: BlocBuilder<GroupChatBloc, GroupChatState>(
+                    buildWhen: (previous, current) =>
+                        current.chatStatus == GroupChatStatus.loaded,
+                    builder: (context, state) {
+                      if (state.chatStatus == GroupChatStatus.loaded &&
+                          state.messages != null &&
+                          state.messages!.isNotEmpty) {
+                        return FadingEdgeScrollView.fromScrollView(
+                          gradientFractionOnEnd: 0.3,
+                          gradientFractionOnStart: 0,
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            reverse: true,
+                            itemCount: state.messages!.length,
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                              right: 10,
+                              bottom: 10,
+                            ),
+                            itemBuilder: (context, index) {
+                              final message = state.messages![index];
+                              return Row(
+                                mainAxisAlignment:
+                                    UserData.uid == message.senderId
+                                        ? MainAxisAlignment.end
+                                        : MainAxisAlignment.start,
+                                children: [
+                                  ShowMessage(
+                                    message: message,
+                                    isSender: UserData.uid == message.senderId,
+                                    onEdit: _editMessage,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        );
+                      }
+
+                      /// no messages here yet
+                      return Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const AnimationWidgetWithBloc(
+                              animationPath: AppAssets.lottieSleepDuck,
+                            ),
+                            Center(
+                              child: Text(
+                                context.tr('noMessagesHereYet'),
+                                style: AppTextStyles.workSansW600.copyWith(
+                                  fontSize: 18,
+                                  color: AppColors.green900,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppFunctions.isLight(context)
+                        ? AppColors.summarizeItWhite
+                        : AppColors.mainBlackColor,
+                    border: const Border(
+                      top: BorderSide(color: AppColors.greyscale300),
+                    ),
+                  ),
+                  child: TextField(
+                    controller: _messageController,
+                    maxLines: null,
+                    maxLength: 500,
+                    textInputAction: TextInputAction.newline,
+                    decoration: InputDecoration(
+                      hintText: context.tr('message'),
+                      border:
+                          const OutlineInputBorder(borderSide: BorderSide.none),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ZoomTapAnimation(
+                              onTap: _sendMessage,
+                              child: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.green900,
+                                ),
+                                child: const Icon(
+                                  Icons.arrow_upward_rounded,
+                                  color: AppColors.summarizeItWhite,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+              ],
+            ),
+          ],
+        ),
+      );
 }

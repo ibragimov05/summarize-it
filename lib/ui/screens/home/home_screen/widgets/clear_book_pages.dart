@@ -8,19 +8,24 @@ class ClearBookPages extends StatelessWidget {
   const ClearBookPages({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<PdfToImageBloc, PdfToImageStates>(
-      builder: (context, state) {
-        return IconButton(
-          tooltip: context.tr('clearScreen'),
-          onPressed: () {
-            context.read<GenerativeAiBloc>().add(const GenerativeAiEvents.toInitial());
-            context.read<PdfToImageBloc>().add(const PdfToImageEvents.toInitialState());
-            context.read<FilePickerBloc>().add(const FilePickerEvents.toInitialStateFilePicker());
-          },
-          icon: const Icon(Icons.highlight_remove_outlined),
-        );
-      },
-    );
-  }
+  Widget build(BuildContext context) =>
+      BlocBuilder<PdfToImageBloc, PdfToImageStates>(
+        builder: (context, state) {
+          return IconButton(
+            tooltip: context.tr('clearScreen'),
+            onPressed: () {
+              context
+                  .read<GenerativeAiBloc>()
+                  .add(const GenerativeAiEvents.toInitial());
+              context
+                  .read<PdfToImageBloc>()
+                  .add(const PdfToImageEvents.toInitialState());
+              context
+                  .read<FilePickerBloc>()
+                  .add(const FilePickerEvents.toInitialStateFilePicker());
+            },
+            icon: const Icon(Icons.highlight_remove_outlined),
+          );
+        },
+      );
 }

@@ -14,46 +14,44 @@ class SearchBooksTextField extends StatefulWidget {
 
 class _SearchBooksTextFieldState extends State<SearchBooksTextField> {
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: TextField(
-        onChanged: widget.onChanged,
-        style: AppTextStyles.workSansMain,
-        decoration: InputDecoration(
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SvgPicture.asset(AppAssets.icoSearch),
-          ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.green900,
-              width: 2,
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: TextField(
+          onChanged: widget.onChanged,
+          style: AppTextStyles.workSansMain,
+          decoration: InputDecoration(
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SvgPicture.asset(AppAssets.icoSearch),
             ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(30),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.green900,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(30),
+              ),
             ),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.green900,
-              width: 2,
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.green900,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(30),
+              ),
             ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(30),
-            ),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.green900,
-              width: 2,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(30),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppColors.green900,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(30),
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

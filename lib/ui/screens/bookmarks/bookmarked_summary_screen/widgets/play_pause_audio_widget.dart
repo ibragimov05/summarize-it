@@ -25,7 +25,7 @@ class _PlayPauseAudioWidgetState extends State<PlayPauseAudioWidget>
     super.initState();
     _audioPlayer.setUrl(widget.summaryAudioUrl);
     _audioPlayer.playbackEventStream.listen(
-          (event) {
+      (event) {
         if (event.processingState == ProcessingState.completed) {
           _isPlaying = false;
           _controller.reverse();
@@ -48,27 +48,25 @@ class _PlayPauseAudioWidgetState extends State<PlayPauseAudioWidget>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      heroTag: 'audio',
-      shape: const CircleBorder(),
-      backgroundColor: AppColors.green900,
-      onPressed: () {
-        if (_isPlaying) {
-          _audioPlayer.pause();
-          _controller.reverse();
-        } else {
-          _controller.forward();
-          _audioPlayer.play();
-        }
-        _isPlaying = !_isPlaying;
-        setState(() {});
-      },
-      child: AnimatedIcon(
-        icon: AnimatedIcons.play_pause,
-        progress: _controller,
-        color: AppColors.summarizeItWhite,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => FloatingActionButton(
+        heroTag: 'audio',
+        shape: const CircleBorder(),
+        backgroundColor: AppColors.green900,
+        onPressed: () {
+          if (_isPlaying) {
+            _audioPlayer.pause();
+            _controller.reverse();
+          } else {
+            _controller.forward();
+            _audioPlayer.play();
+          }
+          _isPlaying = !_isPlaying;
+          setState(() {});
+        },
+        child: AnimatedIcon(
+          icon: AnimatedIcons.play_pause,
+          progress: _controller,
+          color: AppColors.summarizeItWhite,
+        ),
+      );
 }

@@ -21,80 +21,80 @@ class ShowMessage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        if (!isSender)
-          _ReceiverCircleAvatar(
-            receiverName: message.senderName,
-            receiverColor: message.senderChatColor,
-          ),
-        ZoomTapAnimation(
-          onLongTap: isSender
-              ? () async {
-                  final isEdit = await showCupertinoModalPopup<bool?>(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        ManageMessageWidget(message: message),
-                  );
-                  if (isEdit != null && isEdit) onEdit(message);
-                }
-              : null,
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            width:
-                message.text.length > 40 ? DeviceScreen.w(context) / 1.3 : null,
-            decoration: BoxDecoration(
-              color: isSender
-                  ? AppColors.green900.withOpacity(0.8)
-                  : const Color(0xFFf1f2f7).withOpacity(0.9),
-              borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(12),
-                topRight: const Radius.circular(12),
-                bottomLeft: isSender
-                    ? const Radius.circular(12)
-                    : const Radius.circular(0),
-                bottomRight: isSender
-                    ? const Radius.circular(0)
-                    : const Radius.circular(12),
+  Widget build(BuildContext context) => Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (!isSender)
+            _ReceiverCircleAvatar(
+              receiverName: message.senderName,
+              receiverColor: message.senderChatColor,
+            ),
+          ZoomTapAnimation(
+            onLongTap: isSender
+                ? () async {
+                    final isEdit = await showCupertinoModalPopup<bool?>(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          ManageMessageWidget(message: message),
+                    );
+                    if (isEdit != null && isEdit) onEdit(message);
+                  }
+                : null,
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              width: message.text.length > 40
+                  ? DeviceScreen.w(context) / 1.3
+                  : null,
+              decoration: BoxDecoration(
+                color: isSender
+                    ? AppColors.green900.withOpacity(0.8)
+                    : const Color(0xFFf1f2f7).withOpacity(0.9),
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(12),
+                  topRight: const Radius.circular(12),
+                  bottomLeft: isSender
+                      ? const Radius.circular(12)
+                      : const Radius.circular(0),
+                  bottomRight: isSender
+                      ? const Radius.circular(0)
+                      : const Radius.circular(12),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: isSender
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    message.text,
+                    style: AppTextStyles.workSansW500.copyWith(
+                      color: isSender
+                          ? AppColors.summarizeItWhite
+                          : AppColors.mainBlackColor,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (message.isEdited) _MessageEdited(isSender: isSender),
+                      Text(
+                        _formatTime(message.timestamp),
+                        style: AppTextStyles.workSansW500.copyWith(
+                          color: isSender
+                              ? const Color(0xFF66ADA3)
+                              : AppColors.greyscale400.withOpacity(0.8),
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            child: Column(
-              crossAxisAlignment:
-                  isSender ? CrossAxisAlignment.start : CrossAxisAlignment.end,
-              children: [
-                Text(
-                  message.text,
-                  style: AppTextStyles.workSansW500.copyWith(
-                    color: isSender
-                        ? AppColors.summarizeItWhite
-                        : AppColors.mainBlackColor,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    if (message.isEdited) _MessageEdited(isSender: isSender),
-                    Text(
-                      _formatTime(message.timestamp),
-                      style: AppTextStyles.workSansW500.copyWith(
-                        color: isSender
-                            ? const Color(0xFF66ADA3)
-                            : AppColors.greyscale400.withOpacity(0.8),
-                        fontSize: 11,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      );
 }
 
 class _MessageEdited extends StatelessWidget {
@@ -143,7 +143,8 @@ class _ReceiverCircleAvatar extends StatelessWidget {
             child: Center(
               child: Text(
                 receiverName[0].toUpperCase(),
-                style: const TextStyle(color: Colors.white), // Optional text styling
+                style: const TextStyle(
+                    color: Colors.white), // Optional text styling
               ),
             ),
           ),

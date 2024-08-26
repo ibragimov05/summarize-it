@@ -8,16 +8,14 @@ class LoginScreenText extends StatelessWidget {
   const LoginScreenText({super.key, required this.text});
 
   @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: AppTextStyles.workSansMain.copyWith(
-        fontSize: 15,
-        color: AppFunctions.isLight(context)
-            ? AppColors.greyscale400
-            : AppColors.greyscale100,
-        fontWeight: FontWeight.w500,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Text(
+        text,
+        style: AppTextStyles.workSansMain.copyWith(
+          fontSize: 15,
+          color: AppFunctions.isLight(context)
+              ? AppColors.greyscale400
+              : AppColors.greyscale100,
+          fontWeight: FontWeight.w500,
+        ),
+      );
 }

@@ -21,9 +21,9 @@ class _BookPagesState extends State<BookPages> {
   final ScrollController _scrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<FilePickerBloc, FilePickerStates>(
-      builder: (BuildContext context, FilePickerStates state) =>
+  Widget build(BuildContext context) =>
+      BlocBuilder<FilePickerBloc, FilePickerStates>(
+        builder: (BuildContext context, FilePickerStates state) =>
           state.maybeWhen(
         loaded: (filePath, file) => FadingEdgeScrollView.fromScrollView(
           gradientFractionOnStart: 0.3,
@@ -67,5 +67,4 @@ class _BookPagesState extends State<BookPages> {
         orElse: () => const SizedBox(),
       ),
     );
-  }
 }

@@ -38,163 +38,161 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {
-        state.whenOrNull(
+  Widget build(BuildContext context) => BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) => state.whenOrNull(
           authenticated: () {
             if (Navigator.canPop(context)) {
               Navigator.of(context).pop();
             }
+            return null;
           },
-        );
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          surfaceTintColor: AppColors.summarizeItTransparent,
-          leading: const ArrowBackButton(),
-          title: Text(
-            context.tr('signUp'),
-            style: AppTextStyles.workSansW600,
-          ),
         ),
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.only(top: 5, right: 20, left: 20),
-            children: <Widget>[
-              Text(
-                context.tr('completeYourAccount'),
-                style: AppTextStyles.workSansMain.copyWith(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
+        child: Scaffold(
+          appBar: AppBar(
+            surfaceTintColor: AppColors.summarizeItTransparent,
+            leading: const ArrowBackButton(),
+            title: Text(
+              context.tr('signUp'),
+              style: AppTextStyles.workSansW600,
+            ),
+          ),
+          body: Form(
+            key: _formKey,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.only(top: 5, right: 20, left: 20),
+              children: <Widget>[
+                Text(
+                  context.tr('completeYourAccount'),
+                  style: AppTextStyles.workSansMain.copyWith(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
 
-              /// [FIRST NAME]
-              SignUpTextStyle(text: context.tr('firstName')),
-              CustomTextFormField(
-                hintText: context.tr('hintTextFirstName'),
-                validator: (String? text) => AppFunctions.textValidator(
-                    text, context.tr('firstName').toLowerCase()),
-                textEditingController: _firstNameTextController,
-              ),
+                /// [FIRST NAME]
+                SignUpTextStyle(text: context.tr('firstName')),
+                CustomTextFormField(
+                  hintText: context.tr('hintTextFirstName'),
+                  validator: (String? text) => AppFunctions.textValidator(
+                      text, context.tr('firstName').toLowerCase()),
+                  textEditingController: _firstNameTextController,
+                ),
 
-              /// [Last NAME]
-              SignUpTextStyle(text: context.tr('lastName')),
-              CustomTextFormField(
-                hintText: context.tr('hintTextLastName'),
-                validator: (String? text) => AppFunctions.textValidator(
-                    text, context.tr('lastName').toLowerCase()),
-                textEditingController: _lastNameTextController,
-              ),
+                /// [Last NAME]
+                SignUpTextStyle(text: context.tr('lastName')),
+                CustomTextFormField(
+                  hintText: context.tr('hintTextLastName'),
+                  validator: (String? text) => AppFunctions.textValidator(
+                      text, context.tr('lastName').toLowerCase()),
+                  textEditingController: _lastNameTextController,
+                ),
 
-              /// [EMAIL]
-              SignUpTextStyle(text: context.tr('email')),
-              CustomTextFormField(
-                hintText: context.tr('hintTextEmail'),
-                validator: AppFunctions.emailValidator,
-                textInputType: TextInputType.emailAddress,
-                textEditingController: _emailTextController,
-              ),
+                /// [EMAIL]
+                SignUpTextStyle(text: context.tr('email')),
+                CustomTextFormField(
+                  hintText: context.tr('hintTextEmail'),
+                  validator: AppFunctions.emailValidator,
+                  textInputType: TextInputType.emailAddress,
+                  textEditingController: _emailTextController,
+                ),
 
-              /// [PASSWORD]
-              SignUpTextStyle(text: context.tr('password')),
-              CustomTextFormField(
-                hintText: context.tr('hintTextPassword'),
-                isObscure: true,
-                validator: (String? password) =>
-                    AppFunctions.passwordValidator(password, true),
-                textInputType: TextInputType.text,
-                textEditingController: _passwordTextController,
-              ),
+                /// [PASSWORD]
+                SignUpTextStyle(text: context.tr('password')),
+                CustomTextFormField(
+                  hintText: context.tr('hintTextPassword'),
+                  isObscure: true,
+                  validator: (String? password) =>
+                      AppFunctions.passwordValidator(password, true),
+                  textInputType: TextInputType.text,
+                  textEditingController: _passwordTextController,
+                ),
 
-              /// [PASSWORD CONFIRMATION]
-              SignUpTextStyle(text: context.tr('confirmPassword')),
-              CustomTextFormField(
-                hintText: context.tr('hintTextConfirmPassword'),
-                isObscure: true,
-                validator: _confirmPasswordValidator,
-                isKeyboardDone: true,
-                textInputType: TextInputType.text,
-                textEditingController: _confirmPasswordTextController,
-              ),
+                /// [PASSWORD CONFIRMATION]
+                SignUpTextStyle(text: context.tr('confirmPassword')),
+                CustomTextFormField(
+                  hintText: context.tr('hintTextConfirmPassword'),
+                  isObscure: true,
+                  validator: _confirmPasswordValidator,
+                  isKeyboardDone: true,
+                  textInputType: TextInputType.text,
+                  textEditingController: _confirmPasswordTextController,
+                ),
 
-              Padding(
-                padding: const EdgeInsets.only(top: 30, bottom: 25),
-                child: BlocListener<AuthBloc, AuthState>(
-                  listenWhen: (previous, current) =>
-                      current is AuthenticatedState ||
-                      current is ErrorAuthState,
-                  listener: (context, state) {
-                    state.whenOrNull(
-                      error: (errorMessage) {
-                        _buttonController.error();
-                        Future.delayed(
-                        const Duration(seconds: 3),
-                          () => _buttonController.reset(),
-                        );
-                      },
-                    );
-                  },
-                  child: CustomMainGreenButton(
-                    buttonController: _buttonController,
-                    buttonText: context.tr('signUp'),
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        _buttonController.start();
-                        context.read<AuthBloc>().add(
-                              AuthEvent.register(
-                                firstName: _firstNameTextController.text,
-                                secondName: _lastNameTextController.text,
-                                email: _emailTextController.text,
-                                password: _passwordTextController.text,
-                              ),
-                            );
-                      } else {
-                        _buttonController.reset();
-                      }
+                Padding(
+                  padding: const EdgeInsets.only(top: 30, bottom: 25),
+                  child: BlocListener<AuthBloc, AuthState>(
+                    listenWhen: (previous, current) =>
+                        current is AuthenticatedState ||
+                        current is ErrorAuthState,
+                    listener: (context, state) {
+                      state.whenOrNull(
+                        error: (errorMessage) {
+                          _buttonController.error();
+                          Future.delayed(
+                            const Duration(seconds: 3),
+                            () => _buttonController.reset(),
+                          );
+                        },
+                      );
                     },
+                    child: CustomMainGreenButton(
+                      buttonController: _buttonController,
+                      buttonText: context.tr('signUp'),
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          _buttonController.start();
+                          context.read<AuthBloc>().add(
+                                AuthEvent.register(
+                                  firstName: _firstNameTextController.text,
+                                  secondName: _lastNameTextController.text,
+                                  email: _emailTextController.text,
+                                  password: _passwordTextController.text,
+                                ),
+                              );
+                        } else {
+                          _buttonController.reset();
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    context.tr('alreadyHaveAnAccount'),
-                    style: AppTextStyles.workSansMain.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppFunctions.isLight(context)
-                          ? AppColors.greyscale500
-                          : AppColors.greyscale100,
-                    ),
-                  ),
-                  5.w(),
-                  GestureDetector(
-                    onTap: () {
-                      if (context.read<AuthBloc>().state is! LoadingAuthState) {
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: Text(
-                      context.tr('login'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      context.tr('alreadyHaveAnAccount'),
                       style: AppTextStyles.workSansMain.copyWith(
                         fontSize: 16,
+                        fontWeight: FontWeight.w500,
                         color: AppFunctions.isLight(context)
-                            ? AppColors.green900
-                            : AppColors.green600,
+                            ? AppColors.greyscale500
+                            : AppColors.greyscale100,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    5.w(),
+                    GestureDetector(
+                      onTap: () {
+                        if (context.read<AuthBloc>().state
+                            is! LoadingAuthState) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Text(
+                        context.tr('login'),
+                        style: AppTextStyles.workSansMain.copyWith(
+                          fontSize: 16,
+                          color: AppFunctions.isLight(context)
+                              ? AppColors.green900
+                              : AppColors.green600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 
   @override
   void dispose() {

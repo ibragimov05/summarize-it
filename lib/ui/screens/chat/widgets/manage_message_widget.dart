@@ -11,43 +11,41 @@ class ManageMessageWidget extends StatelessWidget {
   const ManageMessageWidget({super.key, required this.message});
 
   @override
-  Widget build(BuildContext context) {
-    return CupertinoActionSheet(
-      cancelButton: CupertinoActionSheetAction(
-        onPressed: () => Navigator.pop(context),
-        child: Text(
-          'Cancel',
-          style: AppTextStyles.workSansW500.copyWith(
-            color: AppColors.green900,
-          ),
-        ),
-      ),
-      actions: <CupertinoActionSheetAction>[
-        CupertinoActionSheetAction(
-          onPressed: () => Navigator.pop(context, true),
+  Widget build(BuildContext context) => CupertinoActionSheet(
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () => Navigator.pop(context),
           child: Text(
-            'Edit message',
+            'Cancel',
             style: AppTextStyles.workSansW500.copyWith(
               color: AppColors.green900,
             ),
           ),
         ),
-        CupertinoActionSheetAction(
-          isDestructiveAction: true,
-          onPressed: () {
-            context
-                .read<GroupChatBloc>()
-                .add(GroupChatEvent.deleteMessage(messageId: message.id));
-            Navigator.pop(context);
-          },
-          child: Text(
-            'Delete message',
-            style: AppTextStyles.workSansW500.copyWith(
-              color: AppColors.error800,
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(
+              'Edit message',
+              style: AppTextStyles.workSansW500.copyWith(
+                color: AppColors.green900,
+              ),
             ),
           ),
-        ),
-      ],
-    );
-  }
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              context
+                  .read<GroupChatBloc>()
+                  .add(GroupChatEvent.deleteMessage(messageId: message.id));
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Delete message',
+              style: AppTextStyles.workSansW500.copyWith(
+                color: AppColors.error800,
+              ),
+            ),
+          ),
+        ],
+      );
 }
