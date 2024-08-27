@@ -16,10 +16,14 @@ class GroupChatBloc extends Bloc<GroupChatEvent, GroupChatState> {
   GroupChatBloc({required GroupChatRepository chatRepository})
       : _chatRepository = chatRepository,
         super(const GroupChatState()) {
-    on<GetAllMessagesEvent>(_onGetAllMessages);
-    on<SendMessageEvent>(_onSendMessage);
-    on<EditMessageEvent>(_onEditMessage);
-    on<DeleteMessageEvent>(_onDeleteMessage);
+    on<GroupChatEvent>(
+      (events, emit) => events.map(
+        getAllMessages: (event) => _onGetAllMessages(event, emit),
+        sendMessage: (event) => _onSendMessage(event, emit),
+        editMessage: (event) => _onEditMessage(event, emit),
+        deleteMessage: (event) => _onDeleteMessage(event, emit),
+      ),
+    );
   }
 
   void _onGetAllMessages(

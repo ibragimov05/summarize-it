@@ -1,25 +1,23 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pdf_image_renderer/pdf_image_renderer.dart';
 import 'package:rounded_loading_button_plus/rounded_loading_button.dart';
 
-part 'pdf_to_image_bloc.freezed.dart';
 part 'pdf_to_image_events.dart';
+
 part 'pdf_to_image_states.dart';
 
 class PdfToImageBloc extends Bloc<PdfToImageEvents, PdfToImageStates> {
   PdfToImageBloc() : super(const InitialPdfToImageState()) {
-    on<ConvertPdfToImageEvent>(_convert);
+    on<ConvertPdfToImageEvent>(_onConvertPdfToImage);
     on<ToInitialStatePdfToImageEvent>(_toInitialState);
   }
 
-  Future<void> _convert(
+  void _onConvertPdfToImage(
     ConvertPdfToImageEvent event,
-    Emitter<PdfToImageStates> emit,
+    emit,
   ) async {
     event.buttonController.start();
     try {
@@ -46,21 +44,23 @@ class PdfToImageBloc extends Bloc<PdfToImageEvents, PdfToImageStates> {
 
         if (img != null) {
           selectedImages.add(img);
-          emit(PdfToImageStates.loading(files: selectedImages));
+          emit(LoadingPdfToImageState(files: selectedImages));
         }
       }
 
-      emit(PdfToImageStates.loaded(files: selectedImages));
+      emit(LoadedPdfToImageState(files: selectedImages));
 
       pdf.close();
     } catch (e) {
-      emit(PdfToImageStates.error(error: e.toString()));
+      emit(ErrorPdfToImageState(error: e.toString()));
     } finally {
       event.buttonController.reset();
     }
   }
 
-  void _toInitialState(ToInitialStatePdfToImageEvent event,
-      Emitter<PdfToImageStates> emit,) =>
-      emit(const PdfToImageStates.initial());
+  void _toInitialState(
+    ToInitialStatePdfToImageEvent event,
+    Emitter<PdfToImageStates> emit,
+  ) =>
+      emit(const InitialPdfToImageState());
 }

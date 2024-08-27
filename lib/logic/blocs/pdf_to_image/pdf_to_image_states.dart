@@ -1,15 +1,27 @@
 part of 'pdf_to_image_bloc.dart';
 
-@freezed
-class PdfToImageStates with _$PdfToImageStates {
-  const factory PdfToImageStates.initial() = InitialPdfToImageState;
+sealed class PdfToImageStates {
+  const PdfToImageStates();
+}
 
-  const factory PdfToImageStates.loading({required List<Uint8List> files}) =
-      LoadingPdfToImageState;
+final class InitialPdfToImageState extends PdfToImageStates {
+  const InitialPdfToImageState();
+}
 
-  const factory PdfToImageStates.loaded({required List<Uint8List> files}) =
-      LoadedPdfToImageState;
+final class LoadingPdfToImageState extends PdfToImageStates {
+  final List<Uint8List> files;
 
-  const factory PdfToImageStates.error({required String error}) =
-      ErrorPdfToImageState;
+  const LoadingPdfToImageState({required this.files});
+}
+
+final class LoadedPdfToImageState extends PdfToImageStates {
+  final List<Uint8List> files;
+
+  const LoadedPdfToImageState({required this.files});
+}
+
+final class ErrorPdfToImageState extends PdfToImageStates {
+  final String error;
+
+  const ErrorPdfToImageState({required this.error});
 }

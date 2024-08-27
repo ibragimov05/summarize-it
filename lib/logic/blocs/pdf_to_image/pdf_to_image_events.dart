@@ -1,11 +1,19 @@
 part of 'pdf_to_image_bloc.dart';
 
-@freezed
-class PdfToImageEvents with _$PdfToImageEvents {
-  const factory PdfToImageEvents.convert({
-    required File file,
-    required RoundedLoadingButtonController buttonController,
-  }) = ConvertPdfToImageEvent;
+sealed class PdfToImageEvents {
+  const PdfToImageEvents();
+}
 
-  const factory PdfToImageEvents.toInitialState() = ToInitialStatePdfToImageEvent;
+final class ConvertPdfToImageEvent extends PdfToImageEvents {
+  final File file;
+  final RoundedLoadingButtonController buttonController;
+
+  const ConvertPdfToImageEvent({
+    required this.file,
+    required this.buttonController,
+  });
+}
+
+final class ToInitialStatePdfToImageEvent extends PdfToImageEvents {
+  const ToInitialStatePdfToImageEvent();
 }

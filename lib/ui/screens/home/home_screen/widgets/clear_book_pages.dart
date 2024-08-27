@@ -19,7 +19,7 @@ class ClearBookPages extends StatelessWidget {
                   .add(const GenerativeAiEvents.toInitial());
               context
                   .read<PdfToImageBloc>()
-                  .add(const PdfToImageEvents.toInitialState());
+              .add(const ToInitialStatePdfToImageEvent());
               context
                   .read<FilePickerBloc>()
                   .add(const FilePickerEvents.toInitialStateFilePicker());

@@ -10,11 +10,16 @@ part 'file_picker_bloc.freezed.dart';
 
 class FilePickerBloc extends Bloc<FilePickerEvents, FilePickerStates> {
   FilePickerBloc() : super(const FilePickerStates.initial()) {
-    on<SelectFileEvent>(_selectFile);
-    on<ToInitialStateFilePickerEvent>(_toInitialStateFilePicker);
+    on<FilePickerEvents>(
+      (events, emit) => events.map(
+        selectFile: (event) async => await _onSelectFile(event, emit),
+        toInitialStateFilePicker: (event) =>
+            _toInitialStateFilePicker(event, emit),
+      ),
+    );
   }
 
-  Future<void> _selectFile(
+  Future<void> _onSelectFile(
     SelectFileEvent event,
     Emitter<FilePickerStates> emit,
   ) async {

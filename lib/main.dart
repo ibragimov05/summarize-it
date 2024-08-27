@@ -28,6 +28,7 @@ void main() async {
             value: getIt.get<AuthBloc>()..add(const AuthEvent.watch()),
           ),
           BlocProvider.value(value: getIt.get<UserBloc>()),
+          BlocProvider.value(value: getIt.get<GenerativeAiBloc>()),
           BlocProvider.value(value: getIt.get<BooksBloc>()),
           BlocProvider.value(value: getIt.get<DarkThemeCubit>()),
           BlocProvider.value(value: getIt.get<AnimationCubit>()),

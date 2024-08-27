@@ -16,8 +16,12 @@ part 'generative_ai_states.dart';
 
 class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
   GenerativeAiBloc() : super(const InitialGenerativeAiState()) {
-    on<SummarizeAiEvent>(_onSummarizeBook);
-    on<ToInitialGenerativeAiEvent>(_toInitialEvent);
+    on<GenerativeAiEvents>(
+      (events, emit) => events.map(
+        summarize: (event) => _onSummarizeBook(event, emit),
+        toInitial: (event) => _toInitialEvent(event, emit),
+      ),
+    );
   }
 
   Future<void> _onSummarizeBook(
@@ -25,6 +29,7 @@ class GenerativeAiBloc extends Bloc<GenerativeAiEvents, GenerativeAiStates> {
     Emitter<GenerativeAiStates> emit,
   ) async {
     emit(const GenerativeAiStates.loading());
+
     event.buttonController.start();
     try {
       final GenerativeModel model = GenerativeModel(
