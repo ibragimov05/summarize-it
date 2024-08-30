@@ -9,8 +9,8 @@ class BooksEvent with _$BooksEvent {
     required Book book,
   }) = AddBookEvent;
 
-  const factory BooksEvent.addAudioUrl({required String bookId,required String audioUrl}) =
-      AddAudioUrlEvent;
+  const factory BooksEvent.addAudioUrl(
+      {required String bookId, required String audioUrl}) = AddAudioUrlEvent;
 
   const factory BooksEvent.deleteBook({required String id}) = DeleteBookEvent;
 }

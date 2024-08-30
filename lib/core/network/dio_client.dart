@@ -53,7 +53,7 @@ class DioClient {
     required Map<String, dynamic> data,
   }) async {
     try {
-      final response = await _dio.patch (url, data: data);
+      final response = await _dio.patch(url, data: data);
       return response;
     } catch (e) {
       rethrow;

@@ -18,10 +18,13 @@ class AudioPlayerBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
     on<AudioPlayerEvent>(
       (AudioPlayerEvent event, Emitter<AudioPlayerState> emit) async {
         await event.map(
-          download: (DownloadAudioEvent event) async => await _onDownloadAudio(event, emit),
+          download: (DownloadAudioEvent event) async =>
+              await _onDownloadAudio(event, emit),
           play: (PlayAudioEvent event) async => await _onPlayAudio(event, emit),
-          pause: (PauseAudioEvent event) async => await _onPauseAudio(event, emit),
-          dispose: (DisposeAudioEvent event) async => await _onDisposeAudio(event, emit),
+          pause: (PauseAudioEvent event) async =>
+              await _onPauseAudio(event, emit),
+          dispose: (DisposeAudioEvent event) async =>
+              await _onDisposeAudio(event, emit),
         );
       },
     );

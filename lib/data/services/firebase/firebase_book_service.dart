@@ -9,13 +9,13 @@ class FirebaseBookService {
       _bookCollection.where('user-uid', isEqualTo: uid).snapshots().map(
             (QuerySnapshot<Map<String, dynamic>> querySnapshot) =>
                 querySnapshot.docs.map(
-            (QueryDocumentSnapshot<Map<String, dynamic>> doc) {
-              Map<String, dynamic> data = doc.data();
-              data['id'] = doc.id;
-              return Book.fromMap(data);
-            },
-          ).toList(),
-        );
+              (QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+                Map<String, dynamic> data = doc.data();
+                data['id'] = doc.id;
+                return Book.fromMap(data);
+              },
+            ).toList(),
+          );
 
   Future<String> addBok(Book book) async {
     try {

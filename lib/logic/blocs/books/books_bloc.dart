@@ -12,17 +12,18 @@ part 'books_bloc.freezed.dart';
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
   final BooksRepository _bookRepository;
 
-  BooksBloc({
-    required BooksRepository bookRepository
-  })  : _bookRepository = bookRepository,
+  BooksBloc({required BooksRepository bookRepository})
+      : _bookRepository = bookRepository,
         super(const BooksState.initial()) {
     on<BooksEvent>(
-      (BooksEvent events, Emitter<BooksState> emit)async {
-       await events.map(
+      (BooksEvent events, Emitter<BooksState> emit) async {
+        await events.map(
           getBooks: (GetBookEvent event) async => _onGetBooks(event, emit),
           addBook: (AddBookEvent event) async => _onAddBook(event, emit),
-          addAudioUrl: (AddAudioUrlEvent event) async => _onAddAudioUrl(event, emit),
-          deleteBook: (DeleteBookEvent event) async => _onDeleteBook(event, emit),
+          addAudioUrl: (AddAudioUrlEvent event) async =>
+              _onAddAudioUrl(event, emit),
+          deleteBook: (DeleteBookEvent event) async =>
+              _onDeleteBook(event, emit),
         );
       },
     );

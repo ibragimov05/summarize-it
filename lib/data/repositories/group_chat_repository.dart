@@ -9,7 +9,7 @@ class GroupChatRepository {
   }) : _groupChatFirebaseService = groupChatFirebaseService;
 
   Stream<QuerySnapshot> getMessages() async* {
-   yield* _groupChatFirebaseService.getMessages();
+    yield* _groupChatFirebaseService.getMessages();
   }
 
   Future<void> sendMessage({required Map<String, dynamic> data}) async =>

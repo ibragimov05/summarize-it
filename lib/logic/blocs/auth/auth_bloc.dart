@@ -29,10 +29,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         Emitter<AuthState> emit,
       ) async {
         await events.map(
-          login: (LoginUserEvent event) async => await _onLoginUser(event, emit),
-          register: (RegisterUserEvent event) async => await _onRegisterUser(event, emit),
-          resetPassword: (ResetPasswordEvent event) async => await _onResetPassword(event, emit),
-          watch: (WatchAuthEvent event) async => await _onWatchAuth(event, emit),
+          login: (LoginUserEvent event) async =>
+              await _onLoginUser(event, emit),
+          register: (RegisterUserEvent event) async =>
+              await _onRegisterUser(event, emit),
+          resetPassword: (ResetPasswordEvent event) async =>
+              await _onResetPassword(event, emit),
+          watch: (WatchAuthEvent event) async =>
+              await _onWatchAuth(event, emit),
           logout: (LogoutEvent event) async => await _onLogoutUser(event, emit),
         );
       },
@@ -100,13 +104,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onWatchAuth(
     WatchAuthEvent event,
-    Emitter<AuthState> emit,) async =>
+    Emitter<AuthState> emit,
+  ) async =>
       await emit.forEach(
-      _authRepository.watchAuth(),
-      onData: (user) => user == null
-          ? const AuthState.unauthenticated()
-          : const AuthState.authenticated(),
-    );
+        _authRepository.watchAuth(),
+        onData: (user) => user == null
+            ? const AuthState.unauthenticated()
+            : const AuthState.authenticated(),
+      );
 
   Future<void> _getDATA() async {
     getIt.get<UserBloc>().add(const UserEvent.getUserEvent());

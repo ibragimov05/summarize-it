@@ -31,5 +31,4 @@ class AppConstants {
     'onboardingText1',
     'onboardingText2',
   ];
-
 }

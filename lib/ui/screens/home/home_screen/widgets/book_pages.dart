@@ -24,10 +24,10 @@ class _BookPagesState extends State<BookPages> {
   Widget build(BuildContext context) =>
       BlocBuilder<FilePickerBloc, FilePickerStates>(
         builder: (BuildContext context, FilePickerStates state) =>
-          state.maybeWhen(
-        loaded: (filePath, file) => FadingEdgeScrollView.fromScrollView(
-          gradientFractionOnStart: 0.3,
-          child: GridView.builder(
+            state.maybeWhen(
+          loaded: (filePath, file) => FadingEdgeScrollView.fromScrollView(
+            gradientFractionOnStart: 0.3,
+            child: GridView.builder(
               controller: _scrollController,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -42,14 +42,14 @@ class _BookPagesState extends State<BookPages> {
               itemCount: widget.files.length,
               itemBuilder: (ctx, index) => GestureDetector(
                 onTap: () {
-                if (filePath != null) {
-                  Navigator.push(
+                  if (filePath != null) {
+                    Navigator.push(
                       context,
                       CupertinoPageRoute(
                         builder: (context) => PdfViewScreen(
                           pressedPageIndex: index,
-                        bookPath: filePath,
-                      ),
+                          bookPath: filePath,
+                        ),
                       ),
                     );
                   }
@@ -63,8 +63,8 @@ class _BookPagesState extends State<BookPages> {
                 ),
               ),
             ),
+          ),
+          orElse: () => const SizedBox(),
         ),
-        orElse: () => const SizedBox(),
-      ),
-    );
+      );
 }

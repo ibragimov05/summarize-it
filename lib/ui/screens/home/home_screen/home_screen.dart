@@ -194,18 +194,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         BlocBuilder<GenerativeAiBloc, GenerativeAiStates>(
                           builder: (context, state) {
                             return CustomSlider(
-                            onSliderValChanged:
-                                state is LoadingGenerativeAiState
-                                    ? null
-                                    : (p0) => _summaryLength = p0,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                HelperButtons(
-                  openDocButtonController: _openDocButtonController,
-                  submitButtonController: _submitButtonController,
+                              onSliderValChanged:
+                                  state is LoadingGenerativeAiState
+                                      ? null
+                                      : (p0) => _summaryLength = p0,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  HelperButtons(
+                    openDocButtonController: _openDocButtonController,
+                    submitButtonController: _submitButtonController,
                     onOpenDocTap: () => context.read<FilePickerBloc>().add(
                           const FilePickerEvents.selectFile(),
                         ),

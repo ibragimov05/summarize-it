@@ -55,14 +55,14 @@ class AppFunctions {
         SnackBar(
           backgroundColor: isLight(context) ? null : AppColors.greyscale100,
           content: Text(
-          message,
-          style: AppTextStyles.workSansMain.copyWith(
-            fontWeight: FontWeight.w500,
-            color: AppColors.error500,
+            message,
+            style: AppTextStyles.workSansMain.copyWith(
+              fontWeight: FontWeight.w500,
+              color: AppColors.error500,
+            ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   static void showSnackBar(BuildContext context, String message) {
@@ -70,17 +70,18 @@ class AppFunctions {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-        backgroundColor: isLight(context) ? null : AppColors.greyscale100,
-        content: Text(
-          message,
-          style: AppTextStyles.workSansMain.copyWith(
-            fontWeight: FontWeight.w500,
-            color:
-                isLight(context) ? AppColors.greyscale100 : AppColors.green900,
+          backgroundColor: isLight(context) ? null : AppColors.greyscale100,
+          content: Text(
+            message,
+            style: AppTextStyles.workSansMain.copyWith(
+              fontWeight: FontWeight.w500,
+              color: isLight(context)
+                  ? AppColors.greyscale100
+                  : AppColors.green900,
+            ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   static String get getGreetingsText {
@@ -119,11 +120,11 @@ class AppFunctions {
       toastification.show(
         context: context,
         type: isSuccess ? ToastificationType.success : ToastificationType.error,
-      autoCloseDuration: const Duration(seconds: 5),
-      description: Text(message, style: AppTextStyles.workSansW500),
-      icon: const Icon(Icons.error),
-      closeButtonShowType: CloseButtonShowType.onHover,
-    );
+        autoCloseDuration: const Duration(seconds: 5),
+        description: Text(message, style: AppTextStyles.workSansW500),
+        icon: const Icon(Icons.error),
+        closeButtonShowType: CloseButtonShowType.onHover,
+      );
 
   static double get randomNumber =>
       -50 + Random().nextInt(50 - -50 + 1).toDouble();
