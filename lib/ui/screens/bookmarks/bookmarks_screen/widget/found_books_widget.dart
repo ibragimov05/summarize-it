@@ -32,21 +32,17 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
   Widget build(BuildContext context) => Column(
         children: [
           SearchBooksTextField(
-            onChanged: (String value) {
-              setState(() {
-                if (value.trim().isEmpty) {
-                  _filteredBooksList = _booksList;
-                } else {
-                  _filteredBooksList = _booksList
+            onChanged: (String value) => setState(
+              () => value.trim().isEmpty
+                  ? _filteredBooksList = _booksList
+                  : _filteredBooksList = _booksList
                       .where(
                         (element) => element.title
                             .toLowerCase()
                             .contains(value.toLowerCase()),
                       )
-                      .toList();
-                }
-              });
-            },
+                      .toList(),
+            ),
           ),
           Expanded(
             child: _filteredBooksList.isNotEmpty
