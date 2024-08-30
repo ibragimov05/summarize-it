@@ -19,11 +19,13 @@ class FoundBooksWidget extends StatefulWidget {
 class _FoundBooksWidgetState extends State<FoundBooksWidget> {
   final ScrollController _scrollController = ScrollController();
   late List<Book> _booksList;
+  late List<Book> _filteredBooksList;
 
   @override
   void initState() {
     super.initState();
-    _booksList = widget.books;
+    _booksList = List.from(widget.books);
+    _filteredBooksList = _booksList;
   }
 
   @override
@@ -31,22 +33,23 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
         children: [
           SearchBooksTextField(
             onChanged: (String value) {
-              if (value.trim().isEmpty) {
-                _booksList = widget.books;
-              } else {
-                _booksList = widget.books
-                    .where(
-                      (element) => element.title
-                          .toLowerCase()
-                          .contains(value.toLowerCase()),
-                    )
-                    .toList();
-              }
-              setState(() {});
+              setState(() {
+                if (value.trim().isEmpty) {
+                  _filteredBooksList = _booksList;
+                } else {
+                  _filteredBooksList = _booksList
+                      .where(
+                        (element) => element.title
+                            .toLowerCase()
+                            .contains(value.toLowerCase()),
+                      )
+                      .toList();
+                }
+              });
             },
           ),
           Expanded(
-            child: _booksList.isNotEmpty
+            child: _filteredBooksList.isNotEmpty
                 ? FadingEdgeScrollView.fromScrollView(
                     gradientFractionOnStart: 0.3,
                     child: ListView.builder(
@@ -56,11 +59,14 @@ class _FoundBooksWidgetState extends State<FoundBooksWidget> {
                         right: 16,
                         top: 10,
                       ),
-                      itemCount: _booksList.length,
+                      itemCount: _filteredBooksList.length,
                       itemBuilder: (context, index) => ShowSummaryWidget(
-                        book: _booksList[index],
-                        onDismissed: () =>
-                            setState(() => _booksList.removeAt(index)),
+                        book: _filteredBooksList[index],
+                        onDismissed: () => setState(() {
+                          final removedBook =
+                              _filteredBooksList.removeAt(index);
+                          _booksList.remove(removedBook);
+                        }),
                       ),
                     ),
                   )
